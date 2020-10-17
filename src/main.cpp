@@ -4,6 +4,7 @@
 #include <math.h>   
 #include <random> 
 #include "../headers/exhausting.h"
+#include "../headers/lsh.h"
 
 using namespace std;
 
@@ -194,6 +195,8 @@ int main(int argc, char** argv)
         
         int** lsh_distances = new int*[Num_Of_Queries];
         for(int i=0;i<Num_Of_Queries;i++)   lsh_distances[i] = new int[N];
+
+        Approximate_LSH(info,lsh_distances,lsh_nns);
         
 
         ///////////////////////
