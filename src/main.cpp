@@ -195,7 +195,7 @@ int main(int argc, char** argv)
         int** lsh_distances = new int*[Num_Of_Queries];
         for(int i=0;i<Num_Of_Queries;i++)   lsh_distances[i] = new int[N];
         
-
+        
         ///////////////////////
 
         //Deallocation of memory of Images_Array...
