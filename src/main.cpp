@@ -165,27 +165,28 @@ int main(int argc, char** argv)
         info->s_i = s_i;
         info->W = W;
 
+        cout << ((Images_Array[32]-Images_Array[0])/dimensions*sizeof(item))+1 << endl;
+
+        //Fill Hash Tables...
         Insert_Images_To_Buckets(info,Hash_Tables);
 
-
-
-        //Print Buckets
-        for(int i=0;i<L;i++)
-        {
-            int counter=0;
-            for(int j=0;j<(Num_Of_Images/16);j++)
-            {
-                Bucket* temp = Hash_Tables[i][j];
-                if(temp!=NULL)
-                {
-                    counter++;
-                    // int counter=0;
-                    // for(int k=0;k<temp->images.size();k++)  counter++;
-                    // cout << "BUCKET " << j << " HAS " << counter << endl; 
-                }
-            }
-            cout << "Bucket " << i << ": " << counter << endl;
-        }
+        // //Print Buckets
+        // for(int i=0;i<L;i++)
+        // {
+        //     int counter=0;
+        //     for(int j=0;j<(Num_Of_Images/16);j++)
+        //     {
+        //         Bucket* temp = Hash_Tables[i][j];
+        //         if(temp!=NULL)
+        //         {
+        //             counter++;
+        //             // int counter=0;
+        //             // for(int k=0;k<temp->images.size();k++)  counter++;
+        //             // cout << "BUCKET " << j << " HAS " << counter << endl; 
+        //         }
+        //     }
+        //     cout << "HashTable " << i << ": " << counter << endl;
+        // }
 
         //////////LSH//////////
         int** lsh_nns = new int*[Num_Of_Queries];
@@ -213,6 +214,14 @@ int main(int argc, char** argv)
                     delete Hash_Tables[i][j];
             delete [] Hash_Tables[i];
         }
+        
+        for(int i=0;i<Num_Of_Queries;i++)   
+        {
+            delete [] lsh_distances[i];
+            delete [] lsh_nns[i];
+        }
+        delete [] lsh_distances;
+        delete [] lsh_nns;
 
         //Deallocation of memory of pointer to object of class Info...
         delete info;
