@@ -57,6 +57,30 @@ void Calculate_g_Values(infoptr info,unsigned int** g_i)
     }
 }
 
+int Calculate_g_Values(infoptr info,unsigned int** g_i)
+{
+    for(int image=0;image<info->Num_of_Images;image++)
+    {
+        for(int i=0;i<info->L;i++)
+        {
+            int h_p[info->k];
+            for(int j=0;j<info->k;j++)
+            {
+                int a_i[info->dimensions];
+
+                for(int z=0;z<info->dimensions;z++)
+                {
+                    a_i[z] = floor((info->Images_Array[image][z] - info->s_i[i*info->k+j][z])/info->W);
+                }
+                h_p[j] = Calculate_hp(a_i,info);
+
+                g_i[image][i] |= (h_p[j] << (j*8));                
+                g_i[image][i] = g_i[image][i]%(info->Num_of_Images/16);
+            }
+        }
+    }
+}
+
 void Insert_Images_To_Buckets(infoptr info,Bucket*** Hash_Tables)
 {
     //Allocate memory so as to store temporarily g_i values...

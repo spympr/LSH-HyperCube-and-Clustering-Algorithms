@@ -4,6 +4,7 @@
 #include <math.h>   
 #include <random> 
 #include "../headers/exhausting.h"
+#include "../headers/lsh.h"
 
 using namespace std;
 
@@ -165,7 +166,7 @@ int main(int argc, char** argv)
         info->s_i = s_i;
         info->W = W;
 
-        // cout << ((Images_Array[32]-Images_Array[0])/dimensions*sizeof(item))+1 << endl;
+        cout << ((Images_Array[32]-Images_Array[0])/dimensions*sizeof(item))+1 << endl;
 
         //Fill Hash Tables...
         Insert_Images_To_Buckets(info,Hash_Tables);
@@ -194,6 +195,8 @@ int main(int argc, char** argv)
         
         int** lsh_distances = new int*[Num_Of_Queries];
         for(int i=0;i<Num_Of_Queries;i++)   lsh_distances[i] = new int[N];
+
+        Approximate_LSH(info,lsh_distances,lsh_nns);
         
         
         ///////////////////////
