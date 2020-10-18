@@ -1,8 +1,8 @@
-#include <iostream> 
-#include <vector> 
-#include "../headers/bucket.h"
+// #include <iostream> 
+// #include <vector> 
+// #include "../headers/bucket.h"
 
-using namespace std;
+// using namespace std;
 
-int Approximate_LSH(infoptr ,int**, int**);
-int ManhattanDistance(item* ,item* ,int );
+// int Approximate_LSH(infoptr ,int**, int**);
+// int ManhattanDistance(item* ,item* ,int );

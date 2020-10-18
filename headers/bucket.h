@@ -18,9 +18,10 @@ class Info
         int Num_of_Images,Num_of_Queries,k,L,dimensions,W,N;
         int **s_i;
         item **Images_Array,**Queries_Array;
+        Bucket*** Hash_Tables;
 
-        Info(int NoI,int NoQ,int k_,int L_,int N_,int dimensions_,item** Images_Array_,item** Queries_Array_)
-        : Num_of_Images(NoI),Num_of_Queries(NoQ),k(k_),L(L_),N(N_),dimensions(dimensions_),Images_Array(Images_Array_),Queries_Array(Queries_Array_){}
+        Info(int NoI,int NoQ,int k_,int L_,int N_,int dimensions_,item** Images_Array_,item** Queries_Array_, Bucket*** Hash_Tables_)
+        : Num_of_Images(NoI),Num_of_Queries(NoQ),k(k_),L(L_),N(N_),dimensions(dimensions_),Images_Array(Images_Array_),Queries_Array(Queries_Array_),Hash_Tables(Hash_Tables_){}
 };
 
 typedef Info* infoptr;
@@ -28,5 +29,6 @@ typedef Bucket* bucketptr;
 
 unsigned int mod(int, int );
 int Calculate_hp(int* , infoptr );
-void Calculate_g_Values(infoptr, unsigned int** );
-void Insert_Images_To_Buckets(infoptr ,Bucket*** );
+void gi_values_of_train(infoptr,unsigned int**);
+void Insert_Images_To_Buckets(infoptr);
+void gi_values_of_query(infoptr, unsigned int* , int);

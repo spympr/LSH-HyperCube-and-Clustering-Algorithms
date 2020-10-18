@@ -3,42 +3,41 @@
 #include <vector>
 #include <math.h>   
 #include <queue> 
-#include "../headers/exhausting.h"
+#include "../headers/lsh.h"
 
 using namespace std;
 
 void Approximate_LSH(infoptr info,int** LSH_Distances, int** LSH_nns)
 {   
-    int W=0;
-
     for(int i=0;i<info->Num_of_Queries;i++)
     {
         item* temp_query = info->Queries_Array[i];
-        priority_queue<int, vector<int>, greater<int> > distances;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
+
+        unsigned int gi_query_values[info->L];
+
+        gi_values_of_query(info, gi_query_values, i);
 
         for(int j=0;j<info->L;j++)
         {
+            int images_in_bucket = info->Hash_Tables[j][gi_query_values[j]]->images.size();
             
+            for(int p=0; p<images_in_bucket;p++)
+            {
+                item* temp_image = info->Hash_Tables[j][gi_query_values[j]]->images.at(p);
+                distances.push(make_pair(ManhattanDistance(temp_query,temp_image, info->dimensions), (temp_image-info->Images_Array[0])/(info->dimensions*sizeof(item))+1));
+            }
         }
 
-        for(int j=0;j<info->Num_of_Images;j++)
-        {
-            item* temp_image = info->Images_Array[j];
-            pq.push(ManhattanDistance(temp_query,temp_image,info->dimensions));
-        }
         for(int k=0;k<info->N;k++)
         {
-            True_Distances[i][k] = pq.top();
-            pq.pop();
-            
-            W += True_Distances[i][k];
-            // cout << True_Distances[i][k] << " ";
+            LSH_Distances[i][k] = distances.top().first;
+            LSH_nns[i][k] = distances.top().second;
+
+            distances.pop();
         }
-        // cout << endl;
     }
 
-    W = W/(info->Num_of_Queries*info->N);
-    return W;
 }
 
 int ManhattanDistance(item* x,item* y,int dimensions)

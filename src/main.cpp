@@ -137,7 +137,7 @@ int main(int argc, char** argv)
             True_Distances[i] = new int[N];
         
         //Initialization of pointer to object of class Info (store important variables).
-        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array);
+        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables);
 
         //Do exhausting search and calculate W...
         int E_R = ExhaustingNN(info,True_Distances);
@@ -169,7 +169,27 @@ int main(int argc, char** argv)
         cout << ((Images_Array[32]-Images_Array[0])/dimensions*sizeof(item))+1 << endl;
 
         //Fill Hash Tables...
-        Insert_Images_To_Buckets(info,Hash_Tables);
+        Insert_Images_To_Buckets(info);
+
+        int temp=0;
+        for(int i=0;i<Num_Of_Images;i++)
+        {
+            for(int j=0;j<(Num_Of_Images/16);j++)
+            {
+                if(info->Hash_Tables[j][j] != NULL)
+                {
+                    int images_in_bucket = info->Hash_Tables[j][j]->images.size();
+                    for(int p=0; p<images_in_bucket;p++)
+                    {
+                        cout << "kk " <<  Hash_Tables[i][j]->images[p];
+                    }
+                    cout <<endl;
+                    temp=1;
+                    break;
+                }
+            }
+            if(temp==1) break;
+        }
 
         // //Print Buckets
         // for(int i=0;i<L;i++)
@@ -197,8 +217,21 @@ int main(int argc, char** argv)
         for(int i=0;i<Num_Of_Queries;i++)   lsh_distances[i] = new int[N];
 
         Approximate_LSH(info,lsh_distances,lsh_nns);
+
+        cout << "geia\n";
+
+        for(int i=0;i<Num_Of_Queries;i++)
+        {
+            for(int j=0;j<N;j++)
+            {
+                cout << "Query: " << ((Queries_Array[i]-Images_Array[0])/dimensions*sizeof(item))+1 << endl;
+                cout << "Nearest neighbor-1: " << lsh_nns[i][j] << endl;
+                cout << "distanceLSH: " << lsh_distances[i][j] << endl;
+                cout << "distanceTrue: " << True_Distances[i][j] << endl;
+            }
+        }
         
-        
+
         ///////////////////////
 
         //Deallocation of memory of Images_Array...

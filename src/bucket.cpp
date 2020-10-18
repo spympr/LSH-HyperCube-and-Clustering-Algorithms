@@ -33,7 +33,7 @@ int Calculate_hp(int* a_i, infoptr info)
     return int(sum);
 }
 
-void Calculate_g_Values(infoptr info,unsigned int** g_i)
+void gi_values_of_train(infoptr info,unsigned int** g_i)
 {
     for(int image=0;image<info->Num_of_Images;image++)
     {
@@ -57,31 +57,29 @@ void Calculate_g_Values(infoptr info,unsigned int** g_i)
     }
 }
 
-int Calculate_g_Values(infoptr info,unsigned int** g_i)
+void gi_values_of_query(infoptr info, unsigned int* gi_query_values, int query)
 {
-    for(int image=0;image<info->Num_of_Images;image++)
+    
+    for(int i=0;i<info->L;i++)
     {
-        for(int i=0;i<info->L;i++)
+        int h_p[info->k];
+        for(int j=0;j<info->k;j++)
         {
-            int h_p[info->k];
-            for(int j=0;j<info->k;j++)
+            int a_i[info->dimensions];
+
+            for(int z=0;z<info->dimensions;z++)
             {
-                int a_i[info->dimensions];
-
-                for(int z=0;z<info->dimensions;z++)
-                {
-                    a_i[z] = floor((info->Images_Array[image][z] - info->s_i[i*info->k+j][z])/info->W);
-                }
-                h_p[j] = Calculate_hp(a_i,info);
-
-                g_i[image][i] |= (h_p[j] << (j*8));                
-                g_i[image][i] = g_i[image][i]%(info->Num_of_Images/16);
+                a_i[z] = floor((info->Queries_Array[query][z] - info->s_i[i*info->k+j][z])/info->W);
             }
+            h_p[j] = Calculate_hp(a_i,info);
+
+            gi_query_values[i] |= (h_p[j] << (j*8));                
+            gi_query_values[i] = gi_query_values[i]%(info->Num_of_Images/16);
         }
     }
 }
 
-void Insert_Images_To_Buckets(infoptr info,Bucket*** Hash_Tables)
+void Insert_Images_To_Buckets(infoptr info)
 {
     //Allocate memory so as to store temporarily g_i values...
     unsigned int** g_i = new unsigned int*[info->Num_of_Images];
@@ -89,7 +87,7 @@ void Insert_Images_To_Buckets(infoptr info,Bucket*** Hash_Tables)
         g_i[i] = new unsigned int[info->L];
     
     //Call function so as to compute all g_i values...
-    Calculate_g_Values(info,g_i);
+    gi_values_of_train(info,g_i);
     
     // // Printing...
     // for(int i=0;i<100;i++)
@@ -106,8 +104,8 @@ void Insert_Images_To_Buckets(infoptr info,Bucket*** Hash_Tables)
     {
         for(int j=0;j<info->L;j++)
         {
-            if(Hash_Tables[j][g_i[i][j]]==NULL)  Hash_Tables[j][g_i[i][j]] = new Bucket();
-            Hash_Tables[j][g_i[i][j]]->add(info->Images_Array[i]);    
+            if(info->Hash_Tables[j][g_i[i][j]]==NULL)  info->Hash_Tables[j][g_i[i][j]] = new Bucket();
+            info->Hash_Tables[j][g_i[i][j]]->add(info->Images_Array[i]);    
         }
     }
 
