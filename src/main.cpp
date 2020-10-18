@@ -143,12 +143,19 @@ int main(int argc, char** argv)
         int** True_Distances = new int*[Num_Of_Queries];
         for(int i=0;i<Num_Of_Queries;i++)   True_Distances[i] = new int[N];
         
+        //Initialization of m,M and calculation of m^d-1modM array...
+        int M = pow(2,floor(32/k));
+        int m = M/3;
+        // int m = 423245;
+        int* modulars = new int[dimensions];
+        for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
+    
         //Initialization of pointer to object of class Info (store important variables).
-        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables);
+        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables,m,M,modulars);
 
         //Do exhausting search and calculate W...
         int E_R = ExhaustingNN(info,True_Distances);
-        int W = 10*int(E_R);
+        int W = 2*int(E_R);
         W = 10000;
         cout << "W: " << W << endl << endl;
             

@@ -9,28 +9,42 @@ void Bucket::add(item* image)
     images.push_back(image);
 }
 
-unsigned int mod(int a, int m) 
+int mod_expo(int base, int exponent,int modulus) 
 {
-    if(a%m < 0) return (unsigned int ) a % m + m;
-    return (unsigned int) a % m;
+    if(modulus==1)  return 0;
+    int c=1;
+    for(int i=0;i<exponent;i++) c = (c*base)%modulus;
+    return c;
+    
+    // int result = 1;
+  
+    // base = base % exponent; 
+    // if(base == 0) return 0;
+    // while(exponent > 0)  
+    // {  
+    //     if (exponent & 1)  
+    //         result = (result*base) % exponent;  
+  
+    //     exponent = exponent>>1;
+    //     base = (base*base) % exponent;  
+    // }  
+    // return result;   
 }
 
 int Calculate_hp(int* a_i, infoptr info)
 {
-    int sum = 0;
-    int m = pow(2,(32-3));
-    int M = pow(2,int(32/info->k));
-    int temp;
+    int sum = 0,first_term,second_term,temp_term;
+    
 
     for(int i=1; i<=info->dimensions;i++)
     {
-        temp = ((a_i[info->dimensions-i] * pow(m,i-1)));
-        sum += mod(temp,M);
+        first_term = a_i[info->dimensions-i] % info->M;
+        second_term = info->modulars[i-1];
+        temp_term = first_term*second_term;        
+        sum += (temp_term % info->M);
     }
 
-    sum = mod(sum,M);
-
-    return int(sum);
+    return(sum % info->M);
 }
 
 void gi_values_of_train(infoptr info,unsigned int** g_i)
