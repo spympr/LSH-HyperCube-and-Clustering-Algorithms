@@ -12,7 +12,7 @@ int ExhaustingNN(infoptr info,int** True_Distances)
 
     for(int i=0;i<info->Num_of_Queries;i++)
     {
-        priority_queue<int, vector<int>, greater<int> > pq;
+        priority_queue<int, vector<int>, greater<int>> pq;
 
         for(int j=0;j<info->Num_of_Images;j++)
             pq.push(ManhattanDistance(info->Queries_Array[i],info->Images_Array[j],info->dimensions));

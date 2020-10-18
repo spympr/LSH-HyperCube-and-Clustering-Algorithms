@@ -65,15 +65,14 @@ void gi_values_of_train(infoptr info,unsigned int** g_i)
                 h_p[j] = Calculate_hp(a_i,info);
 
                 g_i[image][i] |= (h_p[j] << (j*8));                
-                g_i[image][i] = g_i[image][i]%(info->Num_of_Images/16);
             }
+                g_i[image][i] = g_i[image][i]%(info->Num_of_Images/16);
         }
     }
 }
 
 void gi_values_of_query(infoptr info, unsigned int* gi_query_values, int query)
 {
-    
     for(int i=0;i<info->L;i++)
     {
         int h_p[info->k];
@@ -88,8 +87,8 @@ void gi_values_of_query(infoptr info, unsigned int* gi_query_values, int query)
             h_p[j] = Calculate_hp(a_i,info);
 
             gi_query_values[i] |= (h_p[j] << (j*8));                
-            gi_query_values[i] = gi_query_values[i]%(info->Num_of_Images/16);
         }
+            gi_query_values[i] = gi_query_values[i]%(info->Num_of_Images/16);
     }
 }
 
