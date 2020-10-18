@@ -89,16 +89,6 @@ void Insert_Images_To_Buckets(infoptr info)
     //Call function so as to compute all g_i values...
     gi_values_of_train(info,g_i);
     
-    // // Printing...
-    // for(int i=0;i<100;i++)
-    // {
-    //     for(int j=0;j<info->L;j++)
-    //     {
-    //         cout << g_i[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-    
     //Fill buckets of L Hash_Tables...
     for(int i=0;i<info->Num_of_Images;i++)
     {

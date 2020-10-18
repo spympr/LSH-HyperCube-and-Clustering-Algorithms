@@ -117,8 +117,7 @@ int main(int argc, char** argv)
         Read_BF(&Queries_Array,&Num_Of_Queries,&Columns_Of_Queries,&Rows_Of_Queries,query_file,100);
 
         //Printing...
-        cout << "Images: " << Num_Of_Images << endl << "Rows: " << Rows_Of_Images << endl << "Columns: " << Columns_Of_Images << endl << endl;
-        cout << "Queries: " << Num_Of_Queries << endl << "Rows: " << Rows_Of_Queries << endl << "Columns: " << Columns_Of_Queries << endl << endl;
+        cout << "Images: " << Num_Of_Images << endl << "Queries: " << Num_Of_Queries << endl << "Rows: " << Rows_Of_Images << endl << "Columns: " << Columns_Of_Images << endl;
 
         //Initilization of W(grid), dimensions of each Image...
         int dimensions = Columns_Of_Images*Rows_Of_Images;
@@ -142,8 +141,7 @@ int main(int argc, char** argv)
         //Do exhausting search and calculate W...
         int E_R = ExhaustingNN(info,True_Distances);
         int W = 10*int(E_R);
-        // int W = 10000;
-        cout << "W " << W << endl << endl;
+        cout << "W: " << W << endl << endl;
             
         // Initializing of uniform_int_distribution class...
         default_random_engine generator;   
@@ -166,50 +164,10 @@ int main(int argc, char** argv)
         info->s_i = s_i;
         info->W = W;
 
-        cout << ((Images_Array[32]-Images_Array[0])/dimensions*sizeof(item))+1 << endl;
-
         //Fill Hash Tables...
         Insert_Images_To_Buckets(info);
 
-        int temp=0;
-        for(int i=0;i<Num_Of_Images;i++)
-        {
-            for(int j=0;j<(Num_Of_Images/16);j++)
-            {
-                if(info->Hash_Tables[j][j] != NULL)
-                {
-                    int images_in_bucket = info->Hash_Tables[j][j]->images.size();
-                    for(int p=0; p<images_in_bucket;p++)
-                    {
-                        cout << "kk " <<  Hash_Tables[i][j]->images[p];
-                    }
-                    cout <<endl;
-                    temp=1;
-                    break;
-                }
-            }
-            if(temp==1) break;
-        }
-
-        // //Print Buckets
-        // for(int i=0;i<L;i++)
-        // {
-        //     int counter=0;
-        //     for(int j=0;j<(Num_Of_Images/16);j++)
-        //     {
-        //         Bucket* temp = Hash_Tables[i][j];
-        //         if(temp!=NULL)
-        //         {
-        //             counter++;
-        //             // int counter=0;
-        //             // for(int k=0;k<temp->images.size();k++)  counter++;
-        //             // cout << "BUCKET " << j << " HAS " << counter << endl; 
-        //         }
-        //     }
-        //     cout << "HashTable " << i << ": " << counter << endl;
-        // }
-
-        //////////LSH//////////
+        //////////////////////////////LSH///////////////////////////////
         int** lsh_nns = new int*[Num_Of_Queries];
         for(int i=0;i<Num_Of_Queries;i++)   lsh_nns[i] = new int[N];
         
@@ -218,8 +176,6 @@ int main(int argc, char** argv)
 
         Approximate_LSH(info,lsh_distances,lsh_nns);
 
-        cout << "geia\n";
-
         for(int i=0;i<Num_Of_Queries;i++)
         {
             for(int j=0;j<N;j++)
@@ -227,12 +183,11 @@ int main(int argc, char** argv)
                 cout << "Query: " << ((Queries_Array[i]-Images_Array[0])/dimensions*sizeof(item))+1 << endl;
                 cout << "Nearest neighbor-1: " << lsh_nns[i][j] << endl;
                 cout << "distanceLSH: " << lsh_distances[i][j] << endl;
-                cout << "distanceTrue: " << True_Distances[i][j] << endl;
+                cout << "distanceTrue: " << True_Distances[i][j] << endl << endl;
             }
         }
-        
 
-        ///////////////////////
+        ////////////////////////////////////////////////////////////////////
 
         //Deallocation of memory of Images_Array...
         for(int i=0;i<Num_Of_Images;i++)    delete [] Images_Array[i];
