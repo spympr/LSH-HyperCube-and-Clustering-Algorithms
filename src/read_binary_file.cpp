@@ -15,14 +15,13 @@ int ReverseInt(int i)
     return((int)ch1<<24)+((int)ch2<<16)+((int)ch3<<8)+ch4;
 }
 
-void Read_BF(item*** Images_Array,int* number_of_images, int* n_cols, int* n_rows, string input_file,int a)
+void Read_BF(item*** Array,int* number_of_images, int* n_cols, int* n_rows, string input_file,int a)
 {
     ifstream file(input_file,ios::binary);
     
     if(file.is_open())
     {
         int magic_number=0,num_of_images=0,rows=0,cols=0;
-        item temp=0;
 
         //Read magic number...
         file.read((char*)&magic_number,sizeof(magic_number));
@@ -42,7 +41,7 @@ void Read_BF(item*** Images_Array,int* number_of_images, int* n_cols, int* n_row
         cols = ReverseInt(cols);
 
         //Allocation of memory for Images_Array...
-        (*Images_Array) = new item*[num_of_images];
+        (*Array) = new item*[num_of_images];
         
         //Store important values (so as to pass them to main.cpp)
         *number_of_images = num_of_images;
@@ -51,17 +50,16 @@ void Read_BF(item*** Images_Array,int* number_of_images, int* n_cols, int* n_row
 
         for(int i=0;i<num_of_images;i++)
         {
-            (*Images_Array)[i] = new item[rows*cols];
+            (*Array)[i] = new item[rows*cols];
 
             for(int r=0;r<rows;r++)
             {
                 for(int c=0;c<cols;c++)
                 {
-                    temp=0;
-
                     //Read each integer of binary file and store him into our array.
+                    unsigned char temp=0;
                     file.read((char*)&temp,sizeof(temp));
-                    (*Images_Array)[i][rows*r+c] = temp;
+                    (*Array)[i][(rows*r)+c] = (item)temp;
                 }
             }
         }

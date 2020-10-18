@@ -114,10 +114,19 @@ int main(int argc, char** argv)
         Read_BF(&Images_Array,&Num_Of_Images,&Columns_Of_Images,&Rows_Of_Images,input_file,1);
         
         //Read query binary file...
-        Read_BF(&Queries_Array,&Num_Of_Queries,&Columns_Of_Queries,&Rows_Of_Queries,query_file,100);
+        Read_BF(&Queries_Array,&Num_Of_Queries,&Columns_Of_Queries,&Rows_Of_Queries,query_file,1000);
 
         //Printing...
         cout << "Images: " << Num_Of_Images << endl << "Queries: " << Num_Of_Queries << endl << "Rows: " << Rows_Of_Images << endl << "Columns: " << Columns_Of_Images << endl;
+
+        // for(int i=0;i<10;i++)
+        // {
+        //     for(int j=0;j<10;j++)
+        //     {
+        //         cout << Images_Array[i][j] << " ";
+        //     }
+        //     cout << endl;
+        // }
 
         //Initilization of W(grid), dimensions of each Image...
         int dimensions = Columns_Of_Images*Rows_Of_Images;
@@ -132,8 +141,7 @@ int main(int argc, char** argv)
 
         //Initialization of 2D array True_Distances...
         int** True_Distances = new int*[Num_Of_Queries];
-        for(int i=0;i<Num_Of_Queries;i++)
-            True_Distances[i] = new int[N];
+        for(int i=0;i<Num_Of_Queries;i++)   True_Distances[i] = new int[N];
         
         //Initialization of pointer to object of class Info (store important variables).
         infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables);
@@ -141,6 +149,7 @@ int main(int argc, char** argv)
         //Do exhausting search and calculate W...
         int E_R = ExhaustingNN(info,True_Distances);
         int W = 10*int(E_R);
+        W = 10000;
         cout << "W: " << W << endl << endl;
             
         // Initializing of uniform_int_distribution class...
@@ -178,13 +187,14 @@ int main(int argc, char** argv)
 
         for(int i=0;i<Num_Of_Queries;i++)
         {
+            cout << "Query: " << i+1 << endl;
             for(int j=0;j<N;j++)
             {
-                cout << "Query: " << ((Queries_Array[i]-Images_Array[0])/dimensions*sizeof(item))+1 << endl;
-                cout << "Nearest neighbor-1: " << lsh_nns[i][j] << endl;
+                cout << "Nearest neighbor-" << j+1 << ": " << lsh_nns[i][j] << endl;
                 cout << "distanceLSH: " << lsh_distances[i][j] << endl;
-                cout << "distanceTrue: " << True_Distances[i][j] << endl << endl;
+                cout << "distanceTrue: " << True_Distances[i][j] << endl << "--------------------------------------------\n";
             }
+            cout << endl;
         }
 
         ////////////////////////////////////////////////////////////////////
