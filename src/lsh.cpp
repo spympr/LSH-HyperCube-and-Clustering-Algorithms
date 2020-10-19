@@ -8,16 +8,11 @@ using namespace std::chrono;
 
 void Approximate_LSH(infoptr info)
 {   
-    int** LSH_nns = new int*[info->Num_of_Queries];
-    for(int i=0;i<info->Num_of_Queries;i++)   LSH_nns[i] = new int[info->N];
-        
-    int** LSH_Distances = new int*[info->Num_of_Queries];
-    for(int i=0;i<info->Num_of_Queries;i++)   LSH_Distances[i] = new int[info->N];
-
     for(int i=0;i<info->Num_of_Queries;i++)
     {
         int N_NN_Range_Search[info->N];
 
+        int LSH_nns[info->N],LSH_Distances[info->N]; 
         auto start = chrono::high_resolution_clock::now(); 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
@@ -38,37 +33,25 @@ void Approximate_LSH(infoptr info)
             }
         }
 
-        for(int k=0;k<info->N;k++)
-        {
-            LSH_Distances[i][k] = distances.top().first;
-            LSH_nns[i][k] = distances.top().second;
-            distances.pop();
-        }
         auto end = chrono::high_resolution_clock::now(); 
-        info->tLSH[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
-    }
-
-    for(int i=0;i<info->Num_of_Queries;i++)
-    {
+        
         cout << endl << "--------------------------------------------" << endl;
         cout << "Query: " << i+1 << endl;
-        for(int j=0;j<info->N;j++)
+        cout << "Query: " << (info->Queries_Array[i]-info->Queries_Array[0])/(info->dimensions*sizeof(item))+1 << endl;
+        
+        for(int k=0;k<info->N;k++)
         {
-            cout << "Nearest neighbor-" << j+1 << ": " << LSH_nns[i][j] << endl;
-            cout << "distanceLSH: " << LSH_Distances[i][j] << endl;
-            cout << "distanceTrue: " << info->True_Distances[i][j] << endl << endl;
+            LSH_Distances[k] = distances.top().first;
+            LSH_nns[k] = distances.top().second;
+            distances.pop();
+            cout << "Nearest neighbor-" << k+1 << ": " << LSH_nns[k] << endl;
+            cout << "distanceLSH: " << LSH_Distances[k] << endl;
+            cout << "distanceTrue: " << info->True_Distances[i][k] << endl << endl;
         }
+        info->tLSH[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
         cout << "tLSH: " << info->tLSH[i] << "ms" << endl << "tTrue: " << info->tTrue[i] << "ms";
     }
-    cout << endl << "--------------------------------------------" << endl;
-
-    for(int i=0;i<info->Num_of_Queries;i++)   
-    {
-        delete [] LSH_Distances[i];
-        delete [] LSH_nns[i];
-    }
-    delete [] LSH_Distances;
-    delete [] LSH_nns;
+    cout << endl;
 }
 
 void Approximate_Range_Search(infoptr info,int* N_NN_Range_Search, int query_index)
