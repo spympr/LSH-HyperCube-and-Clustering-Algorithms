@@ -19,15 +19,16 @@ int mod_expo(int base, int exponent,int modulus)
 
 int Calculate_hp(int* a_i, infoptr info)
 {
-    int sum = 0,first_term,second_term,temp_term;
+    unsigned int sum = 0,first_term,second_term,temp_term;
 
     for(int i=1; i<=info->dimensions;i++)
     {
         first_term = a_i[info->dimensions-i] % info->M;
         second_term = info->modulars[i-1];
-        temp_term = first_term*second_term;        
+        temp_term = first_term*second_term;
         sum += (temp_term % info->M);
     }
+    // cout << "temp = " << sum << endl;        
     return(sum % info->M);
 }
 
@@ -47,6 +48,7 @@ void gi_values_of_train(infoptr info,unsigned int** g_i)
                     a_i[z] = floor((info->Images_Array[image][z] - info->s_i[i*info->k+j][z])/info->W);
                 }
                 h_p[j] = Calculate_hp(a_i,info);
+                // if(image<10)    cout << "f " << h_p[j] << endl;
             }
             for(int j=0;j<info->k;j++)
             {

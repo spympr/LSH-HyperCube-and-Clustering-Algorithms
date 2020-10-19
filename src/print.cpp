@@ -21,10 +21,10 @@ int main()
 
     unsigned int k=0;
     int p;
-    for(int i=3;i>=0;i--)
+    for(int i=0;i<4;i++)
     {
         p = 1;
-        k += (p << (i*8));                
+        k |= (p << ((4-(i+1))*8));                
     }
     cout << k << endl;
 }

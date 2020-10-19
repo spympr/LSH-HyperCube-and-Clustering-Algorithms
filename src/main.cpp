@@ -133,8 +133,9 @@ int main(int argc, char** argv)
         
         //Initialization of m,M,modulars(calculation of m^d-1modM array)...
         int M = pow(2,floor(32/k));
+        int m = 423255;
         // int m = pow(2,(32-5));
-        int m = M/3;
+        // int m = M/3;
 
         //Calculation of m^d-1modM array...
         int* modulars = new int[dimensions];
@@ -149,10 +150,10 @@ int main(int argc, char** argv)
 
         //Do exhausting search and init W...
         ExhaustingNN(info,True_Distances);
-        int W = 300;
+        int W = 260;
         cout << "W: " << W << endl << endl;
             
-        // Initializing of uniform_int_distribution class...
+        //Initialization of uniform_int_distribution class...
         default_random_engine generator;   
         uniform_int_distribution<int> distribution(0,W);
         

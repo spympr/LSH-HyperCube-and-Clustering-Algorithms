@@ -56,7 +56,7 @@ void Approximate_LSH(infoptr info)
             cout << "distanceLSH: " << LSH_Distances[i][j] << endl;
             cout << "distanceTrue: " << info->True_Distances[i][j] << endl << endl;
         }
-        cout << "tLSH: " << info->tLSH[i] << endl << "tTrue: " << info->tTrue[i];
+        cout << "tLSH: " << info->tLSH[i] << "ms" << endl << "tTrue: " << info->tTrue[i] << "ms";
     }
     cout << endl << "--------------------------------------------" << endl;
 
