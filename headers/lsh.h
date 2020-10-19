@@ -1,8 +1,3 @@
-// #include <iostream> 
-// #include <vector> 
-// #include "../headers/bucket.h"
+#include "../headers/exhausting.h"
 
-// using namespace std;
-
-// int Approximate_LSH(infoptr ,int**, int**);
-// int ManhattanDistance(item* ,item* ,int );
+void Approximate_LSH(infoptr,int**, int**);

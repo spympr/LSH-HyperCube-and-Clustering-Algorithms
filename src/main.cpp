@@ -3,7 +3,6 @@
 #include <vector>
 #include <math.h>   
 #include <random> 
-#include "../headers/exhausting.h"
 #include "../headers/lsh.h"
 
 using namespace std;
@@ -120,14 +119,14 @@ int main(int argc, char** argv)
         cout << "Images: " << Num_Of_Images << endl << "Queries: " << Num_Of_Queries << endl << "Rows: " << Rows_Of_Images << endl << "Columns: " << Columns_Of_Images << endl;
 
         //Initilization of W(grid), dimensions of each Image...
-        int dimensions = Columns_Of_Images*Rows_Of_Images;
+        int dimensions = Columns_Of_Images*Rows_Of_Images,HashTableSize=Num_Of_Images/8;
 
         //Declaration of hash tables...
         Bucket** Hash_Tables[L];
         for(int i=0;i<L;i++)    
         {
-            Hash_Tables[i] = new Bucket*[int(Num_Of_Images/16)];
-            for(int j=0;j<(Num_Of_Images/16);j++)   Hash_Tables[i][j]=NULL;                
+            Hash_Tables[i] = new Bucket*[HashTableSize];
+            for(int j=0;j<HashTableSize;j++)   Hash_Tables[i][j]=NULL;                
         }
 
         //Initialization of 2D array True_Distances...
@@ -136,17 +135,18 @@ int main(int argc, char** argv)
         
         //Initialization of m,M,modulars(calculation of m^d-1modM array)...
         int M = pow(2,floor(32/k));
+        // int m = pow(2,(32-5));
         int m = M/3;
         int* modulars = new int[dimensions];
         for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
     
         //Initialization of pointer to object of class Info (store important variables).
-        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables,m,M,modulars);
+        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables,m,M,modulars,HashTableSize);
 
         //Do exhausting search and calculate W...
         int E_R = ExhaustingNN(info,True_Distances);
-        int W = 2*int(E_R);
-        // W = 10000;
+        int W = int(E_R);
+        W = 400;
         cout << "W: " << W << endl << endl;
             
         // Initializing of uniform_int_distribution class...
@@ -177,7 +177,7 @@ int main(int argc, char** argv)
         for(int i=0;i<L;i++)
         {
             int counter=0;
-            for(int j=0;j<(Num_Of_Images/16);j++)
+            for(int j=0;j<HashTableSize;j++)
             {
                 Bucket* temp = Hash_Tables[i][j];
                 if(temp!=NULL)
