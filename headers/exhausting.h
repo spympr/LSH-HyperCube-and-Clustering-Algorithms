@@ -4,5 +4,5 @@
 
 using namespace std;
 
-int ExhaustingNN(infoptr ,int**);
+void ExhaustingNN(infoptr ,int**);
 item ManhattanDistance(item* ,item* ,int );

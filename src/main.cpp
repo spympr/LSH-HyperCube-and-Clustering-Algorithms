@@ -10,8 +10,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
     string answer,input_file, query_file, output_file;
-    int k,L,N;
-    float R;
+    int k,L,N,R;
 
     if(argc ==1)
     {
@@ -42,7 +41,7 @@ int main(int argc, char** argv)
             k=4;
             L=5;
             N=1;
-            R=1.0;
+            R=10000;
 
             for(int i=1;i<argc;i+=2)
             {
@@ -59,7 +58,7 @@ int main(int argc, char** argv)
                 else if(strcmp(argv[i],"-N") ==0)
                     N = atoi(argv[i+1]);
                 else if(strcmp(argv[i],"-R") == 0)
-                    R = atof(argv[i+1]);
+                    R = atoi(argv[i+1]);
                 else
                 {
                     cout << "Please give an input with this form: ./lsh  –d  <input  file>  –q  <query  file>  –k  <int>  -L  <int>  -ο  <output  file>  -Ν<number of nearest> -R <radius>\n";
@@ -74,8 +73,7 @@ int main(int argc, char** argv)
                 return -1;
             }
 
-            int k=3,L=5,N=1,probes=2,M=10;
-            float R=1.0;
+            int k=14,N=1,probes=2,M=10,R=10000;
 
             for(int i=1;i<=argc;i+=2)
             {
@@ -137,16 +135,21 @@ int main(int argc, char** argv)
         int M = pow(2,floor(32/k));
         // int m = pow(2,(32-5));
         int m = M/3;
+
+        //Calculation of m^d-1modM array...
         int* modulars = new int[dimensions];
         for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
     
-        //Initialization of pointer to object of class Info (store important variables).
-        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables,m,M,modulars,HashTableSize);
+        //Initialization of tTrue,tLSH arrays...
+        double* tLSH = new double[Num_Of_Queries];
+        double* tTrue = new double[Num_Of_Queries];
 
-        //Do exhausting search and calculate W...
-        int E_R = ExhaustingNN(info,True_Distances);
-        int W = int(E_R);
-        W = 400;
+        //Initialization of pointer to object of class Info (store important variables).
+        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables,m,M,modulars,HashTableSize,tLSH,tTrue);
+
+        //Do exhausting search and init W...
+        ExhaustingNN(info,True_Distances);
+        int W = 400;
         cout << "W: " << W << endl << endl;
             
         // Initializing of uniform_int_distribution class...
@@ -169,11 +172,12 @@ int main(int argc, char** argv)
         //Update info with information of s_i array and W...
         info->s_i = s_i;
         info->W = W;
+        info->True_Distances = True_Distances;
 
         //Fill Hash Tables...
         Insert_Images_To_Buckets(info);
 
-        //Print Buckets
+        //Print Buckets...
         for(int i=0;i<L;i++)
         {
             int counter=0;
@@ -190,28 +194,10 @@ int main(int argc, char** argv)
             }
             cout << "HashTable " << i << ": " << counter << endl;
         }
-
-        //////////////////////////////LSH///////////////////////////////
-        int** lsh_nns = new int*[Num_Of_Queries];
-        for(int i=0;i<Num_Of_Queries;i++)   lsh_nns[i] = new int[N];
+        cout << endl;
+    
+        Approximate_LSH(info);
         
-        int** lsh_distances = new int*[Num_Of_Queries];
-        for(int i=0;i<Num_Of_Queries;i++)   lsh_distances[i] = new int[N];
-
-        Approximate_LSH(info,lsh_distances,lsh_nns);
-
-        for(int i=0;i<Num_Of_Queries;i++)
-        {
-            cout << "Query: " << i+1 << endl;
-            for(int j=0;j<N;j++)
-            {
-                cout << "Nearest neighbor-" << j+1 << ": " << lsh_nns[i][j] << endl;
-                cout << "distanceLSH: " << lsh_distances[i][j] << endl;
-                cout << "distanceTrue: " << True_Distances[i][j] << endl << "--------------------------------------------\n";
-            }
-            cout << endl;
-        }
-
         ////////////////////////////////////////////////////////////////////
 
         //Deallocation of memory of Images_Array...
@@ -231,14 +217,6 @@ int main(int argc, char** argv)
             delete [] Hash_Tables[i];
         }
         
-        for(int i=0;i<Num_Of_Queries;i++)   
-        {
-            delete [] lsh_distances[i];
-            delete [] lsh_nns[i];
-        }
-        delete [] lsh_distances;
-        delete [] lsh_nns;
-
         //Deallocation of memory of pointer to object of class Info...
         delete info;
 

@@ -4,14 +4,18 @@
 #include <math.h>   
 #include <queue> 
 #include <cstdlib>
+#include <chrono> 
 #include "../headers/exhausting.h"
 
-int ExhaustingNN(infoptr info,int** True_Distances)
+using namespace std::chrono;
+
+void ExhaustingNN(infoptr info,int** True_Distances)
 {   
     int W=0;
 
     for(int i=0;i<info->Num_of_Queries;i++)
     {
+        auto start = chrono::high_resolution_clock::now(); 
         priority_queue<int, vector<int>, greater<int>> pq;
 
         for(int j=0;j<info->Num_of_Images;j++)
@@ -22,14 +26,12 @@ int ExhaustingNN(infoptr info,int** True_Distances)
             True_Distances[i][k] = pq.top();
             pq.pop();
             
-            W += True_Distances[i][k];
             // cout << True_Distances[i][k] << " ";
         }
         // cout << endl;
+        auto end = chrono::high_resolution_clock::now(); 
+        info->tTrue[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
     }
-
-    W = W/(info->Num_of_Queries*info->N);
-    return W;
 }
 
 item ManhattanDistance(item* x,item* y,int dimensions)

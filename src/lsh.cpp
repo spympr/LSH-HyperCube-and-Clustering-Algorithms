@@ -1,13 +1,22 @@
 #include <iostream>
 #include <queue> 
+#include <chrono> 
 #include "../headers/lsh.h"
 
 using namespace std;
+using namespace std::chrono;
 
-void Approximate_LSH(infoptr info,int** LSH_Distances, int** LSH_nns)
+void Approximate_LSH(infoptr info)
 {   
+    int** LSH_nns = new int*[info->Num_of_Queries];
+    for(int i=0;i<info->Num_of_Queries;i++)   LSH_nns[i] = new int[info->N];
+        
+    int** LSH_Distances = new int*[info->Num_of_Queries];
+    for(int i=0;i<info->Num_of_Queries;i++)   LSH_Distances[i] = new int[info->N];
+
     for(int i=0;i<info->Num_of_Queries;i++)
     {
+        auto start = chrono::high_resolution_clock::now(); 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
         unsigned int gi_query_values[info->L];
@@ -33,5 +42,29 @@ void Approximate_LSH(infoptr info,int** LSH_Distances, int** LSH_nns)
             LSH_nns[i][k] = distances.top().second;
             distances.pop();
         }
+        auto end = chrono::high_resolution_clock::now(); 
+        info->tLSH[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
     }
+
+    for(int i=0;i<info->Num_of_Queries;i++)
+    {
+        cout << endl << "--------------------------------------------" << endl;
+        cout << "Query: " << i+1 << endl;
+        for(int j=0;j<info->N;j++)
+        {
+            cout << "Nearest neighbor-" << j+1 << ": " << LSH_nns[i][j] << endl;
+            cout << "distanceLSH: " << LSH_Distances[i][j] << endl;
+            cout << "distanceTrue: " << info->True_Distances[i][j] << endl << endl;
+        }
+        cout << "tLSH: " << info->tLSH[i] << endl << "tTrue: " << info->tTrue[i];
+    }
+    cout << endl << "--------------------------------------------" << endl;
+
+    for(int i=0;i<info->Num_of_Queries;i++)   
+    {
+        delete [] LSH_Distances[i];
+        delete [] LSH_nns[i];
+    }
+    delete [] LSH_Distances;
+    delete [] LSH_nns;
 }
