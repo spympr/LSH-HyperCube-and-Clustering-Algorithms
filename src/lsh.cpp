@@ -83,7 +83,6 @@ void Approximate_Range_Search(infoptr info,int* N_NN_Range_Search, int query_ind
     for(int k=0;k<info->N;k++)
     {
         N_NN_Range_Search[k] = neighboors.top();
-
         neighboors.pop();
     }
 }
