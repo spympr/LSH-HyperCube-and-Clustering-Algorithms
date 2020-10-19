@@ -149,7 +149,7 @@ int main(int argc, char** argv)
 
         //Do exhausting search and init W...
         ExhaustingNN(info,True_Distances);
-        int W = 400;
+        int W = 300;
         cout << "W: " << W << endl << endl;
             
         // Initializing of uniform_int_distribution class...
@@ -169,7 +169,7 @@ int main(int argc, char** argv)
             // cout << endl << endl;
         }
 
-        //Update info with information of s_i array and W...
+        //Update info with information of s_i array,True_Distances array and W...
         info->s_i = s_i;
         info->W = W;
         info->True_Distances = True_Distances;
@@ -182,16 +182,8 @@ int main(int argc, char** argv)
         {
             int counter=0;
             for(int j=0;j<HashTableSize;j++)
-            {
-                Bucket* temp = Hash_Tables[i][j];
-                if(temp!=NULL)
-                {
-                    counter++;
-                    // int counter=0;
-                    // for(int k=0;k<temp->images.size();k++)  counter++;
-                    // cout << "BUCKET " << j << " HAS " << counter << endl; 
-                }
-            }
+                if(Hash_Tables[i][j]!=NULL)
+                    counter++;                
             cout << "HashTable " << i << ": " << counter << endl;
         }
         cout << endl;
