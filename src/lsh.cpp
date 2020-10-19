@@ -16,6 +16,8 @@ void Approximate_LSH(infoptr info)
 
     for(int i=0;i<info->Num_of_Queries;i++)
     {
+        int N_NN_Range_Search[info->N];
+
         auto start = chrono::high_resolution_clock::now(); 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
@@ -69,43 +71,36 @@ void Approximate_LSH(infoptr info)
     delete [] LSH_nns;
 }
 
-void Approximate_Range_Search(infoptr info)
+void Approximate_Range_Search(infoptr info,int* N_NN_Range_Search, int query_index)
 {   
-    for(int i=0;i<info->Num_of_Queries;i++)
+    item* temp_query = info->Queries_Array[query_index];
+    priority_queue<int, vector<int>, greater<int>> neighboors; 
+
+    unsigned int gi_query_values[info->L];
+
+    gi_values_of_query(info, gi_query_values, query_index);
+
+    for(int j=0;j<info->L;j++)
     {
-        item* temp_query = info->Queries_Array[i];
-        priority_queue<int, vector<int>, greater<int>> images; 
-
-        unsigned int gi_query_values[info->L];
-
-        gi_values_of_query(info, gi_query_values, i);
-
-        // for(int o=0;o<info->L;o++)  cout << gi_query_values[o] << " ";
-        // cout <<endl;
-
-        for(int j=0;j<info->L;j++)
+        if(info->Hash_Tables[j][gi_query_values[j]] != NULL)
         {
-            if(info->Hash_Tables[j][gi_query_values[j]] != NULL)
+            int images_in_bucket = info->Hash_Tables[j][gi_query_values[j]]->images.size();
+            // cout << images_in_bucket << endl;
+            
+            for(int p=0; p<images_in_bucket;p++)
             {
-                int images_in_bucket = info->Hash_Tables[j][gi_query_values[j]]->images.size();
-                // cout << images_in_bucket << endl;
-                
-                for(int p=0; p<images_in_bucket;p++)
-                {
-                    item* temp_image = info->Hash_Tables[j][gi_query_values[j]]->images[p];
-                    if(ManhattanDistance(temp_query,temp_image, info->dimensions) < info->R)
-                    // cout << " hh " << info->Hash_Tables[j][gi_query_values[j]]->images[p] << endl;
-                    images.push((ManhattanDistance(temp_query,temp_image, info->dimensions), (temp_image-info->Images_Array[0])/(info->dimensions*sizeof(item))+1));
-                }
+                item* temp_image = info->Hash_Tables[j][gi_query_values[j]]->images[p];
+
+                if(ManhattanDistance(temp_query,temp_image, info->dimensions) < info->R)
+                    neighboors.push((temp_image-info->Images_Array[0])/(info->dimensions*sizeof(item))+1);
             }
-        }
-
-        for(int k=0;k<info->N;k++)
-        {
-            Images_Range_Search[i][k] = images.top();
-
-            images.pop();
         }
     }
 
+    for(int k=0;k<info->N;k++)
+    {
+        N_NN_Range_Search[k] = neighboors.top();
+
+        neighboors.pop();
+    }
 }

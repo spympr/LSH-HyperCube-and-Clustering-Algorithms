@@ -146,7 +146,7 @@ int main(int argc, char** argv)
         double* tTrue = new double[Num_Of_Queries];
 
         //Initialization of pointer to object of class Info (store important variables).
-        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,dimensions,Images_Array,Queries_Array,Hash_Tables,m,M,modulars,HashTableSize,tLSH,tTrue);
+        infoptr info = new Info(Num_Of_Images,Num_Of_Queries,k,L,N,R,dimensions,Images_Array,Queries_Array,Hash_Tables,m,M,modulars,HashTableSize,tLSH,tTrue);
 
         //Do exhausting search and init W...
         ExhaustingNN(info,True_Distances);
