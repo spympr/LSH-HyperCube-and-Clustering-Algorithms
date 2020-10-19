@@ -30,7 +30,7 @@ void ExhaustingNN(infoptr info,int** True_Distances)
         }
         // cout << endl;
         auto end = chrono::high_resolution_clock::now(); 
-        info->tTrue[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
+        info->tTrue[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
     }
 }
 

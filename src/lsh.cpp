@@ -43,7 +43,7 @@ void Approximate_LSH(infoptr info)
             distances.pop();
         }
         auto end = chrono::high_resolution_clock::now(); 
-        info->tLSH[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
+        info->tLSH[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
     }
 
     for(int i=0;i<info->Num_of_Queries;i++)
@@ -56,7 +56,7 @@ void Approximate_LSH(infoptr info)
             cout << "distanceLSH: " << LSH_Distances[i][j] << endl;
             cout << "distanceTrue: " << info->True_Distances[i][j] << endl << endl;
         }
-        cout << "tLSH: " << info->tLSH[i] << endl << "tTrue: " << info->tTrue[i];
+        cout << "tLSH: " << info->tLSH[i] << "ms" << endl << "tTrue: " << info->tTrue[i] << "ms";
     }
     cout << endl << "--------------------------------------------" << endl;
 
