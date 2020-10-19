@@ -3,6 +3,7 @@
 #include <vector>
 #include <math.h>   
 #include <queue> 
+#include <cstdlib>
 #include "../headers/exhausting.h"
 
 int ExhaustingNN(infoptr info,int** True_Distances)
@@ -11,14 +12,11 @@ int ExhaustingNN(infoptr info,int** True_Distances)
 
     for(int i=0;i<info->Num_of_Queries;i++)
     {
-        item* temp_query = info->Queries_Array[i];
-        priority_queue<int, vector<int>, greater<int> > pq;
+        priority_queue<int, vector<int>, greater<int>> pq;
 
         for(int j=0;j<info->Num_of_Images;j++)
-        {
-            item* temp_image = info->Images_Array[j];
-            pq.push(ManhattanDistance(temp_query,temp_image,info->dimensions));
-        }
+            pq.push(ManhattanDistance(info->Queries_Array[i],info->Images_Array[j],info->dimensions));
+        
         for(int k=0;k<info->N;k++)
         {
             True_Distances[i][k] = pq.top();
@@ -34,9 +32,9 @@ int ExhaustingNN(infoptr info,int** True_Distances)
     return W;
 }
 
-int ManhattanDistance(item* x,item* y,int dimensions)
+item ManhattanDistance(item* x,item* y,int dimensions)
 {
-    int sum=0;
+    item sum=0;
     for(int i=0;i<dimensions;i++)   sum+=abs(x[i]-y[i]);    
     
     return sum;
@@ -46,28 +44,21 @@ void Approximate_LSH(infoptr info,int** LSH_Distances, int** LSH_nns)
 {   
     for(int i=0;i<info->Num_of_Queries;i++)
     {
-        item* temp_query = info->Queries_Array[i];
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
         unsigned int gi_query_values[info->L];
-
+        
         gi_values_of_query(info, gi_query_values, i);
-
-        // for(int o=0;o<info->L;o++)  cout << gi_query_values[o] << " ";
-        // cout <<endl;
 
         for(int j=0;j<info->L;j++)
         {
             if(info->Hash_Tables[j][gi_query_values[j]] != NULL)
-            {
-                int images_in_bucket = info->Hash_Tables[j][gi_query_values[j]]->images.size();
-                // cout << images_in_bucket << endl;
-                
-                for(int p=0; p<images_in_bucket;p++)
+            {                
+                for(int p=0;p<info->Hash_Tables[j][gi_query_values[j]]->images.size();p++)
                 {
-                    item* temp_image = info->Hash_Tables[j][gi_query_values[j]]->images[p];
+                    // item* temp_image = info->Hash_Tables[j][gi_query_values[j]]->images[p];
                     // cout << " hh " << info->Hash_Tables[j][gi_query_values[j]]->images[p] << endl;
-                    distances.push(make_pair(ManhattanDistance(temp_query,temp_image, info->dimensions), (temp_image-info->Images_Array[0])/(info->dimensions*sizeof(item))+1));
+                    distances.push(make_pair(ManhattanDistance(info->Queries_Array[i],info->Hash_Tables[j][gi_query_values[j]]->images[p], info->dimensions), (info->Hash_Tables[j][gi_query_values[j]]->images[p]-info->Images_Array[0])/(info->dimensions*sizeof(item))+1));
                 }
             }
         }
@@ -76,9 +67,7 @@ void Approximate_LSH(infoptr info,int** LSH_Distances, int** LSH_nns)
         {
             LSH_Distances[i][k] = distances.top().first;
             LSH_nns[i][k] = distances.top().second;
-
             distances.pop();
         }
     }
-
 }
