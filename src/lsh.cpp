@@ -37,7 +37,7 @@ void Approximate_LSH(infoptr info)
         
         cout << endl << "--------------------------------------------" << endl;
         cout << "Query: " << i+1 << endl;
-        cout << "Query: " << (info->Queries_Array[i]-info->Queries_Array[0])/(info->dimensions*sizeof(item))+1 << endl;
+        // cout << "Query: " << (info->Queries_Array[i]-info->Queries_Array[0])/(info->dimensions*sizeof(item))+1 << endl;
         
         for(int k=0;k<info->N;k++)
         {
@@ -50,6 +50,18 @@ void Approximate_LSH(infoptr info)
         }
         info->tLSH[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
         cout << "tLSH: " << info->tLSH[i] << "ms" << endl << "tTrue: " << info->tTrue[i] << "ms";
+
+        Approximate_Range_Search(info,N_NN_Range_Search, i);
+
+        cout << endl;
+        cout << "R-near neighbors:" << endl;
+
+        for(int n=0;n<info->N;n++)
+        { 
+            if(N_NN_Range_Search[n] != -1) cout << N_NN_Range_Search[n] << endl;
+            else cout << "None/n";
+        }
+
     }
     cout << endl;
 }
@@ -82,8 +94,16 @@ void Approximate_Range_Search(infoptr info,int* N_NN_Range_Search, int query_ind
 
     for(int k=0;k<info->N;k++)
     {
-        N_NN_Range_Search[k] = neighboors.top();
+        if(!neighboors.empty())
+        {
+            N_NN_Range_Search[k] = neighboors.top();
 
-        neighboors.pop();
+            neighboors.pop();
+        }
+        else
+        {
+            N_NN_Range_Search[k] = -1;
+        }
+        
     }
 }
