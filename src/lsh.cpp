@@ -21,23 +21,14 @@ void Approximate_LSH(infoptr info)
         gi_values_of_query(info, gi_query_values, i);
 
         for(int j=0;j<info->L;j++)
-        {
             if(info->Hash_Tables[j][gi_query_values[j]] != NULL)
-            {                
                 for(int p=0;p<info->Hash_Tables[j][gi_query_values[j]]->images.size();p++)
-                {
-                    // item* temp_image = info->Hash_Tables[j][gi_query_values[j]]->images[p];
-                    // cout << " hh " << info->Hash_Tables[j][gi_query_values[j]]->images[p] << endl;
                     distances.push(make_pair(ManhattanDistance(info->Queries_Array[i],info->Hash_Tables[j][gi_query_values[j]]->images[p], info->dimensions), (info->Hash_Tables[j][gi_query_values[j]]->images[p][info->dimensions])));
-                }
-            }
-        }
 
         auto end = chrono::high_resolution_clock::now(); 
         
         cout << endl << "--------------------------------------------" << endl;
-        cout << "Query: " << i+1 << endl;
-        // cout << "Query: " << (info->Queries_Array[i]-info->Queries_Array[0])/(info->dimensions*sizeof(item))+1 << endl;
+        cout << "Query: " << info->Queries_Array[i][info->dimensions] << endl;
         
         for(int k=0;k<info->N;k++)
         {
@@ -68,7 +59,6 @@ void Approximate_LSH(infoptr info)
 
 void Approximate_Range_Search(infoptr info,int* N_NN_Range_Search, int query_index)
 {   
-    // item* temp_query = info->Queries_Array[query_index];
     priority_queue<int, vector<int>, greater<int>> neighboors; 
 
     unsigned int gi_query_values[info->L];
@@ -80,12 +70,9 @@ void Approximate_Range_Search(infoptr info,int* N_NN_Range_Search, int query_ind
         if(info->Hash_Tables[j][gi_query_values[j]] != NULL)
         {
             int images_in_bucket = info->Hash_Tables[j][gi_query_values[j]]->images.size();
-            // cout << images_in_bucket << endl;
             
             for(int p=0; p<images_in_bucket;p++)
             {
-                // item* temp_image = info->Hash_Tables[j][gi_query_values[j]]->images[p];
-
                 if(ManhattanDistance(info->Queries_Array[query_index],info->Hash_Tables[j][gi_query_values[j]]->images[p], info->dimensions) < info->R)
                     neighboors.push(info->Hash_Tables[j][gi_query_values[j]]->images[p][info->dimensions]);
             }
@@ -97,13 +84,11 @@ void Approximate_Range_Search(infoptr info,int* N_NN_Range_Search, int query_ind
         if(!neighboors.empty())
         {
             N_NN_Range_Search[k] = neighboors.top();
-
             neighboors.pop();
         }
         else
         {
             N_NN_Range_Search[k] = -1;
         }
-        
     }
 }

@@ -63,7 +63,7 @@ void Read_BF(item*** Array,int* number_of_images, int* n_cols, int* n_rows, stri
                 }
             }
             //In last position store index...
-            (*Array)[i][rows*cols] = i;
+            (*Array)[i][rows*cols] = (item)i;
         }
     }
 }

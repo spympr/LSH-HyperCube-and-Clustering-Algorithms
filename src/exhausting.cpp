@@ -21,15 +21,12 @@ void ExhaustingNN(infoptr info,int** True_Distances)
         for(int j=0;j<info->Num_of_Images;j++)
             pq.push(ManhattanDistance(info->Queries_Array[i],info->Images_Array[j],info->dimensions));
         
+        auto end = chrono::high_resolution_clock::now(); 
         for(int k=0;k<info->N;k++)
         {
             True_Distances[i][k] = pq.top();
             pq.pop();
-            
-            // cout << True_Distances[i][k] << " ";
         }
-        // cout << endl;
-        auto end = chrono::high_resolution_clock::now(); 
         info->tTrue[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
     }
 }

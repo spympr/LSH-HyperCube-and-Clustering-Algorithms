@@ -135,7 +135,7 @@ int main(int argc, char** argv)
         int M = pow(2,floor(32/k));
         int m = 423255;
         // int m = pow(2,(32-5));
-        // int m = M/3;
+        // int m = M/3+1;
 
         //Calculation of m^d-1modM array...
         int* modulars = new int[dimensions];
@@ -150,7 +150,7 @@ int main(int argc, char** argv)
 
         //Do exhausting search and init W...
         ExhaustingNN(info,True_Distances);
-        int W = 260;
+        int W = 250;
         cout << "W: " << W << endl << endl;
             
         //Initialization of uniform_int_distribution class...
