@@ -47,7 +47,7 @@ void Approximate_LSH(infoptr info,int** LSH_Distances, int** LSH_nns)
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
         unsigned int gi_query_values[info->L];
-
+        
         gi_values_of_query(info, gi_query_values, i);
 
         for(int j=0;j<info->L;j++)

@@ -6,18 +6,27 @@ using namespace std;
 
 int main()
 {
-    vector<int> images;
-    int size=-1;
+    // vector<int> images;
+    // int size=-1;
 
-    size=images.size();
+    // size=images.size();
 
-    cout << size << endl;
+    // cout << size << endl;
 
-    char* t = new char[3];
-    t[0] = 1;
-    t[1] = 3;
-    t[2] = 4;
-    cout << t[0] << endl;
+    // char* t = new char[3];
+    // t[0] = 1;
+    // t[1] = 3;
+    // t[2] = 4;
+    // cout << t[0] << endl;
+
+    unsigned int k=0;
+    int p;
+    for(int i=3;i>=0;i--)
+    {
+        p = 1;
+        k += (p << (i*8));                
+    }
+    cout << k << endl;
 }
 
 // // Printing...
