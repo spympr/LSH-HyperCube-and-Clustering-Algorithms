@@ -47,12 +47,13 @@ void gi_values_of_train(infoptr info,unsigned int** g_i)
                     a_i[z] = floor((info->Images_Array[image][z] - info->s_i[i*info->k+j][z])/info->W);
                 }
                 h_p[j] = Calculate_hp(a_i,info);
+                if(image<10)    cout << "f " << h_p[j] << endl;
             }
             for(int j=0;j<info->k;j++)
             {
                 g_i[image][i] += (h_p[j] << ((info->k-(j+1))*8));                
             }
-            g_i[image][i] = g_i[image][i]%(info->Num_of_Images/16);
+            g_i[image][i] = g_i[image][i]%(info->HashTableSize);
         }
     }
 }
@@ -79,7 +80,7 @@ void gi_values_of_query(infoptr info, unsigned int* gi_query_values, int query)
         {
             gi_query_values[i] += (h_p[j] << ((info->k-(j+1))*8));                
         }
-        gi_query_values[i] = gi_query_values[i]%(info->Num_of_Images/16);
+        gi_query_values[i] = gi_query_values[i]%(info->HashTableSize);
     }
 }
 
