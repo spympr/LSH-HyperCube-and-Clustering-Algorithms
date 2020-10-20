@@ -29,6 +29,7 @@ class Info
 typedef Info* infoptr;
 
 int mod_expo(int , int ,int );
+unsigned int mod(int , int );
 int Calculate_hp(int* , infoptr );
 void gi_values_of_train(infoptr,unsigned int**);
 void Insert_Images_To_Buckets(infoptr);

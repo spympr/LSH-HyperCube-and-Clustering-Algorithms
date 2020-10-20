@@ -133,10 +133,10 @@ int main(int argc, char** argv)
         
         //Initialization of m,M,modulars(calculation of m^d-1modM array)...
         int M = pow(2,floor(32/k));
-        int m = 423255;
+        int m = M/3;
+        // int m = 423255;
         // int m = pow(2,(32-5));
-        // int m = M/3+1;
-
+        
         //Calculation of m^d-1modM array...
         int* modulars = new int[dimensions];
         for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
@@ -150,7 +150,7 @@ int main(int argc, char** argv)
 
         //Do exhausting search and init W...
         ExhaustingNN(info,True_Distances);
-        int W = 250;
+        int W = 1000;
         cout << "W: " << W << endl << endl;
             
         //Initialization of uniform_int_distribution class...

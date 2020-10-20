@@ -19,14 +19,20 @@ int main()
     // t[2] = 4;
     // cout << t[0] << endl;
 
-    unsigned int k=0;
-    int p;
-    for(int i=0;i<4;i++)
-    {
-        p = 1;
-        k |= (p << ((4-(i+1))*8));                
-    }
-    cout << k << endl;
+    // unsigned int k=0;
+    // int p;
+    // for(int i=0;i<4;i++)
+    // {
+    //     p = 1;
+    //     k |= (p << ((4-(i+1))*8));                
+    // }
+    // cout << k << endl;
+    int a=-1,m=2;
+
+     if (a % m < 0) 
+        cout <<  a % m + m << endl;
+    else
+        cout << (unsigned int) a % m << endl;
 }
 
 // // Printing...
