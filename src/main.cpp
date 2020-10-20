@@ -163,11 +163,7 @@ int main(int argc, char** argv)
         {
             s_i[i] = new int[dimensions];
             for(int j=0;j<dimensions;j++)   
-            {
                 s_i[i][j] = distribution(generator);
-                // cout << s_i[i][j] << " ";
-            }
-            // cout << endl << endl;
         }
 
         //Update info with information of s_i array,True_Distances array and W...
