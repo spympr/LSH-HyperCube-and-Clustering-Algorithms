@@ -1,5 +1,3 @@
-#include <iostream> 
-#include <vector> 
 #include "../headers/read_binary_file.h"
 
 using namespace std;

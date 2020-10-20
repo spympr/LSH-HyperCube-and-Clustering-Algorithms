@@ -1,9 +1,4 @@
-#include <vector>
-#include <iostream>
-#include <fstream>
 #include "../headers/bucket.h"
-
-using namespace std;
 
 int ReverseInt(int i)
 {

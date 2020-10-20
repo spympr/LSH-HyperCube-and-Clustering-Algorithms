@@ -1,8 +1,8 @@
-#include <iostream> 
-#include <vector> 
-#include "../headers/bucket.h"
+#ifndef EXHAUSTING_H
+#define EXHAUSTING_H
 
-using namespace std;
+#include "../headers/bucket.h"
 
 void ExhaustingNN(infoptr ,int**);
 item ManhattanDistance(item* ,item* ,int );
+#endif

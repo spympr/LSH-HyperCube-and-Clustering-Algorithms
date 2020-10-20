@@ -1,7 +1,3 @@
-#include <iostream>
-#include <string.h>
-#include <vector>
-#include <math.h>   
 #include "../headers/bucket.h"
 
 void Bucket::add(item* image)
@@ -11,7 +7,7 @@ void Bucket::add(item* image)
 
 unsigned int mod(int k, int M) 
 {   
-    // //M is 2^(32/k) so...
+    //M is 2^(32/k) so...
     // unsigned int temp = k << int(32-log2(M));
     // temp = temp << int(32-log2(M));
     // return temp;    
