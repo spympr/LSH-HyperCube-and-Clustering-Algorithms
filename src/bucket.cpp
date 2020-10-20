@@ -16,10 +16,10 @@ unsigned int mod(int k, int M)
     // temp = temp << int(32-log2(M));
     // return temp;    
 
-    if (k % M < 0) 
-        return (unsigned int ) k % M + M;
+    if ((k % M) < 0) 
+        return (unsigned int ) (k % M + M);
     else
-        return (unsigned int) k % M;
+        return (unsigned int) (k % M);
 }
 
 int mod_expo(int base, int exponent,int modulus) 
@@ -58,8 +58,10 @@ void gi_values_of_train(infoptr info,unsigned int** g_i)
 
                 for(int z=0;z<info->dimensions;z++)
                 {
-                    a_i[z] = floor((info->Images_Array[image][z] - info->s_i[i*info->k+j][z])/info->W);
+                    a_i[z] = floor((double)((info->Images_Array[image][z] - info->s_i[(i*info->k)+j][z]))/(double)(info->W));
+                    // cout << a_i[z] << " " ;
                 }
+                // cout << endl;
                 h_p[j] = Calculate_hp(a_i,info);
                 // if(image<10)    cout << "f " << h_p[j] << endl;
             }
@@ -85,7 +87,7 @@ void gi_values_of_query(infoptr info, unsigned int* gi_query_values, int query)
 
             for(int z=0;z<info->dimensions;z++)
             {
-                a_i[z] = floor((info->Queries_Array[query][z] - info->s_i[i*info->k+j][z])/info->W);
+                a_i[z] = floor((double)((info->Queries_Array[query][z] - info->s_i[i*info->k+j][z]))/(double)(info->W));
             }
             h_p[j] = Calculate_hp(a_i,info);
         }

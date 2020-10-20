@@ -150,7 +150,7 @@ int main(int argc, char** argv)
 
         //Do exhausting search and init W...
         ExhaustingNN(info,True_Distances);
-        int W = 2000;
+        int W = 10000;
         cout << "W: " << W << endl << endl;
             
         //Initialization of uniform_int_distribution class...
