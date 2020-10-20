@@ -122,6 +122,7 @@ void LSH(string input_file,string query_file,int L,int N,int k,int R)
     int m = 423255;
     // int m = pow(2,27)+1;
     // int m = M/3;
+    cout << "M " << M << endl;
     
     //Calculation of m^d-1modM array...
     int* modulars = new int[dimensions];

@@ -34,7 +34,8 @@ int main(int argc, char** argv)
                 return -1;
             }
 
-            k=4;
+            // k=4;
+            k=5;
             L=5;
             N=1;
             R=10000;
