@@ -173,8 +173,6 @@ void LSH(string input_file,string query_file,int L,int N,int k,int R)
 
     Approximate_LSH(info);
     
-    ////////////////////////////////////////////////////////////////////
-
     //Deallocation of memory of Images_Array...
     for(int i=0;i<Num_Of_Images;i++)    delete [] Images_Array[i];
     delete [] Images_Array;
