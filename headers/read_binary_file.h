@@ -6,6 +6,7 @@
 #include <queue> 
 #include <chrono> 
 #include <fstream>
+#include <cstdlib>
 
 using namespace std;
 using namespace std::chrono;
