@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
     string answer,input_file, query_file, output_file;
-    int k,L,N,R;
+    int k,L,N,R,M,probes;
 
     if(argc ==1)
     {
@@ -69,7 +69,11 @@ int main(int argc, char** argv)
                 return -1;
             }
 
-            int k=14,N=1,probes=2,M=10,R=10000;
+            k=14;
+            N=1;
+            R=10000;
+            probes=2;
+            M=10;
 
             for(int i=1;i<=argc;i+=2)
             {
@@ -100,7 +104,8 @@ int main(int argc, char** argv)
     while(true)
     {
         if(strcmp(argv[0],"./lsh") == 0)    LSH(input_file,query_file,L,N,k,R);            
-        else if(strcmp(argv[0],"./cube") == 0)    HyperCube(input_file,query_file,L,N,k,R);            
+        else if(strcmp(argv[0],"./cube") == 0)    HyperCube(input_file,query_file,L,N,k,R,M,probes);            
+        else if(strcmp(argv[0],"./cluster") == 0)   cout << "under construction..." << endl;
         
         cout << "Do you want to question something else?\n";
         cin >> answer;
