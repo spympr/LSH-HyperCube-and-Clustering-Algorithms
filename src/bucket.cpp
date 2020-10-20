@@ -1,7 +1,3 @@
-#include <iostream>
-#include <string.h>
-#include <vector>
-#include <math.h>   
 #include "../headers/bucket.h"
 
 void Bucket::add(item* image)

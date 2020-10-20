@@ -7,8 +7,6 @@
 #include <chrono> 
 #include "../headers/exhausting.h"
 
-using namespace std::chrono;
-
 void ExhaustingNN(infoptr info,int** True_Distances)
 {   
     int W=0;

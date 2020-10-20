@@ -1,14 +1,4 @@
-#include <iostream>
-#include <queue> 
-#include <chrono> 
-#include <string.h>
-#include <vector>
-#include <math.h>   
-#include <random> 
 #include "../headers/lsh.h"
-
-using namespace std;
-using namespace std::chrono;
 
 void Approximate_LSH(infoptr info)
 {   
