@@ -8,7 +8,7 @@ int main(int argc, char** argv)
     string answer,input_file, query_file, output_file;
     int k,L,N,R,M,probes;
 
-    if(argc ==1)
+    if(argc==1)
     {
         cout << "Give me the path of dataset: "; 
         cin >> input_file;
