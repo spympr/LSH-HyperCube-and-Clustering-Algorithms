@@ -131,11 +131,11 @@ int main(int argc, char** argv)
         int** True_Distances = new int*[Num_Of_Queries];
         for(int i=0;i<Num_Of_Queries;i++)   True_Distances[i] = new int[N];
         
-        //Initialization of m,M,modulars(calculation of m^d-1modM array)...
-        int M = pow(2,floor(32/k));
-        int m = M/3;
-        // int m = 423255;
-        // int m = pow(2,(32-5));
+        //Initialization of m,M...
+        int M = pow(2,floor((double)32/(double)k));
+        int m = 423255;
+        // int m = pow(2,27)+1;
+        // int m = M/3;
         
         //Calculation of m^d-1modM array...
         int* modulars = new int[dimensions];
@@ -150,7 +150,7 @@ int main(int argc, char** argv)
 
         //Do exhausting search and init W...
         ExhaustingNN(info,True_Distances);
-        int W = 10000;
+        int W = 50000;
         cout << "W: " << W << endl << endl;
             
         //Initialization of uniform_int_distribution class...
