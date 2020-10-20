@@ -1,11 +1,38 @@
 #include <iostream>
+#include <string.h>
 #include <vector>
-
+#include <math.h>  
 using namespace std;
 
+void multiply(int** array)
+{
+    for(int i=0;i<4;i++)
+        for(int j=0;j<4;j++)
+            array[i][j]+=1;
+}
+
+void print(int** array)
+{
+    for(int i=0;i<4;i++)
+        for(int j=0;j<4;j++)
+            cout << array[i][j] << endl;
+}
 
 int main()
 {
+    // int** array = new int*[4];
+    // for(int i=0;i<4;i++)    
+    // {
+    //     array[i] = new int[4];
+    //     for(int j=0;j<4;j++)    array[i][j]=0;
+    // }
+    // multiply(array);
+    // print(array);
+    
+    int k=-1,j=4;
+    // double p = (double)k / (double)j;
+    // cout << p << endl;
+    cout << floor((double)k / (double)j) << endl;
     // vector<int> images;
     // int size=-1;
 
@@ -27,12 +54,12 @@ int main()
     //     k |= (p << ((4-(i+1))*8));                
     // }
     // cout << k << endl;
-    int a=-1,m=2;
+    // int a=-1,m=2;
 
-     if (a % m < 0) 
-        cout <<  a % m + m << endl;
-    else
-        cout << (unsigned int) a % m << endl;
+    //  if (a % m < 0) 
+    //     cout <<  a % m + m << endl;
+    // else
+    //     cout << (unsigned int) a % m << endl;
 }
 
 // // Printing...
