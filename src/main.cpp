@@ -1,9 +1,5 @@
-#include <iostream>
-#include <string.h>
-#include <vector>
-#include <math.h>   
-#include <random> 
 #include "../headers/lsh.h"
+#include "../headers/hypercube.h"
 
 using namespace std;
 
@@ -104,9 +100,8 @@ int main(int argc, char** argv)
     while(true)
     {
         if(strcmp(argv[0],"./lsh") == 0)    LSH(input_file,query_file,L,N,k,R);            
-        // if(strcmp(argv[0],"./cube") == 0)    HyperCube(input_file,query_file,L,n,k,R);            
+        else if(strcmp(argv[0],"./cube") == 0)    HyperCube(input_file,query_file,L,N,k,R);            
         
-        ////////////////////////////////////////////////////////////////////////////////////////////
         cout << "Do you want to question something else?\n";
         cin >> answer;
 

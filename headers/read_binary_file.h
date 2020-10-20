@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <string>
+#include <string.h>
+#include <math.h>   
+#include <random> 
 
 using namespace std;
 
