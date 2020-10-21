@@ -1,7 +1,7 @@
 lsh: main.o read_binary_file.o bucket.o exhausting.o lsh.o hypercube.o
 	g++ main.o read_binary_file.o bucket.o exhausting.o lsh.o hypercube.o -o lsh
 
-cube: main.o read_binary_file.o bucket.o exhausting.o hypercube.o
+cube: main.o read_binary_file.o bucket.o exhausting.o lsh.o hypercube.o
 	g++ main.o read_binary_file.o bucket.o exhausting.o lsh.o hypercube.o -o cube
 
 main.o:	src/main.cpp 
