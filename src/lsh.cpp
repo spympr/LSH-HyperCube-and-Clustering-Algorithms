@@ -104,7 +104,7 @@ void LSH(string input_file,string query_file,int L,int N,int k,int R)
 
     //Initilization of W(grid), dimensions of each Image...
     int dimensions = Columns_Of_Images*Rows_Of_Images,HashTableSize=Num_Of_Images/8;
-
+    
     //Declaration of hash tables...
     Bucket** Hash_Tables[L];
     for(int i=0;i<L;i++)    
