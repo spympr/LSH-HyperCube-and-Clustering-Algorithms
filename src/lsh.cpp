@@ -101,9 +101,14 @@ void LSH::InitLSH()
     cout << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
 
     //Initilization of W(grid), dimensions of each Image...
+<<<<<<< HEAD
     dimensions = Columns*Rows;
     HashTableSize= Num_of_Images/8;
 
+=======
+    int dimensions = Columns_Of_Images*Rows_Of_Images,HashTableSize=Num_Of_Images/8;
+    
+>>>>>>> c13834970c6b7dae15bb33d3be5bac57c8079d73
     //Declaration of hash tables...
     Hash_Tables = new Bucket**[L];
     for(int i=0;i<L;i++)    
@@ -121,6 +126,7 @@ void LSH::InitLSH()
     int m = 423255;
     // int m = pow(2,27)+1;
     // int m = M/3;
+    cout << "M " << M << endl;
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
