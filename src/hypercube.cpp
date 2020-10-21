@@ -126,6 +126,8 @@ void HyperCube::InitHyperCube()
 void HyperCube::Approximate_Hypercube()
 {
     unsigned int fi_query_values[Num_of_Queries];
+    for(int i=0;i<Num_of_Queries;i++)  fi_query_values[i] = 0;
+
     int count_images=0, count_probes=0;
     
     fi_values_of_query(this, fi_query_values);
