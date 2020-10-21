@@ -68,7 +68,7 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
                     // cout << a_i[z] << " " ;
                 }
                 // cout << endl;
-                h_p[j] = Calculate_hp(a_i,info);
+                h_p[j] = Calculate_hp_LSH(a_i,info);
             }
             for(int j=0;j<info->k;j++)
             {
@@ -79,11 +79,14 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
     }
 }
 
-void fi_values_of_train(HyperCube* info,map<unsigned int, unsigned int>** f_i)
+void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 {
+    map<unsigned int,unsigned int>::iterator it;
+    
     for(int image=0;image<info->Num_of_Images;image++)
     {
         int h_p[info->k];
+        int f_i_values[info->k];
         for(int j=0;j<info->k;j++)
         {
             int a_i[info->dimensions];
@@ -94,13 +97,21 @@ void fi_values_of_train(HyperCube* info,map<unsigned int, unsigned int>** f_i)
                 // cout << a_i[z] << " " ;
             }
             // cout << endl;
-            h_p[j] = Calculate_hp(a_i,info);
+            h_p[j] = Calculate_hp_HyperCube(a_i,info);
+            
+            it = info->f_i_map.find(h_p[j]);
+
+            if (it == info->f_i_map.end())
+                info->f_i_map[h_p[j]] = rand() % 2;
+
+            f_i_values[j] = info->f_i_map[h_p[j]];
         }
+
         for(int j=0;j<info->k;j++)
         {
-            g_i[image][i] += (h_p[j] << ((info->k-(j+1))*8));                
+            f_i[image] += (f_i_values[j] << ((info->k-(j+1))));                
         }
-        g_i[image][i] = g_i[image][i]%(info->HashTableSize);
+        // f_i[image] %= (info->HashTableSize);
     }
 }
 
@@ -162,11 +173,10 @@ void Insert_Images_To_Buckets_LSH(LSH* info)
 void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
 {
     //Allocate memory so as to store temporarily g_i values...
-    map<unsigned int, unsigned int>** f_i = new map<unsigned int, unsigned int>*[info->Num_of_Images];
+    unsigned int* f_i = new unsigned int[info->Num_of_Images];
     for(int i=0;i<info->Num_of_Images;i++)  
     {
-        f_i[i] = new map<unsigned int, unsigned int>[info->k];
-        for(int j=0;j<info->k;j++)  f_i[i][j].insert(pair<unsigned int, unsigned int>(0, 0));
+        f_i[i] = 0;
     }
 
     //Call function so as to compute all g_i values...
@@ -175,15 +185,10 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
     //Fill buckets of L Hash_Tables...
     for(int i=0;i<info->Num_of_Images;i++)
     {
-        for(int j=0;j<info->L;j++)
-        {
-            if(info->Hash_Tables[j][g_i[i][j]]==NULL)  info->Hash_Tables[j][g_i[i][j]] = new Bucket();
-            info->Hash_Tables[j][g_i[i][j]]->add(info->Images_Array[i]);    
-        }
+        if(info->Hash_Table[f_i[i]]==NULL)  info->Hash_Table[f_i[i]] = new Bucket();
+        info->Hash_Table[f_i[i]]->add(info->Images_Array[i]);    
     }
 
     //Deallocation of memory...
-    for(int i=0;i<info->Num_of_Images;i++)  
-        delete [] g_i[i];
-    delete [] g_i;
+    delete [] f_i;
 }
