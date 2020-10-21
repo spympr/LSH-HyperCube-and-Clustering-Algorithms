@@ -1,6 +1,6 @@
 #include "../headers/exhausting.h"
 
-void ExhaustingNN(infoptr info,int** True_Distances)
+void ExhaustingNN(LSH* info)
 {   
     int W=0;
 
@@ -15,7 +15,7 @@ void ExhaustingNN(infoptr info,int** True_Distances)
         auto end = chrono::high_resolution_clock::now(); 
         for(int k=0;k<info->N;k++)
         {
-            True_Distances[i][k] = pq.top();
+            info->True_Distances[i][k] = pq.top();
             pq.pop();
         }
         info->tTrue[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  

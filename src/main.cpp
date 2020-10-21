@@ -104,7 +104,7 @@ int main(int argc, char** argv)
     while(true)
     {
         if(strcmp(argv[0],"./lsh") == 0)    LSH(input_file,query_file,L,N,k,R);            
-        else if(strcmp(argv[0],"./cube") == 0)    HyperCube(input_file,query_file,L,N,k,R,M,probes);            
+        else if(strcmp(argv[0],"./cube") == 0)    HyperCube cube(input_file,query_file,N,k,R,M,probes);            
         else if(strcmp(argv[0],"./cluster") == 0)   cout << "under construction..." << endl;
         
         cout << "Do you want to question something else?\n";

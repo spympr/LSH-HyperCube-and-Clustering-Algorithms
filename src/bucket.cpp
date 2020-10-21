@@ -26,7 +26,7 @@ int mod_expo(int base, int exponent,int modulus)
     return c;
 }
 
-int Calculate_hp(int* a_i, infoptr info)
+int Calculate_hp(int* a_i, LSH* info)
 {
     unsigned int sum = 0,first_term,second_term,temp_term;
 
@@ -41,7 +41,7 @@ int Calculate_hp(int* a_i, infoptr info)
     return mod(sum,info->M);
 }
 
-void gi_values_of_train(infoptr info,unsigned int** g_i)
+void gi_values_of_train(LSH* info,unsigned int** g_i)
 {
     for(int image=0;image<info->Num_of_Images;image++)
     {
@@ -59,7 +59,6 @@ void gi_values_of_train(infoptr info,unsigned int** g_i)
                 }
                 // cout << endl;
                 h_p[j] = Calculate_hp(a_i,info);
-                // if(image<10)    cout << "f " << h_p[j] << endl;
             }
             for(int j=0;j<info->k;j++)
             {
@@ -70,7 +69,7 @@ void gi_values_of_train(infoptr info,unsigned int** g_i)
     }
 }
 
-void gi_values_of_query(infoptr info, unsigned int* gi_query_values, int query)
+void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
 {
     for(int i=0;i<info->L;i++)
     {
@@ -96,7 +95,7 @@ void gi_values_of_query(infoptr info, unsigned int* gi_query_values, int query)
     }
 }
 
-void Insert_Images_To_Buckets(infoptr info)
+void Insert_Images_To_Buckets(LSH* info)
 {
     //Allocate memory so as to store temporarily g_i values...
     unsigned int** g_i = new unsigned int*[info->Num_of_Images];
