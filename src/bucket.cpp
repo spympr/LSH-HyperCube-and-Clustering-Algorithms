@@ -99,12 +99,12 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
             // cout << endl;
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
             
-            it = info->f_i_map[image].find(h_p[j]);
+            it = info->f_i_map[j].find(h_p[j]);
 
-            if (it == info->f_i_map[image].end())
-                info->f_i_map[image][h_p[j]] = rand() % 2;
+            if (it == info->f_i_map[j].end())
+                info->f_i_map[j][h_p[j]] = rand() % 2;
 
-            f_i_values[j] = info->f_i_map[image][h_p[j]];
+            f_i_values[j] = info->f_i_map[j][h_p[j]];
         }
 
         for(int j=0;j<info->k;j++)
@@ -174,7 +174,7 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
 {
     //Allocate memory so as to store temporarily g_i values...
     unsigned int* f_i = new unsigned int[info->Num_of_Images];
-    info->f_i_map = new map<unsigned int, unsigned int>[info->Num_of_Images];
+    info->f_i_map = new map<unsigned int, unsigned int>[info->k];
 
     for(int i=0;i<info->Num_of_Images;i++)  
     {
