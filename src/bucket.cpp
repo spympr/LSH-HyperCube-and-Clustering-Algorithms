@@ -115,6 +115,42 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
     }
 }
 
+void fi_values_of_query(HyperCube* info,unsigned int* f_i)
+{
+    map<unsigned int,unsigned int>::iterator it;
+    
+    for(int image=0;image<info->Num_of_Queries;image++)
+    {
+        int h_p[info->k];
+        int f_i_values[info->k];
+        for(int j=0;j<info->k;j++)
+        {
+            int a_i[info->dimensions];
+
+            for(int z=0;z<info->dimensions;z++)
+            {
+                a_i[z] = floor((double)((info->Images_Array[image][z] - info->s_i[(info->k)+j][z]))/(double)(info->W));
+                // cout << a_i[z] << " " ;
+            }
+            // cout << endl;
+            h_p[j] = Calculate_hp_HyperCube(a_i,info);
+            
+            it = info->f_i_map[j].find(h_p[j]);
+
+            if (it == info->f_i_map[j].end())
+                info->f_i_map[j][h_p[j]] = rand() % 2;
+
+            f_i_values[j] = info->f_i_map[j][h_p[j]];
+        }
+
+        for(int j=0;j<info->k;j++)
+        {
+            f_i[image] += (f_i_values[j] << ((info->k-(j+1))));                
+        }
+        // f_i[image] %= (info->HashTableSize);
+    }
+}
+
 void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
 {
     for(int i=0;i<info->L;i++)

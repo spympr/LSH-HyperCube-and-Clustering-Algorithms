@@ -125,5 +125,54 @@ void HyperCube::InitHyperCube()
 
 void HyperCube::Approximate_Hypercube()
 {
+    unsigned int fi_query_values[Num_of_Queries];
+    int count_images=0, count_probes=0;
     
+    fi_values_of_query(this, fi_query_values);
+
+    for(int i=0;i<Num_of_Queries;i++)
+    {
+        int HyberCube_nns[N],HyberCube_Distances[N]; 
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
+
+        if(Hash_Table[fi_query_values[i]] != NULL)
+        {
+            for(int p=0;p<Hash_Table[fi_query_values[i]]->images.size();p++)
+            {
+                distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Table[fi_query_values[i]]->images[p], dimensions), (Hash_Table[fi_query_values[i]]->images[p][dimensions])));
+                count_images++;
+                if(count_images == M)  break;
+            }
+        }
+        if((Hash_Table[fi_query_values[i]] == NULL) || (count_images < M))
+        {
+            while((count_probes < probes) && (count_images < M))
+            {
+                for(int j=0;j<HashTableSize;j++)
+                {
+                    if(Hash_Table[j] != NULL)
+                    {
+                        int hamming_distance = hammingDistance(fi_query_values[i],j);
+                        if(hamming_distance == (count_probes+1))
+                        {
+                            for(int p=0;p<Hash_Table[j]->images.size();p++)
+                            {
+                                distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Table[j]->images[p], dimensions), (Hash_Table[j]->images[p][dimensions])));
+                                count_images++;
+                                if(count_images == M)  break;
+                            }
+                        }
+                    }
+                    if(count_images == M)  break;
+                }
+                count_probes++;
+            }
+        }
+        for(int k=0;k<N;k++)
+        {
+            HyberCube_Distances[k] = distances.top().first;
+            HyberCube_nns[k] = distances.top().second;
+            distances.pop();
+        }
+    }
 }
