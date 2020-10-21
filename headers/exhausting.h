@@ -4,6 +4,7 @@
 #include "../headers/bucket.h"
 
 void ExhaustingNN(LSH* );
+void ExhaustingNN_HC(HyperCube* );
 item ManhattanDistance(item* ,item* ,int );
 
 #endif

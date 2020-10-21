@@ -58,7 +58,7 @@ void HyperCube::InitHyperCube()
     tTrue = new double[Num_of_Queries];
 
     //Do exhausting search and init W...
-    ExhaustingNN(this);
+    ExhaustingNN_HC(this);
     int W = 50000;
     cout << "W: " << W << endl << endl;
 
@@ -81,13 +81,13 @@ void HyperCube::InitHyperCube()
     //Print Buckets...
     // for(int i=0;i<L;i++)
     // {
-    int counter=0;
-    for(int j=0;j<HashTableSize;j++)
-        if(Hash_Tables[j]!=NULL)
-            counter++;                
-    cout << "HashTable " << j << ": " << counter << endl;
+    // int counter=0;
+    // for(int j=0;j<HashTableSize;j++)
+    //     if(Hash_Table[j]!=NULL)
+    //         counter++;                
+    // cout << "HashTable " << j << ": " << counter << endl;
     // }
-    cout << endl;
+    // cout << endl;
 
     Approximate_Hypercube();
 
@@ -107,8 +107,8 @@ void HyperCube::InitHyperCube()
     // for(int i=0;i<L;i++)    
     // {
     for(int j=0;j<(HashTableSize);j++)   
-        if(Hash_Tables[j]!=NULL)
-            delete Hash_Tables[j];
+        if(Hash_Table[j]!=NULL)
+            delete Hash_Table[j];
         // delete [] Hash_Tables[i];
     // }
 
@@ -125,5 +125,5 @@ void HyperCube::InitHyperCube()
 
 void HyperCube::Approximate_Hypercube()
 {
-
+    
 }

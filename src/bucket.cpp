@@ -99,12 +99,12 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
             // cout << endl;
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
             
-            it = info->f_i_map.find(h_p[j]);
+            it = info->f_i_map[image].find(h_p[j]);
 
-            if (it == info->f_i_map.end())
-                info->f_i_map[h_p[j]] = rand() % 2;
+            if (it == info->f_i_map[image].end())
+                info->f_i_map[image][h_p[j]] = rand() % 2;
 
-            f_i_values[j] = info->f_i_map[h_p[j]];
+            f_i_values[j] = info->f_i_map[image][h_p[j]];
         }
 
         for(int j=0;j<info->k;j++)
@@ -130,7 +130,7 @@ void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
             {
                 a_i[z] = floor((double)((info->Queries_Array[query][z] - info->s_i[i*info->k+j][z]))/(double)(info->W));
             }
-            h_p[j] = Calculate_hp(a_i,info);
+            h_p[j] = Calculate_hp_LSH(a_i,info);
         }
         
         for(int j=0;j<info->k;j++)
@@ -174,10 +174,13 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
 {
     //Allocate memory so as to store temporarily g_i values...
     unsigned int* f_i = new unsigned int[info->Num_of_Images];
+    info->f_i_map = new map<unsigned int, unsigned int>[info->Num_of_Images];
+
     for(int i=0;i<info->Num_of_Images;i++)  
     {
         f_i[i] = 0;
     }
+
 
     //Call function so as to compute all g_i values...
     fi_values_of_train(info,f_i);
