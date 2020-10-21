@@ -111,7 +111,6 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
         {
             f_i[image] += (f_i_values[j] << ((info->k-(j+1))));                
         }
-        // f_i[image] %= (info->HashTableSize);
     }
 }
 
@@ -176,11 +175,7 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
     unsigned int* f_i = new unsigned int[info->Num_of_Images];
     info->f_i_map = new map<unsigned int, unsigned int>[info->k];
 
-    for(int i=0;i<info->Num_of_Images;i++)  
-    {
-        f_i[i] = 0;
-    }
-
+    for(int i=0;i<info->Num_of_Images;i++)  f_i[i] = 0;
 
     //Call function so as to compute all g_i values...
     fi_values_of_train(info,f_i);
