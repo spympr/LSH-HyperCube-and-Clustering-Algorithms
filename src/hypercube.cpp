@@ -134,7 +134,7 @@ void HyperCube::Approximate_Hypercube()
 
     for(int i=0;i<Num_of_Queries;i++)
     {
-        int HyberCube_nns[N],HyberCube_Distances[N]; 
+        int HyberCube_nns[N],HyberCube_Distances[N], count_hamming=1; 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
         if(Hash_Table[fi_query_values[i]] != NULL)
@@ -155,7 +155,7 @@ void HyperCube::Approximate_Hypercube()
                     if(Hash_Table[j] != NULL)
                     {
                         int hamming_distance = hammingDistance(fi_query_values[i],j);
-                        if(hamming_distance == (count_probes+1))
+                        if(hamming_distance == count_hamming)
                         {
                             for(int p=0;p<Hash_Table[j]->images.size();p++)
                             {
@@ -163,11 +163,12 @@ void HyperCube::Approximate_Hypercube()
                                 count_images++;
                                 if(count_images == M)  break;
                             }
+                            count_probes++;
                         }
                     }
                     if(count_images == M)  break;
                 }
-                count_probes++;
+                count_hamming++;
             }
         }
         for(int k=0;k<N;k++)
