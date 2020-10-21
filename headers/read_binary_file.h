@@ -1,6 +1,5 @@
 #ifndef READ_BINARY_FILE_H
 #define READ_BINARY_FILE_H
-#include "../headers/lsh.h"
 
 #include <iostream>
 #include <vector>
@@ -16,6 +15,8 @@ using namespace std;
 using namespace std::chrono;
 
 typedef int item;
+
+#include "../headers/lsh.h"
 
 int ReverseInt(int);
 void Read_BF(item***,int*,int*,int*,string,int a);
