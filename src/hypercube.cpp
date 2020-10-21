@@ -134,7 +134,8 @@ void HyperCube::Approximate_Hypercube()
 
     for(int i=0;i<Num_of_Queries;i++)
     {
-        int HyberCube_nns[N],HyberCube_Distances[N], count_hamming=1; 
+        auto start = chrono::high_resolution_clock::now();
+        int HyperCube_nns[N],HyperCube_Distances[N], count_hamming=1; 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
         if(Hash_Table[fi_query_values[i]] != NULL)
@@ -171,11 +172,23 @@ void HyperCube::Approximate_Hypercube()
                 count_hamming++;
             }
         }
+
+        auto end = chrono::high_resolution_clock::now(); 
+
+        cout << endl << "--------------------------------------------" << endl;
+        cout << "Query: " << Queries_Array[i][dimensions] << endl;
+
         for(int k=0;k<N;k++)
         {
-            HyberCube_Distances[k] = distances.top().first;
-            HyberCube_nns[k] = distances.top().second;
+            HyperCube_Distances[k] = distances.top().first;
+            HyperCube_nns[k] = distances.top().second;
             distances.pop();
+            cout << "Nearest neighbor-" << k+1 << ": " << HyperCube_nns[k] << endl;
+            cout << "distanceLSH: " << HyperCube_Distances[k] << endl;
+            cout << "distanceTrue: " << True_Distances[i][k] << endl << endl;
         }
+
+        tHypercube[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
+        cout << "tHypercube: " << tHypercube[i] << "ms" << endl << "tTrue: " << tTrue[i] << "ms";
     }
 }
