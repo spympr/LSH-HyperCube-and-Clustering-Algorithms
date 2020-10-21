@@ -1,3 +1,6 @@
+#ifndef HYPERCUBE_H
+#define HYPERCUBE_H
+
 #include "../headers/exhausting.h"
 #include <map> 
 
@@ -23,3 +26,4 @@ class HyperCube
         void InitHyperCube();
         void Approximate_Hypercube();
 };
+#endif

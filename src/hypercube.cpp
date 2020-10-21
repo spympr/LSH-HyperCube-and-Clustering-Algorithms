@@ -1,4 +1,4 @@
-#include "../headers/hypercube.h"
+#include "../headers/exhausting.h"
 
 int HyperCube::hammingDistance(int n1, int n2) 
 { 
@@ -58,7 +58,7 @@ void HyperCube::InitHyperCube()
     tTrue = new double[Num_of_Queries];
 
     //Do exhausting search and init W...
-    ExhaustingNN(this,True_Distances);
+    ExhaustingNN(this);
     int W = 50000;
     cout << "W: " << W << endl << endl;
 
