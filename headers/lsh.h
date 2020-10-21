@@ -5,6 +5,9 @@
 
 using namespace std;
 
+//Forward declaration
+class Bucket;
+
 class LSH
 {
     public:

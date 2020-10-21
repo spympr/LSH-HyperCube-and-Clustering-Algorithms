@@ -1,4 +1,4 @@
-#include "../headers/bucket.h"
+#include "../headers/exhausting.h"
 
 void Bucket::add(item* image)
 {
@@ -7,11 +7,6 @@ void Bucket::add(item* image)
 
 unsigned int mod(int k, int M) 
 {   
-    //M is 2^(32/k) so...
-    // unsigned int temp = k << int(32-log2(M));
-    // temp = temp << int(32-log2(M));
-    // return temp;    
-
     if ((k % M) < 0) 
         return (unsigned int ) (k % M + M);
     else

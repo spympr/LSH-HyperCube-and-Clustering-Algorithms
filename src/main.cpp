@@ -1,4 +1,4 @@
-#include "../headers/lsh.h"
+#include "../headers/exhausting.h"
 #include "../headers/hypercube.h"
 
 using namespace std;

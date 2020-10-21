@@ -1,8 +1,7 @@
 #ifndef BUCKET_H
 #define BUCKET_H
+
 #include "../headers/read_binary_file.h"
-#include "../headers/lsh.h"
-#include "../headers/hypercube.h"
 
 using namespace std;
 

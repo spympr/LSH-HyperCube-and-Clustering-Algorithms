@@ -17,10 +17,10 @@ exhausting.o:	src/exhausting.cpp
 	g++ -c src/exhausting.cpp
 
 lsh.o:	src/lsh.cpp
-	g++ -c src/lsh.cpp
+	g++ -c src/lsh.cpp 
 
 hypercube.o:	src/hypercube.cpp
 	g++ -c src/hypercube.cpp
 	
 clean:
-	rm cuber lsh *.o
+	rm cube lsh *.o

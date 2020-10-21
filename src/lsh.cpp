@@ -1,4 +1,4 @@
-#include "../headers/lsh.h"
+#include "../headers/exhausting.h"
 
 void LSH::Approximate_LSH()
 {   
@@ -101,8 +101,9 @@ void LSH::InitLSH()
     cout << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
 
     //Initilization of W(grid), dimensions of each Image...
-    int dimensions = Columns_Of_Images*Rows_Of_Images,HashTableSize=Num_Of_Images/8;
-    
+    dimensions = Columns*Rows;
+    HashTableSize= Num_of_Images/8;
+
     //Declaration of hash tables...
     Hash_Tables = new Bucket**[L];
     for(int i=0;i<L;i++)    
@@ -131,7 +132,7 @@ void LSH::InitLSH()
     tTrue = new double[Num_of_Queries];
 
     //Do exhausting search and init W...
-    ExhaustingNN(this,True_Distances);
+    ExhaustingNN(this);
     int W = 50000;
     cout << "W: " << W << endl << endl;
         
