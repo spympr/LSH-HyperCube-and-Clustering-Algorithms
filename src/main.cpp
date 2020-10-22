@@ -72,8 +72,10 @@ int main(int argc, char** argv)
             k=14;
             N=1;
             R=10000;
-            probes=2;
-            M=10;
+            // probes=2;
+            // M=10;
+            probes=10;
+            M=200;
 
             for(int i=1;i<argc;i+=2)
             {

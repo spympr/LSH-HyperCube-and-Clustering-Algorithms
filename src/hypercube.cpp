@@ -45,6 +45,9 @@ void HyperCube::InitHyperCube()
     m = 423255;
     cout << "m " << m << endl;
     cout << "M " << M << endl;
+    cout << "M_boundary " << M_boundary << endl;
+    cout << "Probes " << probes << endl;
+
 
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];

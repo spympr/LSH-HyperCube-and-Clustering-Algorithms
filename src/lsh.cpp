@@ -119,8 +119,7 @@ void LSH::InitLSH()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
-    // int m = M/3+1;
-    // int m = pow(2,27)+1;
+    cout << "m " << m << endl;
     cout << "M " << M << endl;
     
     //Calculation of m^d-1modM array...
