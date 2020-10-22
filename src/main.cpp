@@ -72,10 +72,8 @@ int main(int argc, char** argv)
             k=14;
             N=1;
             R=10000;
-            // probes=2;
-            // M=10;
-            probes=10;
-            M=200;
+            probes=2;
+            M=10;
 
             for(int i=1;i<argc;i+=2)
             {
@@ -93,6 +91,8 @@ int main(int argc, char** argv)
                     M = atoi(argv[i+1]);
                 else if(strcmp(argv[i],"-R") == 0)
                     R = atoi(argv[i+1]);
+                else if(strcmp(argv[i],"-N") ==0)
+                    N = atoi(argv[i+1]);
                 else
                 {
                     cout << "Please give an input with this form: ./cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο<output file> -Ν <number of nearest> -R <radius>\n";

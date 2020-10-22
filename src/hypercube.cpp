@@ -4,12 +4,12 @@ int HyperCube::hammingDistance(int n1, int n2)
 { 
     int x = n1 ^ n2; 
     int setBits = 0; 
-  
+    
     while (x > 0) { 
         setBits += x & 1; 
         x >>= 1; 
-    } 
-  
+    }
+
     return setBits; 
 } 
 
@@ -41,14 +41,12 @@ void HyperCube::InitHyperCube()
     for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new int[N];
 
     //Initialization of m,M...
-    // M = pow(2,floor((double)32/(double)k));
-    M = 256;
+    M = pow(2,floor((double)32/(double)k));
     m = 423255;
     cout << "m " << m << endl;
     cout << "M " << M << endl;
     cout << "M_boundary " << M_boundary << endl;
     cout << "Probes " << probes << endl;
-
 
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
@@ -60,7 +58,7 @@ void HyperCube::InitHyperCube()
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
-    W = 50000;
+    W = 20000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
@@ -122,14 +120,13 @@ void HyperCube::Approximate_Hypercube()
     unsigned int fi_query_values[Num_of_Queries];
     for(int i=0;i<Num_of_Queries;i++)  fi_query_values[i] = 0;
 
-    int count_images=0, count_probes=0;
     
     fi_values_of_query(this, fi_query_values);
 
     for(int i=0;i<Num_of_Queries;i++)
     {
         auto start = chrono::high_resolution_clock::now();
-        int HyperCube_nns[N],HyperCube_Distances[N], count_hamming=1; 
+        int HyperCube_nns[N],HyperCube_Distances[N], count_hamming=1,count_images=0, count_probes=0; 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
         if(Hash_Table[fi_query_values[i]] != NULL)
@@ -138,12 +135,14 @@ void HyperCube::Approximate_Hypercube()
             {
                 distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Table[fi_query_values[i]]->images[p], dimensions), (Hash_Table[fi_query_values[i]]->images[p][dimensions])));
                 count_images++;
-                if(count_images == M)  break;
+                // cout << count_images << " ";
+                if(count_images == M_boundary)  break;
             }
+            // cout << endl;
         }
-        if((Hash_Table[fi_query_values[i]] == NULL) || (count_images < M))
+        if((Hash_Table[fi_query_values[i]] == NULL) || (count_images < M_boundary))
         {
-            while((count_probes < probes) && (count_images < M))
+            while((count_probes < probes) && (count_images < M_boundary))
             {
                 for(int j=0;j<HashTableSize;j++)
                 {
@@ -152,16 +151,17 @@ void HyperCube::Approximate_Hypercube()
                         int hamming_distance = hammingDistance(fi_query_values[i],j);
                         if(hamming_distance == count_hamming)
                         {
+                            // cout << endl << "bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
                             for(int p=0;p<Hash_Table[j]->images.size();p++)
                             {
                                 distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Table[j]->images[p], dimensions), (Hash_Table[j]->images[p][dimensions])));
                                 count_images++;
-                                if(count_images == M)  break;
+                                if(count_images == M_boundary)  break;
                             }
                             count_probes++;
                         }
                     }
-                    if(count_images == M)  break;
+                    if(count_images == M_boundary)  break;
                 }
                 count_hamming++;
             }

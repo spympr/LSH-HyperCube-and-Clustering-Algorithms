@@ -99,13 +99,11 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
             }
             // cout << endl;
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
-            // if(image<10)    cout << h_p[j] << endl; 
+            // if(image<10)    cout << h_p[j] << endl;
             it = info->f_i_map[j].find(h_p[j]);
 
-            if(it == info->f_i_map[j].end())
-            {
-                info->f_i_map[j][h_p[j]] = rand() % 2;
-            }
+            if(it == info->f_i_map[j].end())    info->f_i_map[j][h_p[j]] = rand() % 2;
+   
             f_i_values[j] = info->f_i_map[j][h_p[j]];
         }
 
@@ -140,12 +138,7 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 
             f_i_values[j] = info->f_i_map[j][h_p[j]];
         }
-
-        for(int j=0;j<info->k;j++)
-        {
-            f_i[image] += (f_i_values[j] << ((info->k-(j+1))));                
-        }
-        // f_i[image] %= (info->HashTableSize);
+        for(int j=0;j<info->k;j++)  f_i[image] += (f_i_values[j] << ((info->k-(j+1))));                
     }
 }
 
@@ -188,7 +181,7 @@ void Insert_Images_To_Buckets_LSH(LSH* info)
     //Call function so as to compute all g_i values...
     gi_values_of_train(info,g_i);
     
-    //Fill buckets of L Hash_Tables...
+    //Fill buckets of Hash_Table...
     for(int i=0;i<info->Num_of_Images;i++)
     {
         for(int j=0;j<info->L;j++)
@@ -220,7 +213,6 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
     //Fill buckets of L Hash_Tables...
     for(int i=0;i<info->Num_of_Images;i++)
     {   
-        // cout << f_i[i] << endl;
         if(info->Hash_Table[f_i[i]]==NULL)  info->Hash_Table[f_i[i]] = new Bucket();
         info->Hash_Table[f_i[i]]->add(info->Images_Array[i]);    
     }
