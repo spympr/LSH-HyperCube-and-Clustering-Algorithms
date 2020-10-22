@@ -2,8 +2,6 @@
 
 void ExhaustingNN(LSH* info)
 {   
-    int W=0;
-
     for(int i=0;i<info->Num_of_Queries;i++)
     {
         auto start = chrono::high_resolution_clock::now(); 
@@ -32,8 +30,6 @@ item ManhattanDistance(item* x,item* y,int dimensions)
 
 void ExhaustingNN_HC(HyperCube* info)
 {   
-    int W=0;
-
     for(int i=0;i<info->Num_of_Queries;i++)
     {
         auto start = chrono::high_resolution_clock::now(); 

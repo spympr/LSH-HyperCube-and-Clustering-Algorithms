@@ -34,8 +34,7 @@ int main(int argc, char** argv)
                 return -1;
             }
 
-            // k=4;
-            k=5;
+            k=4;
             L=5;
             N=1;
             R=10000;
@@ -62,11 +61,11 @@ int main(int argc, char** argv)
                 }
             }
         }
-        else if(argv[0] == "./cube")
+        else if(strcmp(argv[0],"./cube") == 0)
         {
-            if(argc!=17 && argc!=5)    
+            if(argc!=17 && argc!=7)    
             {
-                cout << "Please give an input with this form: ./cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο<output file> -Ν <number of nearest> -R <radius>\n";
+                cout << "Please give an input with this form: ./cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο <output file> -Ν <number of nearest> -R <radius>\n";
                 return -1;
             }
 
@@ -76,24 +75,22 @@ int main(int argc, char** argv)
             probes=2;
             M=10;
 
-            for(int i=1;i<=argc;i+=2)
+            for(int i=1;i<argc;i+=2)
             {
-                if(argv[i] == "-d")
-                    input_file = (argv[i+1]);
-                else if(argv[i] == "-q")
+                if(strcmp(argv[i],"-d") == 0)
+                    input_file = (argv[i+1]);                    
+                else if(strcmp(argv[i],"-q") == 0)
                     query_file = (argv[i+1]);
-                else if(argv[i] == "-o")
+                else if(strcmp(argv[i],"-o") == 0)
                     output_file = (argv[i+1]);
-                else if(argv[i] == "-k")
+                else if(strcmp(argv[i],"-k") == 0)
                     k = atoi(argv[i+1]);
-                else if(argv[i] == "-probes")
+                else if(strcmp(argv[i],"-probes") == 0)
                     probes = atoi(argv[i+1]);
-                else if(argv[i] == "-M")
+                else if(strcmp(argv[i],"-M") ==0)
                     M = atoi(argv[i+1]);
-                else if(argv[i] == "-N")
-                    N = atoi(argv[i+1]);
-                else if(argv[i] == "-R")
-                    R = atof(argv[i+1]);
+                else if(strcmp(argv[i],"-R") == 0)
+                    R = atoi(argv[i+1]);
                 else
                 {
                     cout << "Please give an input with this form: ./cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο<output file> -Ν <number of nearest> -R <radius>\n";
@@ -104,11 +101,11 @@ int main(int argc, char** argv)
 
     while(true)
     {
-        if(strcmp(argv[0],"./lsh") == 0)    LSH(input_file,query_file,L,N,k,R);            
+        if(strcmp(argv[0],"./lsh") == 0)    LSH lsh(input_file,query_file,L,N,k,R);            
         else if(strcmp(argv[0],"./cube") == 0)    HyperCube cube(input_file,query_file,N,k,R,M,probes);            
         else if(strcmp(argv[0],"./cluster") == 0)   cout << "under construction..." << endl;
         
-        cout << "Do you want to question something else?\n";
+        cout << endl << "Do you want to question something else?\n";
         cin >> answer;
 
         if((answer == "no") || (answer == "No") || (answer == "NO") || (answer == "n") || (answer =="N"))

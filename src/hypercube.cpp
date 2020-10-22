@@ -27,23 +27,22 @@ void HyperCube::InitHyperCube()
     //Printing...
     cout << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
 
-    //Initilization of W(grid), dimensions of each Image...
-    dimensions = (int)(floor(double(log2(Num_of_Images) - (rand() % 3 +1))));
-    HashTableSize = pow(2,dimensions);
+    //Initilization of dimensions of each Image,k, HashTableSize...
+    // k = (int)(floor(double(log2(Num_of_Images) - (rand() % 3 +1))));
+    dimensions = Rows*Columns;
+    HashTableSize = pow(2,k);
 
     //Declaration of hash tables...
-    Bucket** Hash_Table = new Bucket*[HashTableSize];
-    for(int i=0;i<HashTableSize;i++)
-    {
-        Hash_Table[i] = NULL;
-    }
+    Hash_Table = new Bucket*[HashTableSize];
+    for(int i=0;i<HashTableSize;i++)    Hash_Table[i] = NULL;
+    
 
     //Initialization of 2D array True_Distances...
     True_Distances = new int*[Num_of_Queries];
     for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new int[N];
 
     //Initialization of m,M...
-    int M_boundary = pow(2,floor((double)32/(double)k));
+    int M = pow(2,floor((double)32/(double)k));
     int m = 423255;
     // int m = pow(2,27)+1;
     // int m = M/3;
@@ -51,7 +50,7 @@ void HyperCube::InitHyperCube()
 
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
-    for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M_boundary);
+    for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
 
     //Initialization of tTrue,tLSH arrays...
     tHypercube = new double[Num_of_Queries];
@@ -68,7 +67,7 @@ void HyperCube::InitHyperCube()
     
     //Initialization of L*k*d(imensions) random s_i integers...
     s_i = new int*[k];
-    for(int i=0;i<(k);i++)
+    for(int i=0;i<k;i++)
     {
         s_i[i] = new int[dimensions];
         for(int j=0;j<dimensions;j++)   
@@ -184,7 +183,7 @@ void HyperCube::Approximate_Hypercube()
             HyperCube_nns[k] = distances.top().second;
             distances.pop();
             cout << "Nearest neighbor-" << k+1 << ": " << HyperCube_nns[k] << endl;
-            cout << "distanceLSH: " << HyperCube_Distances[k] << endl;
+            cout << "distanceHyperCube: " << HyperCube_Distances[k] << endl;
             cout << "distanceTrue: " << True_Distances[i][k] << endl << endl;
         }
 

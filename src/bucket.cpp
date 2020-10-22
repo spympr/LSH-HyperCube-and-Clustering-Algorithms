@@ -93,7 +93,7 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 
             for(int z=0;z<info->dimensions;z++)
             {
-                a_i[z] = floor((double)((info->Images_Array[image][z] - info->s_i[(info->k)+j][z]))/(double)(info->W));
+                a_i[z] = floor((double)((info->Images_Array[image][z] - info->s_i[j][z]))/(double)(info->W));
                 // cout << a_i[z] << " " ;
             }
             // cout << endl;
@@ -128,7 +128,7 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 
             for(int z=0;z<info->dimensions;z++)
             {
-                a_i[z] = floor((double)((info->Images_Array[image][z] - info->s_i[(info->k)+j][z]))/(double)(info->W));
+                a_i[z] = floor((double)(info->Images_Array[image][z] - info->s_i[j][z])/(double)(info->W));
                 // cout << a_i[z] << " " ;
             }
             // cout << endl;
@@ -163,7 +163,7 @@ void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
 
             for(int z=0;z<info->dimensions;z++)
             {
-                a_i[z] = floor((double)((info->Queries_Array[query][z] - info->s_i[i*info->k+j][z]))/(double)(info->W));
+                a_i[z] = floor((double)(info->Queries_Array[query][z] - info->s_i[i*info->k+j][z])/(double)(info->W));
             }
             h_p[j] = Calculate_hp_LSH(a_i,info);
         }
@@ -218,7 +218,8 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
     
     //Fill buckets of L Hash_Tables...
     for(int i=0;i<info->Num_of_Images;i++)
-    {
+    {   
+        // cout << f_i[i] << endl;
         if(info->Hash_Table[f_i[i]]==NULL)  info->Hash_Table[f_i[i]] = new Bucket();
         info->Hash_Table[f_i[i]]->add(info->Images_Array[i]);    
     }
