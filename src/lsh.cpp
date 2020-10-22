@@ -62,9 +62,7 @@ void LSH::Approximate_Range_Search(int* N_NN_Range_Search, int query_index)
     {
         if(Hash_Tables[j][gi_query_values[j]] != NULL)
         {
-            int images_in_bucket = Hash_Tables[j][gi_query_values[j]]->images.size();
-            
-            for(int p=0; p<images_in_bucket;p++)
+            for(int p=0; p<Hash_Tables[j][gi_query_values[j]]->images.size();p++)
             {
                 if(ManhattanDistance(Queries_Array[query_index],Hash_Tables[j][gi_query_values[j]]->images[p], dimensions) < R)
                     neighboors.push(Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]);

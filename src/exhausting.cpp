@@ -20,14 +20,6 @@ void ExhaustingNN(LSH* info)
     }
 }
 
-item ManhattanDistance(item* x,item* y,int dimensions)
-{
-    item sum=0;
-    for(int i=0;i<dimensions;i++)   sum+=abs(x[i]-y[i]);    
-    
-    return sum;
-}
-
 void ExhaustingNN_HC(HyperCube* info)
 {   
     for(int i=0;i<info->Num_of_Queries;i++)
@@ -46,4 +38,12 @@ void ExhaustingNN_HC(HyperCube* info)
         }
         info->tTrue[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
     }
+}
+
+item ManhattanDistance(item* x,item* y,int dimensions)
+{
+    item sum=0;
+    for(int i=0;i<dimensions;i++)   sum+=abs(x[i]-y[i]);    
+    
+    return sum;
 }
