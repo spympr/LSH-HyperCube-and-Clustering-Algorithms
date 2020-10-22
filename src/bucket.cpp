@@ -65,7 +65,7 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
                 for(int z=0;z<info->dimensions;z++)
                 {
                     a_i[z] = floor((double)((info->Images_Array[image][z] - info->s_i[(i*info->k)+j][z]))/(double)(info->W));
-                    // cout << a_i[z] << " " ;
+                    // cout << a_i[z] << " ";
                 }
                 // cout << endl;
                 h_p[j] = Calculate_hp_LSH(a_i,info);
@@ -94,7 +94,7 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
             for(int z=0;z<info->dimensions;z++)
             {
                 a_i[z] = floor((double)((info->Images_Array[image][z] - info->s_i[j][z]))/(double)(info->W));
-                // cout << a_i[z] << " " ;
+                // cout << a_i[z] << " " << endl;
             }
             // cout << endl;
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
@@ -207,11 +207,11 @@ void Insert_Images_To_Buckets_LSH(LSH* info)
 
 void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
 {
-    //Allocate memory so as to store temporarily g_i values...
+    //Allocate memory so as to store temporarily f_i values...
     unsigned int* f_i = new unsigned int[info->Num_of_Images];
-    info->f_i_map = new map<unsigned int, unsigned int>[info->k];
-
     for(int i=0;i<info->Num_of_Images;i++)  f_i[i] = 0;
+
+    info->f_i_map = new map<unsigned int, unsigned int>[info->k];
 
     //Call function so as to compute all g_i values...
     fi_values_of_train(info,f_i);

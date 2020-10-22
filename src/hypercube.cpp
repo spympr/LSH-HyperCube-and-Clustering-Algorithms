@@ -58,7 +58,7 @@ void HyperCube::InitHyperCube()
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
-    int W = 50000;
+    W = 1000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
@@ -71,22 +71,18 @@ void HyperCube::InitHyperCube()
     {
         s_i[i] = new int[dimensions];
         for(int j=0;j<dimensions;j++)   
-            s_i[i][j] = distribution(generator);
+            s_i[i][j] = distribution(generator);        
     }
 
     //Fill Hash Tables...
     Insert_Images_To_Buckets_HyperCube(this);
 
     //Print Buckets...
-    // for(int i=0;i<L;i++)
-    // {
-    // int counter=0;
-    // for(int j=0;j<HashTableSize;j++)
-    //     if(Hash_Table[j]!=NULL)
-    //         counter++;                
-    // cout << "HashTable " << j << ": " << counter << endl;
-    // }
-    // cout << endl;
+    int counter=0;
+    for(int j=0;j<HashTableSize;j++)
+        if(Hash_Table[j]!=NULL)
+            counter++;                
+    cout << "HashTable: " << counter << " out of " << HashTableSize << endl;
 
     Approximate_Hypercube();
 
@@ -99,17 +95,14 @@ void HyperCube::InitHyperCube()
     delete [] Queries_Array;
 
     //Deallocation of memory of s_i...
-    for(int i=0;i<(k);i++)    delete [] s_i[i];
+    for(int i=0;i<k;i++)    delete [] s_i[i];
     delete [] s_i;        
 
     //Deallocation of memory of Hash_Tables...
-    // for(int i=0;i<L;i++)    
-    // {
     for(int j=0;j<(HashTableSize);j++)   
         if(Hash_Table[j]!=NULL)
             delete Hash_Table[j];
-        // delete [] Hash_Tables[i];
-    // }
+    delete [] Hash_Table;
 
     //Deallocation of memory of True_Distances...
     for(int i=0;i<Num_of_Queries;i++)  
