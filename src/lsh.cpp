@@ -85,10 +85,10 @@ void LSH::InitLSH()
 
     //Printing...
     cout << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
-
+    
     //Initilization of W(grid), dimensions of each Image...
     dimensions = Columns*Rows;
-    HashTableSize= Num_of_Images/8;
+    HashTableSize = Num_of_Images/8;
 
     //Declaration of hash tables...
     Hash_Tables = new Bucket**[L];

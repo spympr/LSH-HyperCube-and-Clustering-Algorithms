@@ -58,3 +58,16 @@ int main ()
 
   return 0;
 }
+
+
+  // for(int i;i<Num_of_Images;i++)
+  // {
+  //   for(int z=0;z<dimensions;z++)
+  //   {
+  //     cout << Images_Array[i][z] << " "; 
+  //   }
+  //   cout << endl;
+  // }
+  // for(int i;i<Num_of_Queries;i++)
+  //     cout << Queries_Array[i][Columns*Rows] << " "; 
+  // cout << endl << endl;

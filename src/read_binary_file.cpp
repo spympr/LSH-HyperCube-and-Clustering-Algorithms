@@ -45,7 +45,7 @@ void Read_BF(item*** Array,int* number_of_images, int* n_cols, int* n_rows, stri
 
         for(int i=0;i<num_of_images;i++)
         {
-            (*Array)[i] = new item[rows*cols+1];
+            (*Array)[i] = new item[(rows*cols)+1];
 
             for(int r=0;r<rows;r++)
             {
