@@ -60,5 +60,14 @@ void Read_BF(item*** Array,int* number_of_images, int* n_cols, int* n_rows, stri
             //In last position store index...
             (*Array)[i][rows*cols] = (item)i;
         }
+
+        for(int i=0;i<num_of_images;i++)
+        {
+            for(int r=0;r<(rows*cols);r++)
+            {
+                    if(i<10)  cout << (*Array)[i][r];
+            }
+            cout << endl << endl;
+        }
     }
 }

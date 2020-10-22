@@ -51,7 +51,7 @@ void LSH::Approximate_Range_Search(int query_index)
     {
         if(Hash_Tables[j][gi_query_values[j]] != NULL)
         {
-            for(int p=0; p<Hash_Tables[j][gi_query_values[j]]->images.size();p++)
+            for(int p=0; p<(Hash_Tables[j][gi_query_values[j]]->images.size());p++)
             {
                 if(ManhattanDistance(Queries_Array[query_index],Hash_Tables[j][gi_query_values[j]]->images[p], dimensions) < R)
                     neighboors.push(Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]);
@@ -60,16 +60,16 @@ void LSH::Approximate_Range_Search(int query_index)
     }
     
     cout << endl << "R-near neighbors:" << endl;
-    cout << neighboors.size() << endl;
-    // if(neighboors.empty())  cout << "None" << endl;
-    // else
-    // {
-    //     for(int k=0;k<neighboors.size();k++)
-    //     { 
-    //         cout << neighboors.top() << endl;
-    //         neighboors.pop();
-    //     }    
-    // }    
+    // cout << neighboors.size() << endl;
+    if(neighboors.empty())  cout << "None" << endl;
+    else
+    {
+        for(int k=0;k<neighboors.size();k++)
+        { 
+            cout << neighboors.top() << endl;
+            neighboors.pop();
+        }    
+    }    
 }
 
 void LSH::InitLSH()
