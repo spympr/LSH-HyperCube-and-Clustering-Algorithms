@@ -16,7 +16,7 @@ int main ()
   mymap['c']=150;
   mymap['d']=200;
 
-  it = mymap.find('e');
+  it = mymap.find('c');
   if (it != mymap.end())
     mymap.erase (it);
   else 
@@ -29,17 +29,17 @@ int main ()
   std::cout << "c => " << mymap.find('c')->second << '\n';
   std::cout << "d => " << mymap.find('d')->second << '\n';
 
-  int a[4];
-  a[0] = 0;
-  a[1] = 1;
-  a[2] = 1;
-  a[3] = 0;
-  int b=0;
+  // int a[4];
+  // a[0] = 1;
+  // a[1] = 0;
+  // a[2] = 0;
+  // a[3] = 1;
+  // int b=0;
 
-  for(int i=0; i<4;i++)
-    b += a[i] << ((4-(i+1)));
+  // for(int i=0; i<4;i++)
+  //   b += a[i] << ((4-(i+1)));
 
-  std::cout << b << std::endl;
+  // std::cout << b << std::endl;
 
   return 0;
 }

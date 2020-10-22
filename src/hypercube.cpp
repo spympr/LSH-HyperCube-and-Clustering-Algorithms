@@ -41,7 +41,8 @@ void HyperCube::InitHyperCube()
     for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new int[N];
 
     //Initialization of m,M...
-    M = pow(2,floor((double)32/(double)k));
+    // M = pow(2,floor((double)32/(double)k));
+    M = 256;
     m = 423255;
     cout << "m " << m << endl;
     cout << "M " << M << endl;
