@@ -43,10 +43,10 @@ void HyperCube::InitHyperCube()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
-    cout << "m " << m << endl;
-    cout << "M " << M << endl;
-    cout << "M_boundary " << M_boundary << endl;
-    cout << "Probes " << probes << endl;
+    cout << "m: " << m << endl;
+    cout << "M: " << M << endl;
+    cout << "M_boundary: " << M_boundary << endl;
+    cout << "Probes: " << probes << endl;
 
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
@@ -65,7 +65,7 @@ void HyperCube::InitHyperCube()
     default_random_engine generator;   
     uniform_int_distribution<int> distribution(0,W);
     
-    //Initialization of L*k*d(imensions) random s_i integers...
+    //Initialization of k*d(imensions) random s_i integers...
     s_i = new int*[k];
     for(int i=0;i<k;i++)
     {
