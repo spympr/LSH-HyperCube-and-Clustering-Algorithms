@@ -1,4 +1,5 @@
 #include "../headers/exhausting.h"
+#include <time.h>
 
 void Bucket::add(item* image)
 {
@@ -32,7 +33,6 @@ int Calculate_hp_LSH(int* a_i, LSH* info)
         temp_term = first_term*second_term;
         sum += mod(temp_term,info->M);
     }
-    // cout << "temp = " << sum << endl;        
     return mod(sum,info->M);
 }
 
@@ -47,7 +47,6 @@ int Calculate_hp_HyperCube(int* a_i, HyperCube* info)
         temp_term = first_term*second_term;
         sum += mod(temp_term,info->M);
     }
-    // cout << "temp = " << sum << endl;        
     return mod(sum,info->M);
 }
 
@@ -82,8 +81,10 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
 
 void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 {
+    default_random_engine generator;   
+    uniform_int_distribution<int> distribution(0,1);
     map<unsigned int,unsigned int>::iterator it;
-    
+
     for(int image=0;image<info->Num_of_Images;image++)
     {
         int h_p[info->k];
@@ -102,8 +103,8 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
             // if(image<10)    cout << h_p[j] << endl;
             it = info->f_i_map[j].find(h_p[j]);
 
-            if(it == info->f_i_map[j].end())    info->f_i_map[j][h_p[j]] = rand() % 2;
-   
+            if(it == info->f_i_map[j].end())    info->f_i_map[j][h_p[j]] = distribution(generator);
+    
             f_i_values[j] = info->f_i_map[j][h_p[j]];
         }
 
@@ -113,6 +114,8 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 
 void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 {
+    default_random_engine generator;   
+    uniform_int_distribution<int> distribution(0,1);
     map<unsigned int,unsigned int>::iterator it;
     
     for(int image=0;image<info->Num_of_Queries;image++)
@@ -134,7 +137,7 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
             it = info->f_i_map[j].find(h_p[j]);
 
             if (it == info->f_i_map[j].end())
-                info->f_i_map[j][h_p[j]] = rand() % 2;
+                info->f_i_map[j][h_p[j]] = distribution(generator);
 
             f_i_values[j] = info->f_i_map[j][h_p[j]];
         }

@@ -18,7 +18,7 @@ class HyperCube
 
         HyperCube(string input_file_,string query_file_,int N_,int k_,int R_,int M_boundary_,int probes_)
         : k(k_),M_boundary(M_boundary_),probes(probes_),R(R_),input_file(input_file_),query_file(query_file_),N(N_)
-        {
+        {            
             InitHyperCube();
         }
 
