@@ -7,7 +7,7 @@
 class HyperCube
 {
     public:
-        int Num_of_Images,Num_of_Queries,k,M,M_boundary,N,probes,R,dimensions,W,HashTableSize;
+        int Num_of_Images,Num_of_Queries,k,m,M,M_boundary,N,probes,R,dimensions,W,HashTableSize;
         int* modulars, *f_i;
         double* tHypercube,*tTrue;
         int **s_i,**True_Distances;

@@ -36,16 +36,14 @@ void HyperCube::InitHyperCube()
     Hash_Table = new Bucket*[HashTableSize];
     for(int i=0;i<HashTableSize;i++)    Hash_Table[i] = NULL;
     
-
     //Initialization of 2D array True_Distances...
     True_Distances = new int*[Num_of_Queries];
     for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new int[N];
 
     //Initialization of m,M...
-    int M = pow(2,floor((double)32/(double)k));
-    int m = 423255;
-    // int m = pow(2,27)+1;
-    // int m = M/3;
+    M = pow(2,floor((double)32/(double)k));
+    m = 423255;
+    cout << "m " << m << endl;
     cout << "M " << M << endl;
 
     //Calculation of m^d-1modM array...
@@ -58,7 +56,7 @@ void HyperCube::InitHyperCube()
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
-    W = 1000;
+    W = 50000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...

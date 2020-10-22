@@ -117,8 +117,8 @@ void LSH::InitLSH()
     for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new int[N];
     
     //Initialization of m,M...
-    int M = pow(2,floor((double)32/(double)k));
-    int m = 423255;
+    M = pow(2,floor((double)32/(double)k));
+    m = 423255;
     // int m = M/3+1;
     // int m = pow(2,27)+1;
     cout << "M " << M << endl;
@@ -135,7 +135,7 @@ void LSH::InitLSH()
     ExhaustingNN(this);
     W = 50000;
     cout << "W: " << W << endl << endl;
-        
+
     //Initialization of uniform_int_distribution class...
     default_random_engine generator;   
     uniform_int_distribution<int> distribution(0,W);
