@@ -26,7 +26,7 @@ class LSH
         }
 
         void Approximate_LSH();
-        void Approximate_Range_Search(int*, int);
+        void Approximate_Range_Search(int);
         void InitLSH();
 };
 

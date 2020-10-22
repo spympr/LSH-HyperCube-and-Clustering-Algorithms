@@ -4,8 +4,6 @@ void LSH::Approximate_LSH()
 {   
     for(int i=0;i<Num_of_Queries;i++)
     {
-        int N_NN_Range_Search[N];
-
         int LSH_nns[N],LSH_Distances[N]; 
         auto start = chrono::high_resolution_clock::now(); 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
@@ -36,21 +34,12 @@ void LSH::Approximate_LSH()
         tLSH[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
         cout << "tLSH: " << tLSH[i] << "ms" << endl << "tTrue: " << tTrue[i] << "ms";
 
-        Approximate_Range_Search(N_NN_Range_Search, i);
-
-        cout << endl;
-        cout << "R-near neighbors:" << endl;
-
-        for(int n=0;n<N;n++)
-        { 
-            if(N_NN_Range_Search[n] != -1) cout << N_NN_Range_Search[n] << endl;
-            else cout << "None\n";
-        }
+        Approximate_Range_Search(i);
     }
     cout << endl;
 }
 
-void LSH::Approximate_Range_Search(int* N_NN_Range_Search, int query_index)
+void LSH::Approximate_Range_Search(int query_index)
 {   
     priority_queue<int, vector<int>, greater<int>> neighboors; 
 
@@ -69,19 +58,18 @@ void LSH::Approximate_Range_Search(int* N_NN_Range_Search, int query_index)
             }
         }
     }
-
-    for(int k=0;k<N;k++)
-    {
-        if(!neighboors.empty())
-        {
-            N_NN_Range_Search[k] = neighboors.top();
-            neighboors.pop();
-        }
-        else
-        {
-            N_NN_Range_Search[k] = -1;
-        }
-    }
+    
+    cout << endl << "R-near neighbors:" << endl;
+    cout << neighboors.size() << endl;
+    // if(neighboors.empty())  cout << "None" << endl;
+    // else
+    // {
+    //     for(int k=0;k<neighboors.size();k++)
+    //     { 
+    //         cout << neighboors.top() << endl;
+    //         neighboors.pop();
+    //     }    
+    // }    
 }
 
 void LSH::InitLSH()
@@ -130,7 +118,7 @@ void LSH::InitLSH()
 
     //Do exhausting search and init W...
     ExhaustingNN(this);
-    W = 50000;
+    W = 10000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
@@ -153,10 +141,16 @@ void LSH::InitLSH()
     for(int i=0;i<L;i++)
     {
         int counter=0;
+        int sum=0;
         for(int j=0;j<HashTableSize;j++)
+        {
             if(Hash_Tables[i][j]!=NULL)
-                counter++;                
-        cout << "HashTable " << i << ": " << counter << endl;
+            {
+                counter++;
+                sum+=Hash_Tables[i][j]->images.size();
+            }                
+        }
+        cout << "HashTable " << i << ": " << counter << ", " << sum << endl;
     }
     cout << endl;
 
