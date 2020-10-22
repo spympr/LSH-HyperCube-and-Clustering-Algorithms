@@ -138,7 +138,7 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 
             f_i_values[j] = info->f_i_map[j][h_p[j]];
         }
-        for(int j=0;j<info->k;j++)  f_i[image] += (f_i_values[j] << ((info->k-(j+1))));                
+        for(int j=0;j<info->k;j++)  f_i[image] += (f_i_values[j] << ((info->k-(j+1))));     
     }
 }
 
