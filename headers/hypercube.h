@@ -2,7 +2,6 @@
 #define HYPERCUBE_H
 
 #include "../headers/exhausting.h"
-#include <map> 
 
 class HyperCube
 {

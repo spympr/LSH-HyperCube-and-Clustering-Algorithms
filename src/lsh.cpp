@@ -1,6 +1,4 @@
 #include "../headers/exhausting.h"
-#include <unordered_set>
-
 
 void LSH::Approximate_LSH()
 {   
@@ -124,8 +122,8 @@ void LSH::InitLSH()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
-    cout << "m " << m << endl;
-    cout << "M " << M << endl;
+    cout << "m: " << m << endl;
+    cout << "M: " << M << endl;
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
