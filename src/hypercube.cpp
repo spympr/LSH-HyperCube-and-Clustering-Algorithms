@@ -150,7 +150,7 @@ void HyperCube::Approximate_Hypercube()
                         int hamming_distance = hammingDistance(fi_query_values[i],j);
                         if(hamming_distance == count_hamming)
                         {
-                            // cout << endl << "bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
+                            // cout << endl << "query_bucket= " << fi_query_values[i]  << " bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
                             for(int p=0;p<Hash_Table[j]->images.size();p++)
                             {
                                 distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Table[j]->images[p], dimensions), (Hash_Table[j]->images[p][dimensions])));

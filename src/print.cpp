@@ -53,7 +53,7 @@ int main ()
   //   b += a[i] << ((4-(i+1)));
 
   // std::cout << b << std::endl;
-  int k=9,l=0;
+  int k=6812,l=6868;
   cout << hammingDistance(k,l) << endl;
 
   return 0;
