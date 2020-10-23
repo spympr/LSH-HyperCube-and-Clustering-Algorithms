@@ -58,7 +58,7 @@ void HyperCube::InitHyperCube()
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
-    W = 20000;
+    W = 50000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
@@ -184,13 +184,12 @@ void HyperCube::Approximate_Hypercube()
         tHypercube[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
         cout << "tHypercube: " << tHypercube[i] << "ms" << endl << "tTrue: " << tTrue[i] << "ms";
 
-        Approximate_Range_Search(fi_query_values[i]);
+        Approximate_Range_Search(i,fi_query_values[i]);
     }
 }
 
-void HyperCube::Approximate_Range_Search(unsigned int fi_query_value)
+void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_value)
 {
-
     auto start = chrono::high_resolution_clock::now();
     int HyperCube_nns[N], count_hamming=1,count_images=0, count_probes=0; 
     priority_queue<int, vector<int>, greater<int>> neighboors;
@@ -199,10 +198,8 @@ void HyperCube::Approximate_Range_Search(unsigned int fi_query_value)
     {
         for(int p=0;p<Hash_Table[fi_query_value]->images.size();p++)
         {
-            if(ManhattanDistance(Queries_Array[fi_query_value],Hash_Table[fi_query_value]->images[p], dimensions) < R)
-            {
+            if(ManhattanDistance(Queries_Array[query_index],Hash_Table[fi_query_value]->images[p], dimensions) < R)
                 neighboors.push((Hash_Table[fi_query_value]->images[p][dimensions]));
-            }
             count_images++;
             // cout << count_images << " ";
             if(count_images == M_boundary)  break;
@@ -223,9 +220,9 @@ void HyperCube::Approximate_Range_Search(unsigned int fi_query_value)
                         // cout << endl << "bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
                         for(int p=0;p<Hash_Table[j]->images.size();p++)
                         {
-                            if(ManhattanDistance(Queries_Array[fi_query_value],Hash_Table[fi_query_value]->images[p], dimensions) < R)
+                            if(ManhattanDistance(Queries_Array[query_index],Hash_Table[j]->images[p], dimensions) < R)
                             {
-                                neighboors.push((Hash_Table[fi_query_value]->images[p][dimensions]));
+                                neighboors.push((Hash_Table[j]->images[p][dimensions]));
                             }
                             count_images++;
                             if(count_images == M_boundary)  break;
