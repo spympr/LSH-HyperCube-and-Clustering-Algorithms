@@ -26,11 +26,11 @@ int main(int argc, char** argv)
     }
     else
     {
-        if(strcmp(argv[0],"./lsh") == 0)
+        if(strcmp(argv[0],"./executable/lsh") == 0)
         {
             if(argc!=15 && argc!=7)   
             {
-                cout << endl << "Please give an input with this form: ./lsh  –d  <input  file>  –q  <query  file>  –k  <int>  -L  <int>  -ο  <output  file>  -Ν<number of nearest> -R <radius>\n";
+                cout << endl << "Please give an input with this form: ./executable/lsh  –d  <input  file>  –q  <query  file>  –k  <int>  -L  <int>  -ο  <output  file>  -Ν<number of nearest> -R <radius>\n";
                 return -1;
             }
 
@@ -57,15 +57,15 @@ int main(int argc, char** argv)
                     R = atoi(argv[i+1]);
                 else
                 {
-                    cout << "Please give an input with this form: ./lsh  –d  <input  file>  –q  <query  file>  –k  <int>  -L  <int>  -ο  <output  file>  -Ν<number of nearest> -R <radius>\n";
+                    cout << "Please give an input with this form: ./executable/lsh  –d  <input  file>  –q  <query  file>  –k  <int>  -L  <int>  -ο  <output  file>  -Ν<number of nearest> -R <radius>\n";
                 }
             }
         }
-        else if(strcmp(argv[0],"./cube") == 0)
+        else if(strcmp(argv[0],"./executable/cube") == 0)
         {
             if(argc!=17 && argc!=7)    
             {
-                cout << endl << "Please give an input with this form: ./cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο <output file> -Ν <number of nearest> -R <radius>\n";
+                cout << endl << "Please give an input with this form: ./executable/cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο <output file> -Ν <number of nearest> -R <radius>\n";
                 return -1;
             }
 
@@ -95,7 +95,7 @@ int main(int argc, char** argv)
                     N = atoi(argv[i+1]);
                 else
                 {
-                    cout << "Please give an input with this form: ./cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο<output file> -Ν <number of nearest> -R <radius>\n";
+                    cout << "Please give an input with this form: ./executable/cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο<output file> -Ν <number of nearest> -R <radius>\n";
                 }
             }
         }
@@ -103,9 +103,9 @@ int main(int argc, char** argv)
 
     while(true)
     {
-        if(strcmp(argv[0],"./lsh") == 0)    LSH lsh(input_file,query_file,L,N,k,R);            
-        else if(strcmp(argv[0],"./cube") == 0)    HyperCube cube(input_file,query_file,N,k,R,M,probes);            
-        else if(strcmp(argv[0],"./cluster") == 0)   cout << "under construction..." << endl;
+        if(strcmp(argv[0],"./executable/lsh") == 0)    LSH lsh(input_file,query_file,L,N,k,R);            
+        else if(strcmp(argv[0],"./executable/cube") == 0)    HyperCube cube(input_file,query_file,N,k,R,M,probes);            
+        else if(strcmp(argv[0],"./executable/cluster") == 0)   cout << "under construction..." << endl;
         
         cout << endl << "Do you want to question something else?\n";
         cin >> answer;

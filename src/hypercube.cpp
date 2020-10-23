@@ -17,7 +17,7 @@ void HyperCube::InitHyperCube()
 {
     //Declaration of variables...
     int Rows,Columns;
-
+    
     //Read input binary file...
     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
@@ -25,7 +25,7 @@ void HyperCube::InitHyperCube()
     Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
 
     //Printing...
-    cout << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
+    cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
 
     //Initilization of dimensions of each Image,k, HashTableSize...
     // k = (int)(floor(double(log2(Num_of_Images) - (rand() % 3 +1))));

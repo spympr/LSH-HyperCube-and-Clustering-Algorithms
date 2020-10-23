@@ -99,7 +99,7 @@ void LSH::InitLSH()
     Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
 
     //Printing...
-    cout << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
+    cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
     
     //Initilization of W(grid), dimensions of each Image...
     dimensions = Columns*Rows;
