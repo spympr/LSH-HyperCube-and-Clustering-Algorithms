@@ -81,8 +81,6 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
 
 void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 {
-    default_random_engine generator;   
-    uniform_int_distribution<int> distribution(0,1);
     map<unsigned int,unsigned int>::iterator it;
 
     for(int image=0;image<info->Num_of_Images;image++)
@@ -101,9 +99,10 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
             // cout << endl;
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
             // if(image<10)    cout << h_p[j] << endl;
-            it = info->f_i_map[j].find(h_p[j]);
+            
+            // it = info->f_i_map[j].find(h_p[j]);
 
-            if(it == info->f_i_map[j].end())    info->f_i_map[j][h_p[j]] = distribution(generator);
+            // if(it == info->f_i_map[j].end())    info->f_i_map[j][h_p[j]] = distribution(generator);
     
             f_i_values[j] = info->f_i_map[j][h_p[j]];
         }
@@ -114,8 +113,6 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 
 void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 {
-    default_random_engine generator;   
-    uniform_int_distribution<int> distribution(0,1);
     map<unsigned int,unsigned int>::iterator it;
     
     for(int image=0;image<info->Num_of_Queries;image++)
@@ -134,10 +131,9 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
             // cout << endl;
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
             
-            it = info->f_i_map[j].find(h_p[j]);
+            // it = info->f_i_map[j].find(h_p[j]);
 
-            if (it == info->f_i_map[j].end())
-                info->f_i_map[j][h_p[j]] = distribution(generator);
+            // if (it == info->f_i_map[j].end())   info->f_i_map[j][h_p[j]] = distribution(generator);
 
             f_i_values[j] = info->f_i_map[j][h_p[j]];
         }
@@ -207,6 +203,21 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
     for(int i=0;i<info->Num_of_Images;i++)  f_i[i] = 0;
 
     info->f_i_map = new map<unsigned int, unsigned int>[info->k];
+
+    //Initialization of map...
+    default_random_engine generator;   
+    uniform_int_distribution<int> distribution(0,1);
+    
+    for(int i=0;i<info->k;i++)
+    {
+        cout << "Map " << i << endl;
+        for(int j=0;j<info->M;j++)    
+        {        
+            info->f_i_map[i][j] = distribution(generator);
+            cout << info->f_i_map[i][j] << " ";
+        }
+        cout << endl << "=======================================" << endl;
+    }
 
     //Call function so as to compute all f_i values...
     fi_values_of_train(info,f_i);

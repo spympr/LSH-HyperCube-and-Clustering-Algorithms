@@ -81,3 +81,14 @@ int main ()
     //     if(i<4) cout << endl;
     // }
     // cout << endl;
+
+    // map<unsigned int,unsigned int>::iterator it;
+    // for(int i=0;i<k;i++)
+    // {
+    //     cout << "Map " << i << endl;
+    //     for(auto it = f_i_map[i].cbegin(); it != f_i_map[i].cend(); ++it)        
+    //     {
+    //         cout << it->first << " " << it->second << endl;
+    //     }
+    //     cout << "=======================================" << endl;
+    // }
