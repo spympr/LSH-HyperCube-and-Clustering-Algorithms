@@ -51,6 +51,7 @@ void LSH::Approximate_LSH()
 void LSH::Approximate_Range_Search(int query_index)
 {   
     priority_queue<int, vector<int>, greater<int>> neighboors; 
+    unordered_set<int> indexes_of_images;
 
     unsigned int gi_query_values[L];
 
@@ -63,7 +64,13 @@ void LSH::Approximate_Range_Search(int query_index)
             for(int p=0; p<(Hash_Tables[j][gi_query_values[j]]->images.size());p++)
             {
                 if(ManhattanDistance(Queries_Array[query_index],Hash_Tables[j][gi_query_values[j]]->images[p], dimensions) < R)
-                    neighboors.push(Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]);
+                {
+                    if(indexes_of_images.find((Hash_Tables[j][gi_query_values[j]]->images[p][dimensions])) == indexes_of_images.end())
+                    {
+                        indexes_of_images.insert((Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]));
+                        neighboors.push(Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]);
+                    }
+                }
             }
         }
     }
