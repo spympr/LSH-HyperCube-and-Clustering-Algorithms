@@ -25,5 +25,7 @@ class HyperCube
         int hammingDistance(int , int );
         void InitHyperCube();
         void Approximate_Hypercube();
+        void Approximate_Range_Search(unsigned int);
+
 };
 #endif

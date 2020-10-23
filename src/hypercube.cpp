@@ -183,5 +183,72 @@ void HyperCube::Approximate_Hypercube()
 
         tHypercube[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
         cout << "tHypercube: " << tHypercube[i] << "ms" << endl << "tTrue: " << tTrue[i] << "ms";
+
+        Approximate_Range_Search(fi_query_values[i]);
     }
+}
+
+void HyperCube::Approximate_Range_Search(unsigned int fi_query_value)
+{
+
+    auto start = chrono::high_resolution_clock::now();
+    int HyperCube_nns[N], count_hamming=1,count_images=0, count_probes=0; 
+    priority_queue<int, vector<int>, greater<int>> neighboors;
+
+    if(Hash_Table[fi_query_value] != NULL)
+    {
+        for(int p=0;p<Hash_Table[fi_query_value]->images.size();p++)
+        {
+            if(ManhattanDistance(Queries_Array[fi_query_value],Hash_Table[fi_query_value]->images[p], dimensions) < R)
+            {
+                neighboors.push((Hash_Table[fi_query_value]->images[p][dimensions]));
+            }
+            count_images++;
+            // cout << count_images << " ";
+            if(count_images == M_boundary)  break;
+        }
+        // cout << endl;
+    }
+    if((Hash_Table[fi_query_value] == NULL) || (count_images < M_boundary))
+    {
+        while((count_probes < probes) && (count_images < M_boundary))
+        {
+            for(int j=0;j<HashTableSize;j++)
+            {
+                if(Hash_Table[j] != NULL)
+                {
+                    int hamming_distance = hammingDistance(fi_query_value,j);
+                    if(hamming_distance == count_hamming)
+                    {
+                        // cout << endl << "bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
+                        for(int p=0;p<Hash_Table[j]->images.size();p++)
+                        {
+                            if(ManhattanDistance(Queries_Array[fi_query_value],Hash_Table[fi_query_value]->images[p], dimensions) < R)
+                            {
+                                neighboors.push((Hash_Table[fi_query_value]->images[p][dimensions]));
+                            }
+                            count_images++;
+                            if(count_images == M_boundary)  break;
+                        }
+                        count_probes++;
+                    }
+                }
+                if(count_images == M_boundary)  break;
+            }
+            count_hamming++;
+        }
+    }
+
+    auto end = chrono::high_resolution_clock::now(); 
+
+    cout << endl << "R-near neighbors:" << endl;
+    if(neighboors.empty())  cout << "None" << endl;
+    else
+    {
+        for(int k=0;k<neighboors.size();k++)
+        { 
+            cout << neighboors.top() << endl;
+            neighboors.pop();
+        }    
+    }  
 }
