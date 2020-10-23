@@ -30,7 +30,7 @@ int main(int argc, char** argv)
         {
             if(argc!=15 && argc!=7)   
             {
-                cout << "Please give an input with this form: ./lsh  –d  <input  file>  –q  <query  file>  –k  <int>  -L  <int>  -ο  <output  file>  -Ν<number of nearest> -R <radius>\n";
+                cout << endl << "Please give an input with this form: ./lsh  –d  <input  file>  –q  <query  file>  –k  <int>  -L  <int>  -ο  <output  file>  -Ν<number of nearest> -R <radius>\n";
                 return -1;
             }
 
@@ -65,7 +65,7 @@ int main(int argc, char** argv)
         {
             if(argc!=17 && argc!=7)    
             {
-                cout << "Please give an input with this form: ./cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο <output file> -Ν <number of nearest> -R <radius>\n";
+                cout << endl << "Please give an input with this form: ./cube  –d  <input  file>  –q  <query  file>  –k  <int>  -M  <int>  -probes  <int>  -ο <output file> -Ν <number of nearest> -R <radius>\n";
                 return -1;
             }
 
