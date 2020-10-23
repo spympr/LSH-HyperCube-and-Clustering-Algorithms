@@ -86,6 +86,15 @@ void HyperCube::InitHyperCube()
 
     Approximate_Hypercube();
 
+    map<unsigned int,unsigned int>::iterator it;
+    for(int i=0;i<k;i++)
+    {
+        for(auto it = f_i_map[i].cbegin(); it != f_i_map[i].cend(); ++it)        
+        {
+            cout << it->first << " " << it->second << endl;
+        }
+        cout << "=======================================" << endl;
+    }
     //Deallocation of memory of Images_Array...
     for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
     delete [] Images_Array;
