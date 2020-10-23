@@ -118,7 +118,7 @@ void LSH::InitLSH()
 
     //Do exhausting search and init W...
     ExhaustingNN(this);
-    W = 20000;
+    W = 50000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
