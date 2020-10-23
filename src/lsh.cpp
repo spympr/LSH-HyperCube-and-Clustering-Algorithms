@@ -76,7 +76,6 @@ void LSH::Approximate_Range_Search(int query_index)
     }
     
     cout << endl << "R-near neighbors:" << endl;
-    // cout << neighboors.size() << endl;
     if(neighboors.empty())  cout << "None" << endl;
     else
     {
