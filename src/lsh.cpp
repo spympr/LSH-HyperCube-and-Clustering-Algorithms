@@ -1,5 +1,85 @@
 #include "../headers/exhausting.h"
 
+int LSH::get_dimensions()
+{
+    return dimensions;
+}
+
+int LSH::get_M()
+{
+    return M;
+}
+
+int LSH::get_N()
+{
+    return N;
+}
+
+int LSH::get_k()
+{
+    return k;
+}
+
+int LSH::get_L()
+{
+    return L;
+}
+
+int LSH::get_W()
+{
+    return W;
+}
+
+int LSH::get_HashTableSize()
+{
+    return HashTableSize;
+}
+
+int LSH::get_Num_of_Images()
+{
+    return Num_of_Images;
+}
+
+int LSH::get_Num_of_Queries()
+{
+    return Num_of_Queries;
+}
+
+int* LSH::get_modulars()
+{
+    return modulars;
+}
+
+int** LSH::get_s_i()
+{
+    return s_i;
+}
+
+double* LSH::get_tTrue()
+{
+    return tTrue;
+}
+
+int** LSH::get_True_Distances()
+{
+    return True_Distances;
+}
+
+item** LSH::get_Images_Array()
+{
+    return Images_Array;
+}
+
+item** LSH::get_Queries_Array()
+{
+    return Queries_Array;
+}
+
+Bucket*** LSH::get_Hash_Tables()
+{
+    return Hash_Tables;
+}
+
 void LSH::Approximate_LSH()
 {   
     for(int i=0;i<Num_of_Queries;i++)

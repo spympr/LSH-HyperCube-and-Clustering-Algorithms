@@ -26,14 +26,14 @@ int Calculate_hp_LSH(int* a_i, LSH* info)
 {
     unsigned int sum = 0,first_term,second_term,temp_term;
 
-    for(int i=1; i<=info->dimensions;i++)
+    for(int i=1; i<=info->get_dimensions();i++)
     {
-        first_term = mod(a_i[info->dimensions-i],info->M);
-        second_term = info->modulars[i-1];
+        first_term = mod(a_i[info->get_dimensions()-i],info->get_M());
+        second_term = info->get_modulars()[i-1];
         temp_term = first_term*second_term;
-        sum += mod(temp_term,info->M);
+        sum += mod(temp_term,info->get_M());
     }
-    return mod(sum,info->M);
+    return mod(sum,info->get_M());
 }
 
 int Calculate_hp_HyperCube(int* a_i, HyperCube* info)
@@ -52,29 +52,29 @@ int Calculate_hp_HyperCube(int* a_i, HyperCube* info)
 
 void gi_values_of_train(LSH* info,unsigned int** g_i)
 {
-    for(int image=0;image<info->Num_of_Images;image++)
+    for(int image=0;image<info->get_Num_of_Images();image++)
     {
-        for(int i=0;i<info->L;i++)
+        for(int i=0;i<info->get_L();i++)
         {
-            int h_p[info->k];
-            for(int j=0;j<info->k;j++)
+            int h_p[info->get_k()];
+            for(int j=0;j<info->get_k();j++)
             {
-                int a_i[info->dimensions];
+                int a_i[info->get_dimensions()];
 
-                for(int z=0;z<info->dimensions;z++)
+                for(int z=0;z<info->get_dimensions();z++)
                 {
-                    a_i[z] = floor((double)((info->Images_Array[image][z] - info->s_i[(i*info->k)+j][z]))/(double)(info->W));
+                    a_i[z] = floor((double)((info->get_Images_Array()[image][z] - info->get_s_i()[(i*info->get_k())+j][z]))/(double)(info->get_W()));
                     // cout << a_i[z] << " ";
                 }
                 // cout << endl;
                 h_p[j] = Calculate_hp_LSH(a_i,info);
                 // if(image<10)    cout << h_p[j] << endl;
             }
-            for(int j=0;j<info->k;j++)
+            for(int j=0;j<info->get_k();j++)
             {
-                g_i[image][i] += (h_p[j] << ((info->k-(j+1))*8));                
+                g_i[image][i] += (h_p[j] << ((info->get_k()-(j+1))*8));                
             }
-            g_i[image][i] = g_i[image][i]%(info->HashTableSize);
+            g_i[image][i] = g_i[image][i]%(info->get_HashTableSize());
         }
     }
 }
@@ -143,55 +143,55 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 
 void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
 {
-    for(int i=0;i<info->L;i++)
+    for(int i=0;i<info->get_L();i++)
     {
         gi_query_values[i] = 0;
 
-        int h_p[info->k];
-        for(int j=0;j<info->k;j++)
+        int h_p[info->get_k()];
+        for(int j=0;j<info->get_k();j++)
         {
-            int a_i[info->dimensions];
+            int a_i[info->get_dimensions()];
 
-            for(int z=0;z<info->dimensions;z++)
+            for(int z=0;z<info->get_dimensions();z++)
             {
-                a_i[z] = floor((double)(info->Queries_Array[query][z] - info->s_i[i*info->k+j][z])/(double)(info->W));
+                a_i[z] = floor((double)(info->get_Queries_Array()[query][z] - info->get_s_i()[i*info->get_k()+j][z])/(double)(info->get_W()));
             }
             h_p[j] = Calculate_hp_LSH(a_i,info);
         }
         
-        for(int j=0;j<info->k;j++)
+        for(int j=0;j<info->get_k();j++)
         {
-            gi_query_values[i] += (h_p[j] << ((info->k-(j+1))*8));                
+            gi_query_values[i] += (h_p[j] << ((info->get_k()-(j+1))*8));                
         }
-        gi_query_values[i] = gi_query_values[i]%(info->HashTableSize);
+        gi_query_values[i] = gi_query_values[i]%(info->get_HashTableSize());
     }
 }
 
 void Insert_Images_To_Buckets_LSH(LSH* info)
 {
     //Allocate memory so as to store temporarily g_i values...
-    unsigned int** g_i = new unsigned int*[info->Num_of_Images];
-    for(int i=0;i<info->Num_of_Images;i++)  
+    unsigned int** g_i = new unsigned int*[info->get_Num_of_Images()];
+    for(int i=0;i<info->get_Num_of_Images();i++)  
     {
-        g_i[i] = new unsigned int[info->L];
-        for(int j=0;j<info->L;j++)  g_i[i][j]=0;
+        g_i[i] = new unsigned int[info->get_L()];
+        for(int j=0;j<info->get_L();j++)  g_i[i][j]=0;
     }
 
     //Call function so as to compute all g_i values...
     gi_values_of_train(info,g_i);
     
     //Fill buckets of Hash_Table...
-    for(int i=0;i<info->Num_of_Images;i++)
+    for(int i=0;i<info->get_Num_of_Images();i++)
     {
-        for(int j=0;j<info->L;j++)
+        for(int j=0;j<info->get_L();j++)
         {
-            if(info->Hash_Tables[j][g_i[i][j]]==NULL)  info->Hash_Tables[j][g_i[i][j]] = new Bucket();
-            info->Hash_Tables[j][g_i[i][j]]->add(info->Images_Array[i]);    
+            if(info->get_Hash_Tables()[j][g_i[i][j]]==NULL)  info->get_Hash_Tables()[j][g_i[i][j]] = new Bucket();
+            info->get_Hash_Tables()[j][g_i[i][j]]->add(info->get_Images_Array()[i]);    
         }
     }
 
     //Deallocation of memory...
-    for(int i=0;i<info->Num_of_Images;i++)  
+    for(int i=0;i<info->get_Num_of_Images();i++)  
         delete [] g_i[i];
     delete [] g_i;
 }
