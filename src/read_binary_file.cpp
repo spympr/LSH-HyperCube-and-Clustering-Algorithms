@@ -67,7 +67,7 @@ void Read_BF(item*** Array,int* number_of_images, int* n_cols, int* n_rows, stri
             {
                 if(i<1)  cout << (*Array)[i][r] << " ";
             }
+            // cout << endl;
         }
-        cout << endl;
     }
 }
