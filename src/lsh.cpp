@@ -39,13 +39,17 @@ void LSH::Approximate_LSH()
             cout << "Nearest neighbor-" << k+1 << ": " << LSH_nns[k] << endl;
             cout << "distanceLSH: " << LSH_Distances[k] << endl;
             cout << "distanceTrue: " << True_Distances[i][k] << endl << endl;
+            dist_error += (double)(LSH_Distances[k]-True_Distances[i][k])/(double)True_Distances[i][k];
         }
         tLSH[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
         cout << "tLSH: " << tLSH[i] << "ms" << endl << "tTrue: " << tTrue[i] << "ms";
+        time_error += tLSH[i]/tTrue[i];
 
         Approximate_Range_Search(i);
     }
-    cout << endl;
+
+    cout << endl << "LSH Mean Distance Error: " << dist_error/(double)(Num_of_Queries*N) << endl;
+    cout << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
 }
 
 void LSH::Approximate_Range_Search(int query_index)

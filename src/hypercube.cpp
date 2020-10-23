@@ -179,13 +179,18 @@ void HyperCube::Approximate_Hypercube()
             cout << "Nearest neighbor-" << k+1 << ": " << HyperCube_nns[k] << endl;
             cout << "distanceHyperCube: " << HyperCube_Distances[k] << endl;
             cout << "distanceTrue: " << True_Distances[i][k] << endl << endl;
+            dist_error += (double)(HyperCube_Distances[k]-True_Distances[i][k])/(double)True_Distances[i][k];
         }
 
         tHypercube[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
         cout << "tHypercube: " << tHypercube[i] << "ms" << endl << "tTrue: " << tTrue[i] << "ms";
+        time_error += tHypercube[i]/tTrue[i];
 
         Approximate_Range_Search(i,fi_query_values[i]);
     }
+
+    cout << endl << "HyperCube's Mean Distance Error: " << dist_error/(double)(Num_of_Queries*N) << endl;
+    cout << endl << "tHyperCube/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
 }
 
 void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_value)
