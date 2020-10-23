@@ -1,7 +1,7 @@
 #ifndef LSH_H
 #define LSH_H
 
-#include "../headers/exhausting.h"
+#include "../headers/exhausting.h" 
 
 using namespace std;
 
