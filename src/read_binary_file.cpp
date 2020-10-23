@@ -47,27 +47,16 @@ void Read_BF(item*** Array,int* number_of_images, int* n_cols, int* n_rows, stri
         {
             (*Array)[i] = new item[(rows*cols)+1];
 
-            for(int r=0;r<rows;r++)
+            for(int z=0;z<rows*cols;z++)
             {
-                for(int c=0;c<cols;c++)
-                {
                     //Read each integer of binary file and store him into our array.
                     unsigned char temp=0;
                     file.read((char*)&temp,sizeof(temp));
-                    (*Array)[i][(rows*r)+c] = (item)temp;
-                }
+                    (*Array)[i][z] = (item)temp;
             }
+            
             //In last position store index...
             (*Array)[i][rows*cols] = (item)i;
-        }
-
-        for(int i=0;i<num_of_images;i++)
-        {
-            for(int r=0;r<=rows*cols;r++)
-            {
-                if(i<1)  cout << (*Array)[i][r] << " ";
-            }
-            // cout << endl;
         }
     }
 }

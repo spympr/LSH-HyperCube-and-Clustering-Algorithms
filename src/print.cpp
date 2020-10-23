@@ -71,3 +71,13 @@ int main ()
   // for(int i;i<Num_of_Queries;i++)
   //     cout << Queries_Array[i][Columns*Rows] << " "; 
   // cout << endl << endl;
+
+    // for(int i=0;i<Num_of_Images;i++)
+    // {
+    //     for(int r=0;r<=Rows*Columns;r++)
+    //     {
+    //         if(i<4)  cout << Images_Array[i][r] << " ";
+    //     }
+    //     if(i<4) cout << endl;
+    // }
+    // cout << endl;
