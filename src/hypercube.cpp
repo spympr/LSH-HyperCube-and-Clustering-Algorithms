@@ -28,7 +28,6 @@ void HyperCube::InitHyperCube()
     cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
 
     //Initilization of dimensions of each Image,k, HashTableSize...
-    // k = (int)(floor(double(log2(Num_of_Images) - (rand() % 3 +1))));
     dimensions = Rows*Columns;
     HashTableSize = pow(2,k);
 
