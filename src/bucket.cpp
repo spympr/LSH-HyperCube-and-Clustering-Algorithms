@@ -216,7 +216,7 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
             info->f_i_map[i][j] = distribution(generator);
             cout << info->f_i_map[i][j] << " ";
         }
-        cout << endl << "=======================================" << endl;
+        cout << endl << "=======" << endl;
     }
 
     //Call function so as to compute all f_i values...
