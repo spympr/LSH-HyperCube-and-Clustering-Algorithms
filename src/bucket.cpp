@@ -81,7 +81,7 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
 
 void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 {
-    map<unsigned int,unsigned int>::iterator it;
+    // map<unsigned int,unsigned int>::iterator it;
 
     for(int image=0;image<info->get_Num_of_Images();image++)
     {
@@ -113,7 +113,7 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 
 void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 {
-    map<unsigned int,unsigned int>::iterator it;
+    // map<unsigned int,unsigned int>::iterator it;
     
     for(int image=0;image<info->get_Num_of_Queries();image++)
     {
