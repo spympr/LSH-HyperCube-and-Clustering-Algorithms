@@ -1,4 +1,6 @@
 #include "../headers/exhausting.h"
+#include <unordered_set>
+
 
 void LSH::Approximate_LSH()
 {   
@@ -7,6 +9,7 @@ void LSH::Approximate_LSH()
         int LSH_nns[N],LSH_Distances[N]; 
         auto start = chrono::high_resolution_clock::now(); 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
+        unordered_set<int> indexes_of_images;
 
         unsigned int gi_query_values[L];
         
@@ -15,7 +18,13 @@ void LSH::Approximate_LSH()
         for(int j=0;j<L;j++)
             if(Hash_Tables[j][gi_query_values[j]] != NULL)
                 for(int p=0;p<Hash_Tables[j][gi_query_values[j]]->images.size();p++)
-                    distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Tables[j][gi_query_values[j]]->images[p], dimensions), (Hash_Tables[j][gi_query_values[j]]->images[p][dimensions])));
+                {
+                    if(indexes_of_images.find((Hash_Tables[j][gi_query_values[j]]->images[p][dimensions])) == indexes_of_images.end())
+                    {
+                        indexes_of_images.insert((Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]));
+                        distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Tables[j][gi_query_values[j]]->images[p], dimensions), (Hash_Tables[j][gi_query_values[j]]->images[p][dimensions])));
+                    }
+                }
 
         auto end = chrono::high_resolution_clock::now(); 
         
