@@ -58,7 +58,7 @@ void HyperCube::InitHyperCube()
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
-    W = 10000;
+    W = 50000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
