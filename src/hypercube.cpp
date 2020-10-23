@@ -1,5 +1,95 @@
 #include "../headers/exhausting.h"
 
+int HyperCube::get_dimensions()
+{
+    return dimensions;
+}
+
+int HyperCube::get_M_boundary()
+{
+    return M_boundary;
+}
+
+int HyperCube::get_k()
+{
+    return k;
+}
+
+int HyperCube::get_M()
+{
+    return M;
+}
+
+int HyperCube::get_R()
+{
+    return R;
+}
+
+int HyperCube::get_N()
+{
+    return N;
+}
+
+int HyperCube::get_W()
+{
+    return W;
+}
+
+int HyperCube::get_HashTableSize()
+{
+    return HashTableSize;
+}
+
+int HyperCube::get_Num_of_Images()
+{
+    return Num_of_Images;
+}
+
+int HyperCube::get_Num_of_Queries()
+{
+    return Num_of_Queries;
+}
+
+int* HyperCube::get_modulars()
+{
+    return modulars;
+}
+
+int** HyperCube::get_s_i()
+{
+    return s_i;
+}
+
+double* HyperCube::get_tTrue()
+{
+    return tTrue;
+}
+
+int** HyperCube::get_True_Distances()
+{
+    return True_Distances;
+}
+
+map<unsigned int,unsigned int>* HyperCube::get_f_i_map()
+{
+    return f_i_map;
+}
+
+item** HyperCube::get_Images_Array()
+{
+    return Images_Array;
+}
+
+item** HyperCube::get_Queries_Array()
+{
+    return Queries_Array;
+}
+
+Bucket** HyperCube::get_Hash_Table()
+{
+    return Hash_Table;
+}
+
 int HyperCube::hammingDistance(int n1, int n2) 
 { 
     int x = n1 ^ n2; 

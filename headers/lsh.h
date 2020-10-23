@@ -29,6 +29,7 @@ class LSH
         void Approximate_LSH();
         void Approximate_Range_Search(int);
         void InitLSH();
+        
         int get_dimensions();
         int get_M();
         int get_k();
