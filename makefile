@@ -1,26 +1,26 @@
-lsh: main.o read_binary_file.o bucket.o exhausting.o lsh.o hypercube.o
-	g++ main.o read_binary_file.o bucket.o exhausting.o lsh.o hypercube.o -o lsh
+lsh: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o
+	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o -o executable/lsh
 
-cube: main.o read_binary_file.o bucket.o exhausting.o lsh.o hypercube.o
-	g++ main.o read_binary_file.o bucket.o exhausting.o lsh.o hypercube.o -o cube
+cube: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o
+	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o -o executable/cube
 
-main.o:	src/main.cpp 
-	g++ -c src/main.cpp
+build/main.o: src/main.cpp 
+	g++ -c src/main.cpp -o build/main.o
 
-read_binary_file.o:	src/read_binary_file.cpp headers/read_binary_file.h
-	g++ -c src/read_binary_file.cpp
+build/read_binary_file.o: src/read_binary_file.cpp headers/read_binary_file.h
+	g++ -c src/read_binary_file.cpp -o build/read_binary_file.o
 
-bucket.o: src/bucket.cpp headers/bucket.h
-	g++ -c src/bucket.cpp
+build/bucket.o: src/bucket.cpp headers/bucket.h
+	g++ -c src/bucket.cpp -o build/bucket.o
 
-exhausting.o: src/exhausting.cpp headers/exhausting.h
-	g++ -c src/exhausting.cpp
+build/exhausting.o: src/exhausting.cpp headers/exhausting.h
+	g++ -c src/exhausting.cpp -o build/exhausting.o
 
-lsh.o: src/lsh.cpp headers/lsh.h
-	g++ -c src/lsh.cpp 
+build/lsh.o: src/lsh.cpp headers/lsh.h
+	g++ -c src/lsh.cpp -o build/lsh.o
 
-hypercube.o: src/hypercube.cpp headers/hypercube.h
-	g++ -c src/hypercube.cpp
+build/hypercube.o: src/hypercube.cpp headers/hypercube.h
+	g++ -c src/hypercube.cpp -o build/hypercube.o
 	
 clean:
-	rm cube lsh *.o
+	rm executable/cube executable/lsh build/*.o
