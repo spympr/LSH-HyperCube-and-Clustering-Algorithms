@@ -120,8 +120,7 @@ void kmeans::centroid_initialization()
     default_random_engine generator;   
     uniform_int_distribution<int> distribution(0,number_of_images-1);
 
-    int first_centroid = distribution(generator);
-    centroids[0] = first_centroid;
+    centroids[0] = distribution(generator);
     
     for(int centroid=0;centroid<K;centroid++)
     {
@@ -135,9 +134,9 @@ void kmeans::centroid_initialization()
             min_distance=pow(2,25);
             for(int j=0;j<=centroid;j++)
             {
-                int distance = ManhattanDistance(Images_Array[i], Images_Array[centroids[centroid]],dimensions);
+                int distance = ManhattanDistance(Images_Array[i], Images_Array[centroids[j]],dimensions);
                 if(distance < min_distance)  min_distance = distance;
-                if(j == (K-1) )  break;
+                // if(j == (centroid-1) )  break;
             }
             D_i[i] = min_distance;
             distances.push(min_distance);
@@ -147,18 +146,16 @@ void kmeans::centroid_initialization()
         P_r[0] = pow(((float)(D_i[0])/(float)max_Di),2);
 
         for(int r=1;r<number_of_images;r++)
-        {
             P_r[r] = P_r[r-1] + pow(((float)(D_i[r])/(float)max_Di),2);
-        }
     
         default_random_engine generator;   
         uniform_int_distribution<float> distribution(0,P_r[number_of_images-1]);
 
         float x = distribution(generator);
 
-        for(int r=1;r<number_of_images;r++)
-            if((P_r[r-1] < x) && (x <= P_r[r]))  
-                centroids[centroid++] = r;
+        for(int r=0;r<number_of_images;r++)
+            if((P_r[r] - x) >=0)  
+                centroids[centroid+1] = r;
     }
 }
 
