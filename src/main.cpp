@@ -131,7 +131,7 @@ int main(int argc, char** argv)
         else if(strcmp(argv[0],"./cube") == 0)    HyperCube cube(input_file,query_file,N,k,R,M,probes);            
         else if(strcmp(argv[0],"./cluster") == 0)   
         {
-            if(strcmp(method.c_str(),"Classic") == 0)   Lloyd_Cluster Lloyd(configuration_file);
+            if(strcmp(method.c_str(),"Classic") == 0)   Lloyd_Cluster Lloyd(configuration_file,complete);
             else if(strcmp(method.c_str(),"LSH") == 0)  cout << " ";
             else if(strcmp(method.c_str(),"Hypercube") == 0) cout << " ";
             else

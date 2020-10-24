@@ -7,17 +7,17 @@ class Lloyd_Cluster
 {
     private:
         int dimensions,number_of_images,cols,rows;
-        string input_file;
+        string input_file,complete;
         item** Images_Array;
         kmeans* init;
         
     public:
-        Lloyd_Cluster(string conf)
+        Lloyd_Cluster(string conf,string comp):complete(comp)
         {   
             Read_BF(&Images_Array,&number_of_images,&cols,&rows,input_file,1);
             dimensions = cols*rows;
             init = new kmeans(Images_Array,conf);
-            // Lloyd_clustering();
+            Lloyd_clustering();
         }
 
         ~Lloyd_Cluster()
