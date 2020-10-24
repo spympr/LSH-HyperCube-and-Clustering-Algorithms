@@ -7,6 +7,7 @@ class kmeans
 {
     private:
         int num_of_clusters,L,LSH_k,HC_k,HC_M,probes;
+        unsigned int* P;
 
     public:
 
@@ -14,6 +15,8 @@ class kmeans
         {
             info_initialization(conf);
             centroid_initialization(Images_Array);
+
+            P = new int [];
         }
 
         void info_initialization(string );
