@@ -38,4 +38,16 @@ class kmeans
         int get_number_of_images();
         item** get_Images_Array();
 };
+
+class Nearest_Centroids
+{
+    private:
+    
+        int nearest_centroid1,nearest_centroid2;
+    
+    public:    
+
+            
+};
+
 #endif
