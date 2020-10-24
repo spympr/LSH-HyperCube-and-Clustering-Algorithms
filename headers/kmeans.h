@@ -26,5 +26,4 @@ class kmeans
         int get_HC_M();
         int get_probes();
 };
-
 #endif
