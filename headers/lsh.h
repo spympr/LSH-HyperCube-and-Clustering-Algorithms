@@ -15,11 +15,11 @@ class LSH
         int **s_i,**True_Distances;
         item **Images_Array,**Queries_Array;
         Bucket*** Hash_Tables;
-        string input_file,query_file;
+        string input_file,query_file,output_file;
 
     public:
-        LSH(string input_file_,string query_file_,int L_,int N_,int k_,int R_)
-        :input_file(input_file_),query_file(query_file_),L(L_),N(N_),k(k_),R(R_),dist_error(0.0),time_error(0.0)
+        LSH(string input_file_,string query_file_,string output_file_,int L_,int N_,int k_,int R_)
+        :input_file(input_file_),query_file(query_file_),output_file(output_file_),L(L_),N(N_),k(k_),R(R_),dist_error(0.0),time_error(0.0)
         {
             InitLSH();
         }
