@@ -7,18 +7,18 @@ class Lloyd_Cluster
 {
     private:
         string complete,output_file;
-        kmeans* init;
+        kmeans* kmeansptr;
         
     public:
         Lloyd_Cluster(string input_file,string output_file_,string conf,string comp):complete(comp),output_file(output_file_)
         {   
-            init = new kmeans(input_file,conf);
+            kmeansptr = new kmeans(input_file,conf);
             Lloyd_clustering();
         }
 
         ~Lloyd_Cluster()
         {
-            delete init;
+            delete kmeansptr;
         }
         
         void Lloyd_clustering();
