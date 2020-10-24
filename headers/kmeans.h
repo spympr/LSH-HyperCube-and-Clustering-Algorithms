@@ -57,6 +57,11 @@ class Nearest_Centroids
         int get_nearest_centroid1();
         int get_dist1();
         int get_nearest_centroid2();
+        int get_dist2();   
+
+        int get_nearest_centroid1();
+        int get_dist1();
+        int get_nearest_centroid2();
         int get_dist2();           
 };
 
