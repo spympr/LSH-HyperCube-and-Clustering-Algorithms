@@ -128,11 +128,12 @@ void kmeans::centroid_initialization()
     {
         int min_distance;
         int D_i[number_of_images];
+        float P_r[number_of_images];
         priority_queue<int> distances;
 
         for(int i=0;i<number_of_images;i++)
         {
-            min_distance=-1;
+            min_distance=pow(2,25);
             for(int j=0;j<clusters;j++)
             {
                 int distance = ManhattanDistance(Images_Array[i], Images_Array[centroid],dimensions);
@@ -142,11 +143,13 @@ void kmeans::centroid_initialization()
             distances.push(min_distance);
         }
         int max_Di = distances.top();
-        distances.pop();
 
-        float sum=0.0;
-        for(int z=0;z<number_of_images;z++)
-            sum += pow((D_i[z]/min_distance),2);
+        P_r[0] = pow((float)(D_i[0]/max_Di),2);
+
+        for(int r=1;r<=number_of_images;r++)
+        {
+            P_r[r] = P_r[r-1] + pow((float)(D_i[r]/max_Di),2);
+        }
         
         clusters++;
         P_r[clusters] = sum;    
