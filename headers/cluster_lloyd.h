@@ -15,15 +15,15 @@ class Lloyd_Cluster
         Lloyd_Cluster(string input_file,string output_file_,string conf,string comp):complete(comp),output_file(output_file_)
         {   
             kmeansptr = new kmeans(input_file,conf);
-            centroids = new item*[kmeansptr->get_num_of_clusters()];
-            for(int i=0;i<kmeansptr->get_num_of_clusters();i++) centroids[i] = new item[kmeansptr->get_dimensions()];
+            centroids = new item*[kmeansptr->get_K()];
+            for(int i=0;i<kmeansptr->get_K();i++) centroids[i] = new item[kmeansptr->get_dimensions()];
             
             Lloyd_Clustering();
         }
 
         ~Lloyd_Cluster()
         {
-            for(int i=0;i<kmeansptr->get_num_of_clusters();i++) delete [] centroids[i];
+            for(int i=0;i<kmeansptr->get_K();i++) delete [] centroids[i];
             delete [] centroids;
             delete kmeansptr;
 

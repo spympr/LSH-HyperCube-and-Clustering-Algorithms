@@ -5,10 +5,10 @@ void Lloyd_Cluster::Lloyd_Clustering()
     float average_sihouette;
     
     //!!!!HAS TO BE REPLACED BY ORIGINAL LIST OF CENTROIDS//
-    int indexes[kmeansptr->get_num_of_clusters()];
+    int indexes[kmeansptr->get_K()];
     
     //Store centroids with results of kmeans++ initialization...
-    for(int i=0;i<kmeansptr->get_num_of_clusters();i++)
+    for(int i=0;i<kmeansptr->get_K();i++)
         for(int j=0;j<kmeansptr->get_dimensions();j++)
             centroids[i][j] = kmeansptr->get_Images_Array()[indexes[i]][j];
 
@@ -16,7 +16,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
     {
         Lloyd_Assign();
         
-        average_sihouette = Silhouette(&points,kmeansptr->get_num_of_clusters());
+        average_sihouette = Silhouette(&points,kmeansptr->get_K());
         cout << average_sihouette << endl;
         if(average_sihouette > 0.1)    break;
         
@@ -32,7 +32,7 @@ void Lloyd_Cluster::Lloyd_Assign()
         priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > distances; 
         
         //For each centroid...
-        for(int j=0;j<kmeansptr->get_num_of_clusters();j++)
+        for(int j=0;j<kmeansptr->get_K();j++)
             distances.push(make_pair(ManhattanDistance(kmeansptr->get_Images_Array()[i],centroids[j],kmeansptr->get_dimensions()),j));
         
         int dist1 = distances.top().first;

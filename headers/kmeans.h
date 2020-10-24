@@ -6,7 +6,7 @@
 class kmeans
 {
     private:
-        int num_of_clusters,L,LSH_k,HC_k,HC_M,probes,dimensions,number_of_images,cols,rows;
+        int K,L,LSH_k,HC_k,HC_M,probes,dimensions,number_of_images,cols,rows;
         item** Images_Array;
         float* P_r;
 
@@ -17,12 +17,13 @@ class kmeans
             dimensions = cols*rows;
             info_initialization(conf);
 
-            P_r = new float [number_of_images];
+            P_r = new float[number_of_images];
             centroid_initialization();
         }
 
         ~kmeans()
         {
+            delete [] P_r;
             //Deallocation of memory of Images_Array...
             for(int i=0;i<number_of_images;i++)    delete [] Images_Array[i];
                 delete [] Images_Array;
@@ -31,7 +32,7 @@ class kmeans
         void info_initialization(string );
         void centroid_initialization();
 
-        int get_num_of_clusters();
+        int get_K();
         int get_L();
         int get_LSH_k();
         int get_HC_k();

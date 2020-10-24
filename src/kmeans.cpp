@@ -25,9 +25,9 @@ item** kmeans::get_Images_Array()
     return Images_Array;
 }
 
-int kmeans::get_num_of_clusters()
+int kmeans::get_K()
 {
-    return num_of_clusters;
+    return K;
 }
 
 int kmeans::get_L()
@@ -81,7 +81,7 @@ void kmeans::info_initialization(string configuration_file)
                 if(word == "number_of_clusters:")
                 {
                     iss >> word;
-                    num_of_clusters = stoi(word);
+                    K = stoi(word);
                 }
                 else if(word == "number_of_vector_hash_tables:")
                 {
@@ -118,14 +118,15 @@ void kmeans::info_initialization(string configuration_file)
 void kmeans::centroid_initialization()
 {
     default_random_engine generator;   
-    uniform_int_distribution<int> distribution(0,number_of_images)-1;
+    uniform_int_distribution<int> distribution(0,number_of_images-1);
 
     int first_centroid = distribution(generator);
+    int centroid = first_centroid;
     int clusters = 1;
     
-    while(clusters != num_of_clusters)
+    while(clusters != K)
     {
-        int min_distance=-1;
+        int min_distance;
         int D_i[number_of_images];
         priority_queue<int> distances;
 
@@ -134,7 +135,7 @@ void kmeans::centroid_initialization()
             min_distance=-1;
             for(int j=0;j<clusters;j++)
             {
-                int distance = ManhattanDistance(Images_Array[i], Images_Array[first_centroid],dimensions);
+                int distance = ManhattanDistance(Images_Array[i], Images_Array[centroid],dimensions);
                 if(distance < min_distance)  min_distance = distance;
             }
             D_i[i] = min_distance;
