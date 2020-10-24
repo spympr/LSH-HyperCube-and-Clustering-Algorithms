@@ -1,8 +1,8 @@
 lsh: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o
-	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o -o executable/lsh
+	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o -o lsh
 
 cube: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o
-	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o -o executable/cube
+	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o -o cube
 
 build/main.o: src/main.cpp 
 	g++ -c src/main.cpp -o build/main.o
@@ -23,4 +23,4 @@ build/hypercube.o: src/hypercube.cpp headers/hypercube.h
 	g++ -c src/hypercube.cpp -o build/hypercube.o
 	
 clean:
-	rm executable/cube executable/lsh build/*.o
+	rm cube lsh build/*.o
