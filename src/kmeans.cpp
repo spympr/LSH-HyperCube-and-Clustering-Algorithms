@@ -194,6 +194,7 @@ float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K)
     //Calculate mean si of each cluster..
     for(int i=0;i<K;i++) 
     {
+        cout << "Cluster " << i << ":" << images_in_cluster[i] << endl;
         silhouette_array[i]/=(float)images_in_cluster[i];
         average_silhouette+=silhouette_array[i];
     }
