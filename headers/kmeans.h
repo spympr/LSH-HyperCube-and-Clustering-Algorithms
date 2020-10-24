@@ -17,12 +17,13 @@ class kmeans
             dimensions = cols*rows;
             info_initialization(conf);
 
-            P_r = new float [number_of_images];
+            P_r = new float[number_of_images];
             centroid_initialization();
         }
 
         ~kmeans()
         {
+            delete [] P_r;
             //Deallocation of memory of Images_Array...
             for(int i=0;i<number_of_images;i++)    delete [] Images_Array[i];
                 delete [] Images_Array;
