@@ -148,7 +148,7 @@ void kmeans::centroid_initialization()
 
         for(int r=1;r<=number_of_images;r++)
         {
-            P_r[r] = P_r[r-1] + pow((float)(D_i[z]/max_Di),2);
+            P_r[r] = P_r[r-1] + pow((float)(D_i[r]/max_Di),2);
         }
         
         clusters++;
