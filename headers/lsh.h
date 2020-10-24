@@ -3,8 +3,6 @@
 
 #include "../headers/exhausting.h" 
 
-using namespace std;
-
 //Forward declaration
 class Bucket;
 
