@@ -25,9 +25,9 @@ item** kmeans::get_Images_Array()
     return Images_Array;
 }
 
-int kmeans::get_num_of_clusters()
+int kmeans::get_K()
 {
-    return num_of_clusters;
+    return K;
 }
 
 int kmeans::get_L()
@@ -81,7 +81,7 @@ void kmeans::info_initialization(string configuration_file)
                 if(word == "number_of_clusters:")
                 {
                     iss >> word;
-                    num_of_clusters = stoi(word);
+                    K = stoi(word);
                 }
                 else if(word == "number_of_vector_hash_tables:")
                 {
@@ -123,7 +123,7 @@ void kmeans::centroid_initialization()
     int first_centroid = distribution(generator);
     int clusters = 1;
     
-    while(clusters != num_of_clusters)
+    while(clusters != K)
     {
         int min_distance=-1;
         int D_i[number_of_images];

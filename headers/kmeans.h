@@ -6,7 +6,7 @@
 class kmeans
 {
     private:
-        int num_of_clusters,L,LSH_k,HC_k,HC_M,probes,dimensions,number_of_images,cols,rows;
+        int K,L,LSH_k,HC_k,HC_M,probes,dimensions,number_of_images,cols,rows;
         item** Images_Array;
         float* P_r;
 
@@ -32,7 +32,7 @@ class kmeans
         void info_initialization(string );
         void centroid_initialization();
 
-        int get_num_of_clusters();
+        int get_K();
         int get_L();
         int get_LSH_k();
         int get_HC_k();
