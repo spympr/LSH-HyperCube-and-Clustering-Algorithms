@@ -152,6 +152,7 @@ void kmeans::centroid_initialization()
         }
         
         clusters++;
+        P_r[clusters] = sum;    
 
         default_random_engine generator;   
         uniform_int_distribution<float> distribution(0,P_r[number_of_images-clusters]);
