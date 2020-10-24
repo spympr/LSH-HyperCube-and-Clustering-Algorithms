@@ -10,14 +10,14 @@ class kmeans
 
     public:
 
-        kmeans(item** Images_Array_,string conf): L(3),LSH_k(4),HC_M(10),HC_k(3),probes(2)
+        kmeans(item** Images_Array,string conf): L(3),LSH_k(4),HC_M(10),HC_k(3),probes(2)
         {
             info_initialization(conf);
-            centroid_initialization();
+            centroid_initialization(Images_Array);
         }
 
         void info_initialization(string );
-        void centroid_initialization();
+        void centroid_initialization(item** );
 
         int get_num_of_clusters();
         int get_L();

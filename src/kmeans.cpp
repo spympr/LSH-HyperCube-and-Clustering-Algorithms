@@ -80,7 +80,7 @@ void kmeans::info_initialization(string configuration_file)
     else cout << "Problem" << endl;
 }
 
-void kmeans::centroid_initialization()
+void kmeans::centroid_initialization(item** Images_Array)
 {
-
+    
 }
