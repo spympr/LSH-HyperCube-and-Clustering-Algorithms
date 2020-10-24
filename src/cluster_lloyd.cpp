@@ -39,6 +39,13 @@ void Lloyd_Cluster::Lloyd_clustering()
         
         ////////KMEDIANS UPDATE/////////
         
+        map <int,Nearest_Centroids*>::iterator it;
 
+        for(it=points.begin();it!=points.end();it++)    
+        {
+            
+        }
+
+        
     }
 }
