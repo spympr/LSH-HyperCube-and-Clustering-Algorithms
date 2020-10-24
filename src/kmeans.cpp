@@ -149,7 +149,7 @@ void kmeans::centroid_initialization()
             sum += pow((D_i[z]/min_distance),2);
         
         clusters++;
-        P_r[clusters] = sum;
+        P_r[clusters] = sum;    
 
         default_random_engine generator;   
         uniform_int_distribution<float> distribution(0,P_r[number_of_images-clusters]);
