@@ -2,10 +2,10 @@
 
 void Lloyd_Cluster::Lloyd_Clustering()
 {
+    //Original array of kmeans centroisd...
+    int* indexes = kmeansptr->get_centroids();
     float average_sihouette;
     
-    //!!!!HAS TO BE REPLACED BY ORIGINAL LIST OF CENTROIDS//
-    int indexes[kmeansptr->get_K()];
     
     //Store centroids with results of kmeans++ initialization...
     for(int i=0;i<kmeansptr->get_K();i++)

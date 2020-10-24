@@ -25,6 +25,11 @@ item** kmeans::get_Images_Array()
     return Images_Array;
 }
 
+int* kmeans::get_centroids()
+{
+    return centroids;
+}
+
 int kmeans::get_K()
 {
     return K;
@@ -149,12 +154,12 @@ void kmeans::centroid_initialization()
             P_r[r] = P_r[r-1] + pow(((float)(D_i[r])/(float)max_Di),2);
     
         default_random_engine generator;   
-        uniform_int_distribution<float> distribution(0,P_r[number_of_images-1]);
+        uniform_real_distribution<float> distribution(float(0.0),P_r[number_of_images-1]);
 
         float x = distribution(generator);
 
         for(int r=0;r<number_of_images;r++)
-            if((P_r[r] - x) >=0)  
+            if((P_r[r] - x) >= 0)  
                 centroids[centroid+1] = r;
     }
 }
