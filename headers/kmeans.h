@@ -13,12 +13,11 @@ class kmeans
         kmeans(item** Images_Array_,string conf)
         {
             info_initialization(conf);
-            // centroid_initialization();
+            centroid_initialization();
         }
 
         void info_initialization(string );
         void centroid_initialization();
-        //get function to get structere of k clusters
 
         int get_num_of_clusters();
         int get_L();
