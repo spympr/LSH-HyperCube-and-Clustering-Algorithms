@@ -164,24 +164,24 @@ void kmeans::centroid_initialization()
     }
 }
 
-float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int num_of_clusters)
+float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K)
 {
     //Declaration of important structures,variables...
     map <int,Nearest_Centroids*>::iterator it;
     int ai,bi,cluster;
-    float silhouette_array[num_of_clusters],average_silhouette = 0.0;
-    int images_in_cluster[num_of_clusters];
+    float silhouette_array[K],average_silhouette = 0.0;
+    int images_in_cluster[K];
     
     //Initialize arrays with zeros...
-    for(int i=0;i<num_of_clusters;i++)  silhouette_array[i] = 0.0;
-    for(int i=0;i<num_of_clusters;i++)  images_in_cluster[i] = 0;
+    for(int i=0;i<K;i++)  silhouette_array[i] = 0.0;
+    for(int i=0;i<K;i++)  images_in_cluster[i] = 0;
 
     //Iterate whole map so as to calculate silhouette for points of each cluster...
     for(it=map_ptr->begin();it!=map_ptr->end();it++)    
     {
         ai = it->second->get_dist1();
         bi = it->second->get_dist2();
-        cluster = it->first;
+        cluster = it->second->get_nearest_centroid1();
 
         if(ai < bi)     
             silhouette_array[cluster] += (1-((float)ai/(float)bi));
@@ -192,7 +192,7 @@ float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int num_of_clusters)
     }
     
     //Calculate mean si of each cluster..
-    for(int i=0;i<num_of_clusters;i++) 
+    for(int i=0;i<K;i++) 
     {
         silhouette_array[i]/=(float)images_in_cluster[i];
         average_silhouette+=silhouette_array[i];
