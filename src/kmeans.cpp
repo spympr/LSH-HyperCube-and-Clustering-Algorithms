@@ -144,18 +144,19 @@ void kmeans::centroid_initialization()
         }
         int max_Di = distances.top();
 
-        P_r[0] = pow((float)(D_i[0]/max_Di),2);
+        P_r[0] = pow(((float)(D_i[0])/(float)max_Di),2);
 
-        for(int r=1;r<=number_of_images;r++)
+        for(int r=1;r<number_of_images;r++)
         {
-            P_r[r] = P_r[r-1] + pow((float)(D_i[r]/max_Di),2);
+            P_r[r] = P_r[r-1] + pow(((float)(D_i[r])/(float)max_Di),2);
         }
         
         clusters++;
-        // P_r[clusters] = sum;    
-
+        
         default_random_engine generator;   
         uniform_int_distribution<float> distribution(0,P_r[number_of_images-clusters]);
+
+
     }
 }
 
