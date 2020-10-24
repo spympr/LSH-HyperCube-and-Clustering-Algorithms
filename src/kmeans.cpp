@@ -136,7 +136,7 @@ void kmeans::centroid_initialization()
             {
                 int distance = ManhattanDistance(Images_Array[i], Images_Array[centroids[j]],dimensions);
                 if(distance < min_distance)  min_distance = distance;
-                if(j == (centroid-1) )  break;
+                // if(j == (centroid-1) )  break;
             }
             D_i[i] = min_distance;
             distances.push(min_distance);
