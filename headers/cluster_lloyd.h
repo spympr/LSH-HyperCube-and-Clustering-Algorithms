@@ -18,7 +18,7 @@ class Lloyd_Cluster
             centroids = new item*[kmeansptr->get_num_of_clusters()];
             for(int i=0;i<kmeansptr->get_num_of_clusters();i++) centroids[i] = new item[kmeansptr->get_dimensions()];
             
-            Lloyd_clustering();
+            Lloyd_Clustering();
         }
 
         ~Lloyd_Cluster()
@@ -31,7 +31,9 @@ class Lloyd_Cluster
             for(it=points.begin();it!=points.end();it++)    delete it->second;
         }
         
-        void Lloyd_clustering();
+        void Lloyd_Clustering();
+        void Lloyd_Assign();
+        void Lloyd_Update();
 };
 
 #endif
