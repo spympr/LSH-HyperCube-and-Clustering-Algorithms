@@ -10,7 +10,7 @@ class kmeans
 
     public:
 
-        kmeans(item** Images_Array_,string conf)
+        kmeans(item** Images_Array_,string conf): L(3),LSH_k(4),HC_M(10),HC_k(3),probes(2)
         {
             info_initialization(conf);
             centroid_initialization();
