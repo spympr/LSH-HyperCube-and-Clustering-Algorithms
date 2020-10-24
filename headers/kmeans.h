@@ -52,12 +52,7 @@ class Nearest_Centroids
     public:    
         Nearest_Centroids(int n1,int d1,int n2,int d2)
         :nearest_centroid1(n1),dist1(d1),nearest_centroid2(n2),dist2(d2)
-        {}
-
-        int get_nearest_centroid1();
-        int get_dist1();
-        int get_nearest_centroid2();
-        int get_dist2();   
+        {}   
 
         int get_nearest_centroid1();
         int get_dist1();
