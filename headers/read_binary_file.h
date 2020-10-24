@@ -14,7 +14,7 @@
 #include <map>
 #include <fstream>
 #include <sstream>
-
+#include <bits/stdc++.h> 
 
 using namespace std;
 using namespace std::chrono;

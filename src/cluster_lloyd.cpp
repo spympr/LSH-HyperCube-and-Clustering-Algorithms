@@ -49,13 +49,35 @@ void Lloyd_Cluster::Lloyd_Assign()
 void Lloyd_Cluster::Lloyd_Update()
 {    
     map <int,Nearest_Centroids*>::iterator it;
+    int cluster,median_index;
 
-    //Initialize K*dimensions priority_queues...
-    priority_queue<int, vector<int>, greater<int>>** priority_queues = new priority_queue<int, vector<int>, greater<int>>*[kmeansptr->get_K()];
-    for(int i=0;i<kmeansptr->get_K();i++)   priority_queues[i] = new priority_queue<int, vector<int>, greater<int>>[kmeansptr->get_dimensions()];  
+    //Initialize K*dimensions vectors...
+    vector<item>** vectors = new vector<item>*[kmeansptr->get_K()];
+    for(int i=0;i<kmeansptr->get_K();i++)   vectors[i] = new vector<int>[kmeansptr->get_dimensions()];  
     
+    //Fill vectors with features of each image of dataset...
     for(it=points.begin();it!=points.end();it++)    
     {
-        // it->first
+        for(int z=0;z<kmeansptr->get_dimensions();z++)
+        {
+            cluster = it->second->get_nearest_centroid1();
+            vectors[cluster][z].push_back(kmeansptr->get_Images_Array()[it->first][z]);
+        }
     }
+
+    //Sort each vector and choose the appropriate feature (with median index) 
+    //in order to have a new one centroid.
+    for(int i=0;i<kmeansptr->get_K();i++)   
+    {
+        for(int z=0;z<kmeansptr->get_dimensions();z++)
+        {
+            sort(vectors[i][z].begin(),vectors[i][z].end());
+            median_index = ceil((double)vectors[i][z].size()/(double)2); 
+            centroids[i][z] = vectors[i][z][median_index];
+        }   
+    }
+    
+    //Deallocate memory for vectors...
+    for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
+    delete [] vectors;    
 }
