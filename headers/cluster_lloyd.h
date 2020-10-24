@@ -1,10 +1,9 @@
-#ifndef CLUSTER_LLOYD.H
-#define CLUSTER_LLOYD.H
+#ifndef CLUSTER_LLOYD_H
+#define CLUSTER_LLOYD_H
 
-#include "../headers/exhausting.h"
 #include "../headers/kmeans.h"
 
-class LLoyd_Cluster
+class Lloyd_Cluster
 {
     private:
         int dimensions,number_of_images,cols,rows;
@@ -13,15 +12,15 @@ class LLoyd_Cluster
         kmeans* init;
         
     public:
-        LLoyd_Cluster()
+        Lloyd_Cluster(string conf)
         {   
             Read_BF(&Images_Array,&number_of_images,&cols,&rows,input_file,1);
             dimensions = cols*rows;
-            init = new kmeans(Images_Array);
-            Lloyd_clustering();
+            init = new kmeans(Images_Array,conf);
+            // Lloyd_clustering();
         }
 
-        ~LLoyd_Cluster()
+        ~Lloyd_Cluster()
         {
             delete init;
         }

@@ -1,7 +1,5 @@
-#include "../headers/exhausting.h"
-// #include "../headers/hypercube.h"
-
-using namespace std;
+#include "../headers/cluster_lloyd.h"
+// #include "../headers/exhausting.h"
 
 int main(int argc, char** argv)
 {
@@ -116,9 +114,9 @@ int main(int argc, char** argv)
                 else if(strcmp(argv[i],"-o") == 0)
                     output_file = (argv[i+1]);
                 else if(strcmp(argv[i],"-complete") == 0)
-                    complete = atoi(argv[i+1]);
+                    complete = argv[i+1];
                 else if(strcmp(argv[i],"-m") == 0)
-                    method = atoi(argv[i+1]);
+                    method = argv[i+1];
                 else
                 {
                 cout << endl << "Please give an input with this form: ./cluster –i <input file> –c <configuration file> -o <output file> -complete <yes or no> -m <method: Classic OR LSH or Hypercube>" <<  endl;
@@ -133,18 +131,9 @@ int main(int argc, char** argv)
         else if(strcmp(argv[0],"./cube") == 0)    HyperCube cube(input_file,query_file,N,k,R,M,probes);            
         else if(strcmp(argv[0],"./cluster") == 0)   
         {
-            if(strcmp(method.c_str(),"Classic") == 0)
-            {
-                
-            }
-            else if(strcmp(method.c_str(),"LSH") == 0)
-            {
-
-            }
-            else if(strcmp(method.c_str(),"Hypercube") == 0)
-            {
-
-            }
+            if(strcmp(method.c_str(),"Classic") == 0)   Lloyd_Cluster Lloyd(configuration_file);
+            else if(strcmp(method.c_str(),"LSH") == 0)  cout << " ";
+            else if(strcmp(method.c_str(),"Hypercube") == 0) cout << " ";
             else
             {
                 cout << endl << "Invalid method! Please try to pich one of these methods: [Classic,LSH,Hypercube]" << endl;
