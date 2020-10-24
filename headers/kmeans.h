@@ -8,6 +8,7 @@ class kmeans
     private:
         int K,L,LSH_k,HC_k,HC_M,probes,dimensions,number_of_images,cols,rows;
         item** Images_Array;
+        int* centroids;
 
     public:
         kmeans(string input_file,string conf): L(3),LSH_k(4),HC_M(10),HC_k(3),probes(2)
@@ -15,12 +16,14 @@ class kmeans
             Read_BF(&Images_Array,&number_of_images,&cols,&rows,input_file,1);
             dimensions = cols*rows;
             info_initialization(conf);
+            centroids = new int [K];
 
             centroid_initialization();
         }
 
         ~kmeans()
         {
+            delete [] centroids;
             //Deallocation of memory of Images_Array...
             for(int i=0;i<number_of_images;i++)    delete [] Images_Array[i];
                 delete [] Images_Array;
