@@ -1,5 +1,25 @@
 #include "../headers/kmeans.h"
 
+int Nearest_Centroids::get_nearest_centroid1()
+{
+    return nearest_centroid1;
+}
+
+int Nearest_Centroids::get_dist1()
+{
+    return dist1;
+}
+
+int Nearest_Centroids::get_nearest_centroid2()
+{
+    return nearest_centroid2;
+}
+
+int Nearest_Centroids::get_dist2()
+{
+    return dist2;
+}
+
 item** kmeans::get_Images_Array()
 {
     return Images_Array;
@@ -103,6 +123,7 @@ void kmeans::centroid_initialization()
     int first_centroid = distribution(generator);
     int clusters = 1;
     
+<<<<<<< HEAD
     while(clusters != num_of_clusters)
     {
         int min_distance=-1;
@@ -133,4 +154,43 @@ void kmeans::centroid_initialization()
         default_random_engine generator;   
         uniform_int_distribution<float> distribution(0,P_r[number_of_images-clusters]);
     }
+=======
+}
+
+float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int num_of_clusters)
+{
+    //Declaration of important structures,variables...
+    map <int,Nearest_Centroids*>::iterator it;
+    int ai,bi,cluster;
+    float silhouette_array[num_of_clusters],average_silhouette = 0.0;
+    int images_in_cluster[num_of_clusters];
+    
+    //Initialize arrays with zeros...
+    for(int i=0;i<num_of_clusters;i++)  silhouette_array[i] = 0.0;
+    for(int i=0;i<num_of_clusters;i++)  images_in_cluster[i] = 0;
+
+    //Iterate whole map so as to calculate silhouette for points of each cluster...
+    for(it=map_ptr->begin();it!=map_ptr->end();it++)    
+    {
+        ai = it->second->get_dist1();
+        bi = it->second->get_dist2();
+        cluster = it->first;
+
+        if(ai < bi)     
+            silhouette_array[cluster] += (1-((float)ai/(float)bi));
+        else if(ai > bi)    
+            silhouette_array[cluster] += (((float)bi/(float)ai)-1);
+        
+        images_in_cluster[cluster] += 1;
+    }
+    
+    //Calculate mean si of each cluster..
+    for(int i=0;i<num_of_clusters;i++) 
+    {
+        silhouette_array[i]/=(float)images_in_cluster[i];
+        average_silhouette+=silhouette_array[i];
+    }
+    
+    return average_silhouette;
+>>>>>>> 0639400bd5168d5d78e73205ba0b87ee44635a36
 }
