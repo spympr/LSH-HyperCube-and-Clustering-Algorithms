@@ -1,5 +1,10 @@
 #include "../headers/kmeans.h"
 
+item** kmeans::get_Images_Array()
+{
+    return Images_Array;
+}
+
 int kmeans::get_num_of_clusters()
 {
     return num_of_clusters;
@@ -28,6 +33,16 @@ int kmeans::get_HC_M()
 int kmeans::get_probes()
 {
     return probes;
+}
+
+int kmeans::get_dimensions()
+{
+    return dimensions;
+}
+
+int kmeans::get_number_of_images()
+{
+    return number_of_images;
 }
 
 void kmeans::info_initialization(string configuration_file)
@@ -80,7 +95,7 @@ void kmeans::info_initialization(string configuration_file)
     else cout << "Problem" << endl;
 }
 
-void kmeans::centroid_initialization(item** Images_Array)
+void kmeans::centroid_initialization()
 {
     
 }
