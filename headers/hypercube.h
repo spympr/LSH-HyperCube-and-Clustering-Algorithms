@@ -12,13 +12,13 @@ class HyperCube
         int **s_i,**True_Distances;
         item **Images_Array,**Queries_Array;
         Bucket** Hash_Table;
-        string input_file,query_file;
+        string input_file,query_file,output_file;
         map<unsigned int,unsigned int>* f_i_map;
 
     public:
 
-        HyperCube(string input_file_,string query_file_,int N_,int k_,int R_,int M_boundary_,int probes_)
-        : k(k_),M_boundary(M_boundary_),probes(probes_),R(R_),input_file(input_file_),query_file(query_file_),N(N_),dist_error(0.0),time_error(0.0)
+        HyperCube(string input_file_,string query_file_,string output_file_,int N_,int k_,int R_,int M_boundary_,int probes_)
+        : k(k_),M_boundary(M_boundary_),probes(probes_),R(R_),input_file(input_file_),query_file(query_file_),output_file(output_file_),N(N_),dist_error(0.0),time_error(0.0)
         {         
             f_i_map = new map<unsigned int, unsigned int>[k];
             InitHyperCube();
