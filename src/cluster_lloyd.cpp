@@ -50,8 +50,12 @@ void Lloyd_Cluster::Lloyd_Update()
 {    
     map <int,Nearest_Centroids*>::iterator it;
 
+    //Initialize K*dimensions priority_queues...
+    priority_queue<int, vector<int>, greater<int>>** priority_queues = new priority_queue<int, vector<int>, greater<int>>*[kmeansptr->get_K()];
+    for(int i=0;i<kmeansptr->get_K();i++)   priority_queues[i] = new priority_queue<int, vector<int>, greater<int>>[kmeansptr->get_dimensions()];  
+    
     for(it=points.begin();it!=points.end();it++)    
     {
-        
+        // it->first
     }
 }
