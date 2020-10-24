@@ -1,5 +1,35 @@
 #include "../headers/kmeans.h"
 
+int kmeans::get_num_of_clusters()
+{
+    return num_of_clusters;
+}
+
+int kmeans::get_L()
+{
+    return L;
+}
+
+int kmeans::get_LSH_k()
+{
+    return LSH_k;
+}
+
+int kmeans::get_HC_k()
+{
+    return HC_k;
+}
+
+int kmeans::get_HC_M()
+{
+    return HC_M;
+}
+
+int kmeans::get_probes()
+{
+    return probes;
+}
+
 void kmeans::info_initialization(string configuration_file)
 {
     ifstream file(configuration_file);
@@ -48,11 +78,4 @@ void kmeans::info_initialization(string configuration_file)
         
     }
     else cout << "Problem" << endl;
-
-    cout << "K: " << num_of_clusters << endl;
-    cout << "L: " << L << endl;
-    cout << "k_lsh: " << LSH_k << endl;
-    cout << "M_boundary: " << HC_M << endl;
-    cout << "k_hc: " << HC_k << endl;
-    cout << "probes: " << probes << endl;
 }

@@ -19,6 +19,13 @@ class kmeans
         void info_initialization(string );
         void centroid_initialization();
         //get function to get structere of k clusters
+
+        int get_num_of_clusters();
+        int get_L();
+        int get_LSH_k();
+        int get_HC_k();
+        int get_HC_M();
+        int get_probes();
 };
 
 #endif
