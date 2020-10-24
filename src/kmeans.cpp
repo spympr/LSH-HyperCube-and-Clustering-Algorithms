@@ -118,12 +118,11 @@ void kmeans::info_initialization(string configuration_file)
 void kmeans::centroid_initialization()
 {
     default_random_engine generator;   
-    uniform_int_distribution<int> distribution(0,number_of_images);
+    uniform_int_distribution<int> distribution(0,number_of_images)-1;
 
     int first_centroid = distribution(generator);
     int clusters = 1;
     
-<<<<<<< HEAD
     while(clusters != num_of_clusters)
     {
         int min_distance=-1;
@@ -154,7 +153,6 @@ void kmeans::centroid_initialization()
         default_random_engine generator;   
         uniform_int_distribution<float> distribution(0,P_r[number_of_images-clusters]);
     }
-=======
 }
 
 float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int num_of_clusters)
@@ -192,5 +190,4 @@ float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int num_of_clusters)
     }
     
     return average_silhouette;
->>>>>>> 0639400bd5168d5d78e73205ba0b87ee44635a36
 }
