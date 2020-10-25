@@ -25,7 +25,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
         
         average_sihouette = Silhouette(&points,kmeansptr->get_K());
         cout << average_sihouette << endl;
-        if(average_sihouette > 0.1)    break;
+        if(average_sihouette > 0.15)    break;
 
         cout << "Before Update" << endl;
 
@@ -72,7 +72,7 @@ void Lloyd_Cluster::Lloyd_Update()
     vector<item>** vectors = new vector<item>*[kmeansptr->get_K()];
     for(int i=0;i<kmeansptr->get_K();i++)   vectors[i] = new vector<int>[kmeansptr->get_dimensions()];  
     
-    cout << "Before filling vectors..." << endl;
+    // cout << "Before filling vectors..." << endl;
 
     //Fill vectors with features of each image of dataset...
     for(it=points.begin();it!=points.end();it++)    
@@ -84,7 +84,7 @@ void Lloyd_Cluster::Lloyd_Update()
         }
     }
 
-    cout << "Before sorting..." << endl;
+    // cout << "Before sorting..." << endl;
 
     //Sort each vector and choose the appropriate feature (with median index) 
     //in order to have a new one centroid.

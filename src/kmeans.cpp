@@ -137,7 +137,7 @@ void kmeans::info_initialization(string configuration_file)
         }
         
     }
-    else cout << "Problem" << endl;
+    else cout << endl << "Problem" << endl;
 }
 
 void kmeans::centroid_initialization()
@@ -225,10 +225,11 @@ float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K)
     //Calculate mean si of each cluster..
     for(int i=0;i<K;i++) 
     {
-        cout << "Cluster " << i << ":" << images_in_cluster[i] << endl;
+        // cout << "Cluster " << i << ": " << silhouette_array[i] << "/" << images_in_cluster[i];
         silhouette_array[i]/=(float)images_in_cluster[i];
+        // cout << "=" << silhouette_array[i] << endl << endl;
         average_silhouette+=silhouette_array[i];
     }
     
-    return average_silhouette;
+    return average_silhouette/(float)K;
 }
