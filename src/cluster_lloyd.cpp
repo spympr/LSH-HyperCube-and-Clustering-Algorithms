@@ -143,13 +143,21 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
     }
     cout << endl;
 
-    // if(complete=="yes")
-    // {
-    //     for(int i=0;i<K;i++)   
-    //     {
-    //     cout << "CLUSTER-" << i+1 << "{" <<  << ",  ";
-    //     for(int z=0;z<kmeansptr->get_dimensions();z++)  cout << centroids[i][z] << " "; 
-    //     cout << endl;
-    //     }
-    // }
+    if(complete=="yes")
+    {
+        for(int i=0;i<K;i++)   
+        {
+            cout << "CLUSTER-" << i+1 << "{" << "centroid?" << ",  ";
+            for(it=points.begin();it!=points.end();it++)    
+            {
+                cluster = it->second->get_nearest_centroid1();
+                if(cluster==i)
+                {
+                    cout << it->first << ", "; 
+                    cout << endl;
+                }
+            }
+            cout << "}" << endl << endl;
+        }
+    }
 }
