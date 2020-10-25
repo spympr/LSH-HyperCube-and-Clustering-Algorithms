@@ -195,16 +195,16 @@ void kmeans::centroid_initialization()
     }
 }
 
-float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K)
+float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_array)
 {
     //Declaration of important structures,variables...
     map <int,Nearest_Centroids*>::iterator it;
     int ai,bi,cluster;
-    float silhouette_array[K],average_silhouette = 0.0;
+    float average_silhouette = 0.0;
     int images_in_cluster[K];
     
     //Initialize arrays with zeros...
-    for(int i=0;i<K;i++)  silhouette_array[i] = 0.0;
+    for(int i=0;i<K;i++)  (*silhouette_array)[i] = 0.0;
     for(int i=0;i<K;i++)  images_in_cluster[i] = 0;
 
     //Iterate whole map so as to calculate silhouette for points of each cluster...
@@ -215,9 +215,9 @@ float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K)
         cluster = it->second->get_nearest_centroid1();
 
         if(ai < bi)     
-            silhouette_array[cluster] += (1-((float)ai/(float)bi));
+            (*silhouette_array)[cluster] += (1-((float)ai/(float)bi));
         else if(ai > bi)    
-            silhouette_array[cluster] += (((float)bi/(float)ai)-1);
+            (*silhouette_array)[cluster] += (((float)bi/(float)ai)-1);
         
         images_in_cluster[cluster] += 1;
     }
@@ -225,11 +225,14 @@ float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K)
     //Calculate mean si of each cluster..
     for(int i=0;i<K;i++) 
     {
-        cout << "Cluster " << i << ": " << silhouette_array[i] << "/" << images_in_cluster[i];
-        silhouette_array[i]/=(float)images_in_cluster[i];
-        cout << "=" << silhouette_array[i] << endl << endl;
-        average_silhouette+=silhouette_array[i];
+        cout << "Cluster " << i << ": " << (*silhouette_array)[i] << "/" << images_in_cluster[i];
+        (*silhouette_array)[i]/=(float)images_in_cluster[i];
+        cout << "=" << (*silhouette_array)[i] << endl << endl;
+        average_silhouette+=(*silhouette_array)[i];
     }
+
+    //Store average silhouette value in last pos of array...
+    (*silhouette_array)[K] = average_silhouette/(float)K;
     
     return average_silhouette/(float)K;
 }

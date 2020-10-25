@@ -65,6 +65,6 @@ class Nearest_Centroids
         int get_dist2();           
 };
 
-float Silhouette(map <int,Nearest_Centroids*>* ,int);
+float Silhouette(map <int,Nearest_Centroids*>* ,int,float**);
 
 #endif
