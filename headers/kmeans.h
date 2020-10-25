@@ -16,9 +16,8 @@ class kmeans
             Read_BF(&Images_Array,&number_of_images,&cols,&rows,input_file,1);
             
             dimensions = cols*rows;
-            centroids = new int[K];
-
             info_initialization(conf);
+            centroids = new int[K];
             centroid_initialization();
         }
 

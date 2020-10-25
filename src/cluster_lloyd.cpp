@@ -8,8 +8,12 @@ void Lloyd_Cluster::Lloyd_Clustering()
     
     //Store centroids with results of kmeans++ initialization...
     for(int i=0;i<kmeansptr->get_K();i++)
+    {
+        cout << "Index of Cluster " << i << ":" << indexes[i] << endl;
         for(int j=0;j<kmeansptr->get_dimensions();j++)
             centroids[i][j] = kmeansptr->get_Images_Array()[indexes[i]][j];
+    }
+    cout << endl;
     
     while(true)
     {
@@ -17,7 +21,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
         
         Lloyd_Assign();
        
-        cout << "Before Silhouette" << endl;
+        cout << "Before Silhouette" << endl << endl;
         
         average_sihouette = Silhouette(&points,kmeansptr->get_K());
         cout << average_sihouette << endl;
