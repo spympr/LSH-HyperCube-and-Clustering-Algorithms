@@ -18,7 +18,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
     //Store centroids with results of kmeans++ initialization...
     for(int i=0;i<kmeansptr->get_K();i++)
     {
-        cout << "Index of Cluster " << i << ":" << indexes[i] << endl;
+        // cout << "Index of Cluster " << i << ":" << indexes[i] << endl;
         for(int j=0;j<kmeansptr->get_dimensions();j++)
             centroids[i][j] = kmeansptr->get_Images_Array()[indexes[i]][j];
     }
@@ -123,16 +123,18 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array)
 
     for(int i=0;i<K;i++)   
     {
-        cout << "CLUSTER-" << i+1 << "{" << images_in_cluster[i] << ", [ ";
+        cout << "CLUSTER-" << i+1 << "  {" << images_in_cluster[i] << ", [ ";
         for(int z=0;z<kmeansptr->get_dimensions();z++)  cout << centroids[i][z] << " "; 
-        cout << endl;
+        cout << "]}" << endl << endl;
     }
     
-    cout << "clustering_time: " << "TIME" << endl << "Silhouette: [ ";
+    cout << "clustering_time: " << "TIME" << endl << endl << "Silhouette: [ ";
 
     for(int i=0;i<=K;i++)   
     {
-        cout << silhouette_array[i] << ", ";
+        cout << silhouette_array[i];
+        if(i<K) cout << ", ";
+        else    cout << " ]";
     }
     cout << endl;
 
