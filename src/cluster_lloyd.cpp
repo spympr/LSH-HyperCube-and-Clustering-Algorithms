@@ -38,20 +38,28 @@ void Lloyd_Cluster::Lloyd_Assign()
     //For each point of dataset keep 2 nearest centroids and the appropriate distances in our map...
     for(int i=0;i<kmeansptr->get_number_of_images();i++)
     {
+        //Store pairs of distance to each centroid from a point of dataset and index of this centroid...
         priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > distances; 
         
-        //For each centroid...
         for(int j=0;j<kmeansptr->get_K();j++)
             distances.push(make_pair(ManhattanDistance(kmeansptr->get_Images_Array()[i],centroids[j],kmeansptr->get_dimensions()),j));
         
+        //Store distance and index of first nearest centroid...
         int dist1 = distances.top().first;
         int n1 = distances.top().second;
+        
+        //Pop up first pair...
         distances.pop();
+        
+        //Store distance and index of second nearest centroid...
         int dist2 = distances.top().first;
         int n2 = distances.top().second;
 
-        // Nearest_Centroids* temp = new Nearest_Centroids(n1,dist1,n2,dist2);
-        // points[i] = temp;
+        //Pass these values to class Nearest_Centroids of each point of dataset...
+        points[i]->set_dist1(dist1);
+        points[i]->set_nearest_centroid1(n1);
+        points[i]->set_dist2(dist2);
+        points[i]->set_nearest_centroid2(n2);
     }
 }
 
