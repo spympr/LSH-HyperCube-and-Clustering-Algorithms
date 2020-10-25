@@ -2,9 +2,15 @@
 
 void Lloyd_Cluster::Lloyd_Clustering()
 {
+    //Threshold epsilon...
+    float epsilon=0.01;
+
     //Original array of kmeans centroisd...
     int* indexes = kmeansptr->get_centroids();
-    float average_sihouette;
+ 
+    //Store previous and current average_silhouette in this array..
+    float average_sihouettes[2];
+    average_sihouettes[0]=2;
     
     //Store centroids with results of kmeans++ initialization...
     for(int i=0;i<kmeansptr->get_K();i++)
@@ -23,9 +29,10 @@ void Lloyd_Cluster::Lloyd_Clustering()
        
         cout << "Before Silhouette" << endl << endl;
         
-        average_sihouette = Silhouette(&points,kmeansptr->get_K());
-        cout << average_sihouette << endl;
-        if(average_sihouette > 0.2)    break;
+        average_sihouettes[1] = Silhouette(&points,kmeansptr->get_K());
+        cout << average_sihouettes[1] << "-" << average_sihouettes[0] << "<" << epsilon << endl;
+        if(abs(average_sihouettes[1]-average_sihouettes[0])<epsilon) break;
+        average_sihouettes[0] = average_sihouettes[1];
 
         cout << "Before Update" << endl;
 
@@ -114,5 +121,4 @@ void Lloyd_Cluster::Lloyd_Print()
     {
         // cout << "CLUSTER " << i+1 << "{";
     }
-
 }
