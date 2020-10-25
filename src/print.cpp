@@ -72,21 +72,23 @@ int main ()
   // points[1]=2;
   // for(it=points.begin();it!=points.end();it++)    
   //   cout << it->first << " " << it->second << endl;
-for(int i=0;i<4;i++)
-{
-    default_random_engine generator;   
-    uniform_real_distribution<float> distribution(float(0.0),17000);
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl;
-    cout << distribution(generator) << endl << endl;
-}
+// for(int i=0;i<4;i++)
+// {
+//     default_random_engine generator;   
+//     uniform_real_distribution<float> distribution(float(0.0),17000);
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl << endl;
+// }
+  // string k="yes";
+  // if(k=="yes")  cout << "poutsa" << endl;
   return 0;
 }
 

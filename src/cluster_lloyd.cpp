@@ -25,12 +25,13 @@ void Lloyd_Cluster::Lloyd_Clustering()
         
         average_sihouette = Silhouette(&points,kmeansptr->get_K());
         cout << average_sihouette << endl;
-        if(average_sihouette > 0.15)    break;
+        if(average_sihouette > 0.2)    break;
 
         cout << "Before Update" << endl;
 
         Lloyd_Update();
     }
+    Lloyd_Print();
 }
 
 void Lloyd_Cluster::Lloyd_Assign()
@@ -101,4 +102,17 @@ void Lloyd_Cluster::Lloyd_Update()
     //Deallocate memory for vectors...
     for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
     delete [] vectors;    
+}
+
+void Lloyd_Cluster::Lloyd_Print()
+{
+    if(complete=="yes")
+    {
+        //
+    }
+    for(int i=0;i<kmeansptr->get_K();i++)   
+    {
+        // cout << "CLUSTER " << i+1 << "{";
+    }
+
 }
