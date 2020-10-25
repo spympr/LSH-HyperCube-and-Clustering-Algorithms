@@ -151,11 +151,7 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
             for(it=points.begin();it!=points.end();it++)    
             {
                 cluster = it->second->get_nearest_centroid1();
-                if(cluster==i)
-                {
-                    cout << it->first << ", "; 
-                    cout << endl;
-                }
+                if(cluster==i)  cout << it->first << ", "; 
             }
             cout << "}" << endl << endl;
         }
