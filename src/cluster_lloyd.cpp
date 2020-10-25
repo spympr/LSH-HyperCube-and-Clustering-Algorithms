@@ -50,8 +50,8 @@ void Lloyd_Cluster::Lloyd_Assign()
         int dist2 = distances.top().first;
         int n2 = distances.top().second;
 
-        Nearest_Centroids* temp = new Nearest_Centroids(n1,dist1,n2,dist2);
-        points[i] = temp;
+        // Nearest_Centroids* temp = new Nearest_Centroids(n1,dist1,n2,dist2);
+        // points[i] = temp;
     }
 }
 

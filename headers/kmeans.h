@@ -51,9 +51,13 @@ class Nearest_Centroids
         int nearest_centroid2,dist2;
     
     public:    
-        Nearest_Centroids(int n1,int d1,int n2,int d2)
-        :nearest_centroid1(n1),dist1(d1),nearest_centroid2(n2),dist2(d2)
-        {}   
+        Nearest_Centroids()
+        {}
+        
+        void set_nearest_centroid1(int );
+        void set_dist1(int );
+        void set_nearest_centroid2(int );
+        void set_dist2(int );
 
         int get_nearest_centroid1();
         int get_dist1();

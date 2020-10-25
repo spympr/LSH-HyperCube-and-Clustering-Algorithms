@@ -1,5 +1,25 @@
 #include "../headers/kmeans.h"
 
+void Nearest_Centroids::set_nearest_centroid1(int a)
+{
+    nearest_centroid1=a;
+}
+
+void Nearest_Centroids::set_dist1(int a)
+{
+    dist1=a;
+}
+
+void Nearest_Centroids::set_nearest_centroid2(int a)
+{
+    nearest_centroid2=a;
+}
+
+void Nearest_Centroids::set_dist2(int a)
+{
+    dist2=a;
+}
+
 int Nearest_Centroids::get_nearest_centroid1()
 {
     return nearest_centroid1;
