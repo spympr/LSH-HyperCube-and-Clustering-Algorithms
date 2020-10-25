@@ -24,6 +24,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
     }
     cout << endl;
     
+    auto start = chrono::high_resolution_clock::now();
     while(true)
     {
         Lloyd_Assign();
@@ -35,7 +36,9 @@ void Lloyd_Cluster::Lloyd_Clustering()
 
         Lloyd_Update();
     }
-    Lloyd_Print(silhouette_array);
+    auto end = chrono::high_resolution_clock::now(); 
+
+    Lloyd_Print(silhouette_array,chrono::duration_cast<chrono::seconds>(end - start).count());
 
     delete [] silhouette_array;
 }
@@ -106,7 +109,7 @@ void Lloyd_Cluster::Lloyd_Update()
     delete [] vectors;    
 }
 
-void Lloyd_Cluster::Lloyd_Print(float* silhouette_array)
+void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
 {
     //Declaration of important structures,variables...
     int cluster,K = kmeansptr->get_K();
@@ -121,6 +124,8 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array)
         images_in_cluster[cluster]++;
     }
 
+    cout << endl;
+    
     for(int i=0;i<K;i++)   
     {
         cout << "CLUSTER-" << i+1 << "  {" << images_in_cluster[i] << ", [ ";
@@ -128,7 +133,7 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array)
         cout << "]}" << endl << endl;
     }
     
-    cout << "clustering_time: " << "TIME" << endl << endl << "Silhouette: [ ";
+    cout << "clustering_time: " << time << endl << endl << "Silhouette: [ ";
 
     for(int i=0;i<=K;i++)   
     {

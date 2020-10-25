@@ -48,7 +48,7 @@ class Lloyd_Cluster
         void Lloyd_Clustering();
         void Lloyd_Assign();
         void Lloyd_Update();
-        void Lloyd_Print(float* );
+        void Lloyd_Print(float* ,int);
 };
 
 #endif
