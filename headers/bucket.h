@@ -6,7 +6,7 @@
 class Bucket
 {
     public:
-        vector< pair<item*,unsigned int> > images;     
+        vector<pair<item*,unsigned int>> images;     
 
         void add(item*,unsigned int);
 };
