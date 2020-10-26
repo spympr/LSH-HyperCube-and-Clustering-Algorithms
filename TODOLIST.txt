@@ -1,5 +1,5 @@
 --------------Monday----------------------
-1) check only points with same gi values
+1) check only points with same gi values ✔
 ------------------------------------------
 
 ------------Tuesday hamod----------------
