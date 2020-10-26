@@ -1,7 +1,14 @@
+--------------Monday----------------------
 1) check only points with same gi values
+------------------------------------------
 
-2) change silhouette or not? (ihamod tomorrow)
-3) questions around reverse assignment
+------------Tuesday hamod----------------
+2) questions around reverse assignment
+3) change silhouette or not? 
 4) time in cluster
+------------------------------------------
 
+---------Wednesday-Thursday-Friday--------
 5) do reverse assignment (LSH or HYPERCUBE)
+6) readme
+------------------------------------------
