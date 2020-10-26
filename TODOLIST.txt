@@ -1,5 +1,7 @@
 1) check only points with same gi values
+
 2) change silhouette or not? (ihamod tomorrow)
 3) questions around reverse assignment
 4) time in cluster
+
 5) do reverse assignment (LSH or HYPERCUBE)
