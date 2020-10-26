@@ -10,5 +10,6 @@
 
 ---------Wednesday-Thursday-Friday--------
 5) do reverse assignment (LSH or HYPERCUBE)
-6) readme
+6) make I/O beautiful
+7) readme
 ------------------------------------------

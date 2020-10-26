@@ -218,32 +218,40 @@ void HyperCube::Approximate_Hypercube()
         int HyperCube_nns[N],HyperCube_Distances[N], count_hamming=1,count_images=0, count_probes=0; 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
 
-        if(Hash_Table[fi_query_values[i]] != NULL)
+        Bucket* temp = Hash_Table[fi_query_values[i]];
+
+        if(temp != NULL)
         {
-            for(int p=0;p<Hash_Table[fi_query_values[i]]->images.size();p++)
+            vector<pair<item*,unsigned int>>::iterator it;
+
+            for(it=temp->images.begin();it!=temp->images.end();it++)    
             {
-                distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Table[fi_query_values[i]]->images[p], dimensions), (Hash_Table[fi_query_values[i]]->images[p][dimensions])));
+                distances.push(make_pair(ManhattanDistance(Queries_Array[i],it->first,dimensions), (it->first[dimensions])));
                 count_images++;
                 // cout << count_images << " ";
                 if(count_images == M_boundary)  break;
             }
             // cout << endl;
         }
-        if((Hash_Table[fi_query_values[i]] == NULL) || (count_images < M_boundary))
+        if((temp == NULL) || (count_images < M_boundary))
         {
             while((count_probes < probes) && (count_images < M_boundary))
             {
                 for(int j=0;j<HashTableSize;j++)
                 {
-                    if(Hash_Table[j] != NULL)
+                    Bucket* hash_cell = Hash_Table[j];
+
+                    if(hash_cell != NULL)
                     {
                         int hamming_distance = hammingDistance(fi_query_values[i],j);
                         if(hamming_distance == count_hamming)
                         {
                             // cout << endl << "query_bucket= " << fi_query_values[i]  << " bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
-                            for(int p=0;p<Hash_Table[j]->images.size();p++)
+                            vector<pair<item*,unsigned int>>::iterator it;
+
+                            for(it=hash_cell->images.begin();it!=hash_cell->images.end();it++)    
                             {
-                                distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Table[j]->images[p], dimensions), (Hash_Table[j]->images[p][dimensions])));
+                                distances.push(make_pair(ManhattanDistance(Queries_Array[i],it->first, dimensions), (it->first[dimensions])));
                                 count_images++;
                                 if(count_images == M_boundary)  break;
                             }
@@ -289,36 +297,43 @@ void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_v
     int HyperCube_nns[N], count_hamming=1,count_images=0, count_probes=0; 
     priority_queue<int, vector<int>, greater<int>> neighboors;
 
-    if(Hash_Table[fi_query_value] != NULL)
+    Bucket* temp = Hash_Table[fi_query_value];
+
+    if(temp != NULL)
     {
-        for(int p=0;p<Hash_Table[fi_query_value]->images.size();p++)
+        vector<pair<item*,unsigned int>>::iterator it;
+
+        for(it=temp->images.begin();it!=temp->images.end();it++)
         {
-            if(ManhattanDistance(Queries_Array[query_index],Hash_Table[fi_query_value]->images[p], dimensions) < R)
-                neighboors.push((Hash_Table[fi_query_value]->images[p][dimensions]));
+            if(ManhattanDistance(Queries_Array[query_index],it->first, dimensions) < R)
+                neighboors.push(it->first[dimensions]);
             count_images++;
             // cout << count_images << " ";
             if(count_images == M_boundary)  break;
         }
         // cout << endl;
     }
-    if((Hash_Table[fi_query_value] == NULL) || (count_images < M_boundary))
+    if((temp == NULL) || (count_images < M_boundary))
     {
         while((count_probes < probes) && (count_images < M_boundary))
         {
             for(int j=0;j<HashTableSize;j++)
             {
-                if(Hash_Table[j] != NULL)
+                Bucket* hash_cell = Hash_Table[j];
+                
+                if(hash_cell != NULL)
                 {
                     int hamming_distance = hammingDistance(fi_query_value,j);
                     if(hamming_distance == count_hamming)
                     {
+                        vector<pair<item*,unsigned int>>::iterator it;
+
                         // cout << endl << "bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
-                        for(int p=0;p<Hash_Table[j]->images.size();p++)
+                        for(it=hash_cell->images.begin();it!=hash_cell->images.end();it++)   
                         {
-                            if(ManhattanDistance(Queries_Array[query_index],Hash_Table[j]->images[p], dimensions) < R)
-                            {
-                                neighboors.push((Hash_Table[j]->images[p][dimensions]));
-                            }
+                            if(ManhattanDistance(Queries_Array[query_index],it->first, dimensions) < R)
+                                neighboors.push(it->first[dimensions]);
+                            
                             count_images++;
                             if(count_images == M_boundary)  break;
                         }
