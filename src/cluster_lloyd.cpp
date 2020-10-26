@@ -133,7 +133,7 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
         cout << "]}" << endl << endl;
     }
     
-    cout << "clustering_time: " << time << endl << endl << "Silhouette: [ ";
+    cout << "clustering_time: " << time << "s" << endl << endl << "Silhouette: [ ";
 
     for(int i=0;i<=K;i++)   
     {
