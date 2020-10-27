@@ -5,4 +5,5 @@
 4) change termination's condition in cluster?
 5) make I/O beautiful
 6) readme
+7) Reading bytes (int32,int64,byte)
 ------------------------------------------
