@@ -112,7 +112,7 @@ void HyperCube::InitHyperCube()
     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,10);
 
     //Printing...
     cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
@@ -131,8 +131,8 @@ void HyperCube::InitHyperCube()
 
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
-    m = 423255;
-    // m = M/2+1;
+    // m = 423255;
+    m = 2;
     cout << "m: " << m << endl;
     cout << "M: " << M << endl;
     cout << "M_boundary: " << M_boundary << endl;
@@ -148,7 +148,7 @@ void HyperCube::InitHyperCube()
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
-    W = 50000;
+    W = 40000;
     // W = 20000;
     cout << "W: " << W << endl << endl;
 
@@ -164,6 +164,13 @@ void HyperCube::InitHyperCube()
         for(int j=0;j<dimensions;j++)   
             s_i[i][j] = distribution(generator);        
     }
+
+    // for(int i=0;i<k;i++)
+    // {
+    //     for(int j=0;j<dimensions;j++)
+    //         cout << s_i[i][j] << " ";
+    //     cout << endl;
+    // }
         
     //Fill Hash Tables...
     Insert_Images_To_Buckets_HyperCube(this);
@@ -278,7 +285,7 @@ void HyperCube::Approximate_Hypercube()
             cout << "Nearest neighbor-" << k+1 << ": " << HyperCube_nns[k] << endl;
             cout << "distanceHyperCube: " << HyperCube_Distances[k] << endl;
             cout << "distanceTrue: " << True_Distances[i][k] << endl << endl;
-            dist_error += (double)(HyperCube_Distances[k]-True_Distances[i][k])/(double)True_Distances[i][k];
+            dist_AF += (double)(HyperCube_Distances[k])/(double)True_Distances[i][k];
         }
 
         tHypercube[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
@@ -288,7 +295,7 @@ void HyperCube::Approximate_Hypercube()
         Approximate_Range_Search(i,fi_query_values[i]);
     }
 
-    cout << endl << "HyperCube's Mean Distance Error: " << dist_error/(double)(Num_of_Queries*N) << endl;
+    cout << endl << "HyperCube's Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
     cout << endl << "tHyperCube/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
 }
 

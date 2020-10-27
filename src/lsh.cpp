@@ -128,7 +128,7 @@ void LSH::Approximate_LSH()
             cout << "Nearest neighbor-" << k+1 << ": " << LSH_nns[k] << endl;
             cout << "distanceLSH: " << LSH_Distances[k] << endl;
             cout << "distanceTrue: " << True_Distances[i][k] << endl << endl;
-            dist_error += (double)(LSH_Distances[k]-True_Distances[i][k])/(double)True_Distances[i][k];
+            dist_AF += (double)(LSH_Distances[k])/(double)True_Distances[i][k];
         }
         tLSH[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
         cout << "tLSH: " << tLSH[i] << "ms" << endl << "tTrue: " << tTrue[i] << "ms";
@@ -137,7 +137,7 @@ void LSH::Approximate_LSH()
         Approximate_Range_Search(i);
     }
 
-    cout << endl << "LSH Mean Distance Error: " << dist_error/(double)(Num_of_Queries*N) << endl;
+    cout << endl << "LSH Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
     cout << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
 }
 
@@ -196,7 +196,7 @@ void LSH::InitLSH()
     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,10);
 
     //Printing...
     cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;

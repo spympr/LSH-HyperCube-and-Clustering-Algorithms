@@ -93,11 +93,11 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
             for(int z=0;z<info->get_dimensions();z++)
             {
                 a_i[z] = floor((double)((info->get_Images_Array()[image][z] - info->get_s_i()[j][z]))/(double)(info->get_W()));
-                // cout << a_i[z] << " " << endl;
+                // cout << a_i[z] << " ";
             }
             // cout << endl;
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
-            // if(image<10)    cout << h_p[j] << endl;
+            // cout << h_p[j] << " ";
             
             // it = info->f_i_map[j].find(h_p[j]);
 
@@ -129,6 +129,7 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
             }
             // cout << endl;
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
+            // cout << h_p[j] << " ";
             
             // it = info->f_i_map[j].find(h_p[j]);
 
@@ -211,7 +212,7 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
         for(int j=0;j<info->get_M();j++)    
         {        
             info->get_f_i_map()[i][j] = distribution(generator);
-            // cout << info->f_i_map[i][j] << " ";
+            // cout << info->get_f_i_map()[i][j] << " ";
         }
         // cout << endl << "=======" << endl;
     }
@@ -219,7 +220,7 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
     //Call function so as to compute all f_i values...
     fi_values_of_train(info,f_i);
 
-    // for(int i=0;i<100;i++)  cout << f_i[i] << " ";
+    // for(int i=0;i<info->get_Num_of_Images();i++)  cout << f_i[i] << " ";
     
     //Fill buckets of L Hash_Tables...
     for(int i=0;i<info->get_Num_of_Images();i++)
