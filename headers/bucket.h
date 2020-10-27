@@ -6,9 +6,9 @@
 class Bucket
 {
     public:
-        vector<item*> images;     
+        vector<pair<item*,unsigned int>> images;     
 
-        void add(item* );
+        void add(item*,unsigned int);
 };
 
 int mod_expo(int , int ,int );

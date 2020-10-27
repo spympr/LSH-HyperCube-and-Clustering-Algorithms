@@ -1,9 +1,8 @@
 #include "../headers/exhausting.h"
-#include <time.h>
 
-void Bucket::add(item* image)
+void Bucket::add(item* image,unsigned int g_i)
 {
-    images.push_back(image);
+    images.push_back(make_pair(image,g_i));
 }
 
 unsigned int mod(int k, int M) 
@@ -186,7 +185,7 @@ void Insert_Images_To_Buckets_LSH(LSH* info)
         for(int j=0;j<info->get_L();j++)
         {
             if(info->get_Hash_Tables()[j][g_i[i][j]]==NULL)  info->get_Hash_Tables()[j][g_i[i][j]] = new Bucket();
-            info->get_Hash_Tables()[j][g_i[i][j]]->add(info->get_Images_Array()[i]);    
+            info->get_Hash_Tables()[j][g_i[i][j]]->add(info->get_Images_Array()[i],g_i[i][j]);    
         }
     }
 
@@ -226,7 +225,7 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
     for(int i=0;i<info->get_Num_of_Images();i++)
     {   
         if(info->get_Hash_Table()[f_i[i]]==NULL)  info->get_Hash_Table()[f_i[i]] = new Bucket();
-        info->get_Hash_Table()[f_i[i]]->add(info->get_Images_Array()[i]);    
+        info->get_Hash_Table()[f_i[i]]->add(info->get_Images_Array()[i],f_i[i]);    
     }
 
     //Deallocation of memory...

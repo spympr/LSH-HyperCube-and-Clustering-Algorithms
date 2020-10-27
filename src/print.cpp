@@ -3,6 +3,7 @@
 #include <vector>
 #include <math.h>  
 #include <map>
+#include <random> 
 
 using namespace std;
 
@@ -53,9 +54,41 @@ int main ()
   //   b += a[i] << ((4-(i+1)));
 
   // std::cout << b << std::endl;
-  int k=6812,l=6868;
-  cout << hammingDistance(k,l) << endl;
+  // int k=6812,l=6868;
+  // cout << hammingDistance(k,l) << endl;
 
+
+  // std::map<int,int> points;
+  // std::map<int,int>::iterator it;
+
+  // points[1]=1;
+  // points[2]=2;
+  // points[3]=3;
+  // points[4]=4;
+  // points[5]=5;
+  // for(it=points.begin();it!=points.end();it++)    
+  //   cout << it->first << " " << it->second << endl;
+  // cout << "----------------------------------" << endl;
+  // points[1]=2;
+  // for(it=points.begin();it!=points.end();it++)    
+  //   cout << it->first << " " << it->second << endl;
+// for(int i=0;i<4;i++)
+// {
+//     default_random_engine generator;   
+//     uniform_real_distribution<float> distribution(float(0.0),17000);
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl;
+//     cout << distribution(generator) << endl << endl;
+// }
+  // string k="yes";
+  // if(k=="yes")  cout << "poutsa" << endl;
   return 0;
 }
 

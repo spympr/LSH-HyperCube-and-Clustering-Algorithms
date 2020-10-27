@@ -14,10 +14,10 @@ class kmeans
         kmeans(string input_file,string conf): L(3),LSH_k(4),HC_M(10),HC_k(3),probes(2)
         {
             Read_BF(&Images_Array,&number_of_images,&cols,&rows,input_file,1);
+            
             dimensions = cols*rows;
             info_initialization(conf);
-            centroids = new int [K];
-
+            centroids = new int[K];
             centroid_initialization();
         }
 
@@ -40,6 +40,7 @@ class kmeans
         int get_probes();
         int get_dimensions();
         int get_number_of_images();
+        int* get_centroids();
         item** get_Images_Array();
 };
 
@@ -50,9 +51,13 @@ class Nearest_Centroids
         int nearest_centroid2,dist2;
     
     public:    
-        Nearest_Centroids(int n1,int d1,int n2,int d2)
-        :nearest_centroid1(n1),dist1(d1),nearest_centroid2(n2),dist2(d2)
+        Nearest_Centroids()
         {}
+        
+        void set_nearest_centroid1(int );
+        void set_dist1(int );
+        void set_nearest_centroid2(int );
+        void set_dist2(int );
 
         int get_nearest_centroid1();
         int get_dist1();
@@ -60,6 +65,6 @@ class Nearest_Centroids
         int get_dist2();           
 };
 
-float Silhouette(map <int,Nearest_Centroids*>* ,int);
+float Silhouette(map <int,Nearest_Centroids*>* ,int,float**);
 
 #endif

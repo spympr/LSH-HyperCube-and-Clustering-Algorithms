@@ -1,0 +1,9 @@
+--------- --------------------------------
+1) hypercube(bug!)
+2) cluster update very fast...(bug!)
+3) do reverse assignment (LSH or HYPERCUBE)
+4) change termination's condition in cluster?
+5) make I/O beautiful
+6) readme
+7) Reading bytes
+------------------------------------------

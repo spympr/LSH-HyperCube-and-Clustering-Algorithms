@@ -94,15 +94,26 @@ void LSH::Approximate_LSH()
         gi_values_of_query(this, gi_query_values, i);
 
         for(int j=0;j<L;j++)
-            if(Hash_Tables[j][gi_query_values[j]] != NULL)
-                for(int p=0;p<Hash_Tables[j][gi_query_values[j]]->images.size();p++)
+        {
+            Bucket* temp = Hash_Tables[j][gi_query_values[j]];
+
+            if(temp != NULL)
+            {
+                vector<pair<item*,unsigned int>>::iterator it;
+                
+                for(it=temp->images.begin();it!=temp->images.end();it++)    
                 {
-                    if(indexes_of_images.find((Hash_Tables[j][gi_query_values[j]]->images[p][dimensions])) == indexes_of_images.end())
+                    if(it->second==gi_query_values[j])
                     {
-                        indexes_of_images.insert((Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]));
-                        distances.push(make_pair(ManhattanDistance(Queries_Array[i],Hash_Tables[j][gi_query_values[j]]->images[p], dimensions), (Hash_Tables[j][gi_query_values[j]]->images[p][dimensions])));
+                        if(indexes_of_images.find((it->first[dimensions]))==indexes_of_images.end())
+                        {
+                            indexes_of_images.insert(it->first[dimensions]);
+                            distances.push(make_pair(ManhattanDistance(Queries_Array[i],it->first, dimensions), it->first[dimensions]));
+                        }
                     }
                 }
+            }
+        }
 
         auto end = chrono::high_resolution_clock::now(); 
         
@@ -141,16 +152,23 @@ void LSH::Approximate_Range_Search(int query_index)
 
     for(int j=0;j<L;j++)
     {
-        if(Hash_Tables[j][gi_query_values[j]] != NULL)
+        Bucket* temp = Hash_Tables[j][gi_query_values[j]];
+
+        if(temp != NULL)
         {
-            for(int p=0; p<(Hash_Tables[j][gi_query_values[j]]->images.size());p++)
+            vector<pair<item*,unsigned int>>::iterator it;
+
+            for(it=temp->images.begin();it!=temp->images.end();it++)    
             {
-                if(ManhattanDistance(Queries_Array[query_index],Hash_Tables[j][gi_query_values[j]]->images[p], dimensions) < R)
+                if(ManhattanDistance(Queries_Array[query_index],it->first, dimensions) < R)
                 {
-                    if(indexes_of_images.find((Hash_Tables[j][gi_query_values[j]]->images[p][dimensions])) == indexes_of_images.end())
+                    if(it->second==gi_query_values[j])
                     {
-                        indexes_of_images.insert((Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]));
-                        neighboors.push(Hash_Tables[j][gi_query_values[j]]->images[p][dimensions]);
+                        if(indexes_of_images.find((it->first[dimensions])) == indexes_of_images.end())
+                        {
+                                indexes_of_images.insert((it->first[dimensions]));
+                            neighboors.push(it->first[dimensions]);
+                        }
                     }
                 }
             }
@@ -202,6 +220,7 @@ void LSH::InitLSH()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
+    // m = M/2+1;
     cout << "m: " << m << endl;
     cout << "M: " << M << endl;
     
@@ -215,7 +234,7 @@ void LSH::InitLSH()
 
     //Do exhausting search and init W...
     ExhaustingNN(this);
-    W = 50000;
+    W = 20000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
