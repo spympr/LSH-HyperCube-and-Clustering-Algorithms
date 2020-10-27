@@ -90,6 +90,11 @@ int kmeans::get_number_of_images()
     return number_of_images;
 }
 
+double kmeans::get_kmeans_time()
+{
+    return kmeans_time;
+}
+
 void kmeans::info_initialization(string configuration_file)
 {
     ifstream file(configuration_file);
@@ -142,6 +147,8 @@ void kmeans::info_initialization(string configuration_file)
 
 void kmeans::centroid_initialization()
 {
+    auto start = chrono::high_resolution_clock::now();
+
     //Pick uniformly a random first centroid...
     default_random_engine generator1;   
     uniform_int_distribution<int> distribution1(0,number_of_images-1);
@@ -193,6 +200,8 @@ void kmeans::centroid_initialization()
         }
         // cout << endl << "From centroid:" << centroid+1 << " x:" << x << " " << P_r[number_of_images-1] << " r:" << centroids[centroid+1] << endl;
     }
+    auto end = chrono::high_resolution_clock::now(); 
+    kmeans_time = chrono::duration_cast<chrono::seconds>(end - start).count();
 }
 
 float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_array,kmeans* kmeansptr)

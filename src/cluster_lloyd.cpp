@@ -2,13 +2,14 @@
 
 void Lloyd_Cluster::Lloyd_Clustering()
 {
-    //Threshold epsilon...
+    //Important variables..
     float ratio,epsilon=0.001;
+    double clustering_time;
 
     //Original array of kmeans centroids...
     int* indexes = kmeansptr->get_centroids();
 
-    //Store previous and current average_silhouette in this array..
+    //Store previous and current objective value in this array..
     float objectives_values[2];
     objectives_values[0]=100;
 
@@ -38,10 +39,10 @@ void Lloyd_Cluster::Lloyd_Clustering()
         Lloyd_Update();
     }
     auto end = chrono::high_resolution_clock::now(); 
-    
+    clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
     Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
 
-    Lloyd_Print(silhouette_array,chrono::duration_cast<chrono::seconds>(end - start).count());
+    Lloyd_Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
     delete [] silhouette_array;
 }
