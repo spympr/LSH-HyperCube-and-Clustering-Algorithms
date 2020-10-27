@@ -89,6 +89,15 @@ int main ()
 // }
   // string k="yes";
   // if(k=="yes")  cout << "poutsa" << endl;
+
+  // int k=4,f_i=0,nums[k];
+  // nums[0]=1;
+  // nums[1]=0;
+  // nums[2]=0;
+  // nums[3]=0;
+
+  // for(int j=0;j<k;j++)  f_i += (nums[j] << ((k-(j+1))));
+  // cout << f_i << endl;
   return 0;
 }
 

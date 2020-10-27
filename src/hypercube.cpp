@@ -112,7 +112,7 @@ void HyperCube::InitHyperCube()
     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,10);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
 
     //Printing...
     cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
@@ -172,7 +172,7 @@ void HyperCube::InitHyperCube()
     //     cout << endl;
     // }
         
-    //Fill Hash Tables...
+    //Fill Hash Table...
     Insert_Images_To_Buckets_HyperCube(this);
 
     Approximate_Hypercube();
@@ -256,7 +256,7 @@ void HyperCube::Approximate_Hypercube()
                         int hamming_distance = hammingDistance(fi_query_values[i],j);
                         if(hamming_distance == count_hamming)
                         {
-                            // cout << endl << "query_bucket= " << fi_query_values[i]  << " bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
+                            cout << endl << "query_bucket= " << fi_query_values[i]  << " bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
                             vector<pair<item*,unsigned int>>::iterator it;
 
                             for(it=hash_cell->images.begin();it!=hash_cell->images.end();it++)    
