@@ -219,7 +219,8 @@ void LSH::InitLSH()
     
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
-    m = 423255;
+    // m = 423255;
+    m = M/2+1;
     cout << "m: " << m << endl;
     cout << "M: " << M << endl;
     
