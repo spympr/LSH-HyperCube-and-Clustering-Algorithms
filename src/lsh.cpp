@@ -253,6 +253,8 @@ void LSH::InitLSH()
     //Fill Hash Tables...
     Insert_Images_To_Buckets_LSH(this);
 
+    Approximate_LSH();
+
     //Print Buckets...
     for(int i=0;i<L;i++)
     {
@@ -270,8 +272,6 @@ void LSH::InitLSH()
     }
     cout << endl;
 
-    Approximate_LSH();
-    
     //Deallocation of memory of Images_Array...
     for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
     delete [] Images_Array;
