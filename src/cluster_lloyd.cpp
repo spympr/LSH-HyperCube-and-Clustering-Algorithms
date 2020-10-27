@@ -7,7 +7,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
 
     //Original array of kmeans centroids...
     int* indexes = kmeansptr->get_centroids();
- 
+
     //Store previous and current average_silhouette in this array..
     float average_sihouettes[2];
     average_sihouettes[0]=2;
@@ -29,6 +29,8 @@ void Lloyd_Cluster::Lloyd_Clustering()
     {
         Lloyd_Assign();
 
+        // Lloyd_Objective();
+        
         average_sihouettes[1] = Silhouette(&points,kmeansptr->get_K(),&silhouette_array);
         cout << average_sihouettes[1] << "-" << average_sihouettes[0] << "<" << epsilon << endl;
         if(abs(average_sihouettes[1]-average_sihouettes[0])<epsilon) break;
@@ -80,8 +82,8 @@ void Lloyd_Cluster::Lloyd_Update()
 
     //Initialize K*dimensions vectors...
     vector<item>** vectors = new vector<item>*[kmeansptr->get_K()];
-    for(int i=0;i<kmeansptr->get_K();i++)   vectors[i] = new vector<int>[kmeansptr->get_dimensions()];  
-    
+    for(int i=0;i<kmeansptr->get_K();i++)   vectors[i] = new vector<item>[kmeansptr->get_dimensions()];  
+
     //Fill vectors with features of each image of dataset...
     for(it=points.begin();it!=points.end();it++)    
     {
@@ -105,6 +107,29 @@ void Lloyd_Cluster::Lloyd_Update()
     //Deallocate memory for vectors...
     for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
     delete [] vectors;    
+}
+
+void Lloyd_Cluster::Lloyd_Objective()
+{
+    float avg_sum;
+    int K=kmeansptr->get_K(),cluster,sums[K];
+    for(int i=0;i<kmeansptr->get_K();i++)   sums[i]=0;
+
+    map <int,Nearest_Centroids*>::iterator it;
+
+    for(it=points.begin();it!=points.end();it++)    
+    {
+        cluster = it->second->get_nearest_centroid1();
+        sums[cluster] += ManhattanDistance(kmeansptr->get_Images_Array()[it->first],centroids[cluster],kmeansptr->get_dimensions());
+    }
+    
+    for(int i=0;i<K;i++)  
+    {
+            cout << sums[i] << " ";
+            avg_sum+=sums[i];
+    }
+    cout << endl << (float)avg_sum/(float)K << endl;
+    
 }
 
 void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
