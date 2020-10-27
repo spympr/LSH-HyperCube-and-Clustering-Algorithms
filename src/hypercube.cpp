@@ -148,7 +148,7 @@ void HyperCube::InitHyperCube()
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
-    W = 40000;
+    W = 4000;
     // W = 20000;
     cout << "W: " << W << endl << endl;
 
