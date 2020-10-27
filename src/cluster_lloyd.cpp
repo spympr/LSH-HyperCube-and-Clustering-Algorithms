@@ -2,15 +2,16 @@
 
 void Lloyd_Cluster::Lloyd_Clustering()
 {
-    //Threshold epsilon...
-    float epsilon=0.001;
+    //Important variables..
+    float ratio,epsilon=0.001;
+    double clustering_time;
 
     //Original array of kmeans centroids...
     int* indexes = kmeansptr->get_centroids();
- 
-    //Store previous and current average_silhouette in this array..
-    float average_sihouettes[2];
-    average_sihouettes[0]=2;
+
+    //Store previous and current objective value in this array..
+    float objectives_values[2];
+    objectives_values[0]=100;
 
     //Allocate memory for array with silhouette values...
     float* silhouette_array = new float[kmeansptr->get_K()+1];    
@@ -29,16 +30,20 @@ void Lloyd_Cluster::Lloyd_Clustering()
     {
         Lloyd_Assign();
 
-        average_sihouettes[1] = Silhouette(&points,kmeansptr->get_K(),&silhouette_array);
-        cout << average_sihouettes[1] << "-" << average_sihouettes[0] << "<" << epsilon << endl;
-        if(abs(average_sihouettes[1]-average_sihouettes[0])<epsilon) break;
-        average_sihouettes[0] = average_sihouettes[1];
-
+        objectives_values[1] = Lloyd_Objective();
+        ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
+        objectives_values[0] = objectives_values[1];
+        cout << ratio << "<" << epsilon << endl;
+        if(ratio<epsilon)   break;
+        
         Lloyd_Update();
     }
     auto end = chrono::high_resolution_clock::now(); 
-
-    Lloyd_Print(silhouette_array,chrono::duration_cast<chrono::seconds>(end - start).count());
+    clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
+    
+    Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
+    
+    Lloyd_Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
     delete [] silhouette_array;
 }
@@ -80,8 +85,8 @@ void Lloyd_Cluster::Lloyd_Update()
 
     //Initialize K*dimensions vectors...
     vector<item>** vectors = new vector<item>*[kmeansptr->get_K()];
-    for(int i=0;i<kmeansptr->get_K();i++)   vectors[i] = new vector<int>[kmeansptr->get_dimensions()];  
-    
+    for(int i=0;i<kmeansptr->get_K();i++)   vectors[i] = new vector<item>[kmeansptr->get_dimensions()];  
+
     //Fill vectors with features of each image of dataset...
     for(it=points.begin();it!=points.end();it++)    
     {
@@ -105,6 +110,25 @@ void Lloyd_Cluster::Lloyd_Update()
     //Deallocate memory for vectors...
     for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
     delete [] vectors;    
+}
+
+float Lloyd_Cluster::Lloyd_Objective()
+{
+    float avg_sum;
+    int K=kmeansptr->get_K(),cluster,sums[K];
+    for(int i=0;i<kmeansptr->get_K();i++)   sums[i]=0;
+
+    map <int,Nearest_Centroids*>::iterator it;
+
+    for(it=points.begin();it!=points.end();it++)    
+    {
+        cluster = it->second->get_nearest_centroid1();
+        sums[cluster] += ManhattanDistance(kmeansptr->get_Images_Array()[it->first],centroids[cluster],kmeansptr->get_dimensions());
+    }
+    
+    for(int i=0;i<K;i++)    avg_sum+=sums[i];
+
+    return (float)avg_sum/(float)K;
 }
 
 void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)

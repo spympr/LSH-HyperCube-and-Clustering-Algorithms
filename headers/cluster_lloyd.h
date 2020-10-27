@@ -12,6 +12,7 @@ class Lloyd_Cluster
         map <int,Nearest_Centroids*> points;
         
     public:
+
         Lloyd_Cluster(string input_file,string output_file_,string conf,string comp):complete(comp),output_file(output_file_)
         {   
             //Allocate memory for kmeans pointer (helpful class kmeans).
@@ -49,6 +50,7 @@ class Lloyd_Cluster
         void Lloyd_Assign();
         void Lloyd_Update();
         void Lloyd_Print(float* ,int);
+        float Lloyd_Objective();
 };
 
 #endif
