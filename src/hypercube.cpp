@@ -131,8 +131,8 @@ void HyperCube::InitHyperCube()
 
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
-    // m = 423255;
-    m = 2;
+    m = 423255;
+    // m = 2;
     cout << "m: " << m << endl;
     cout << "M: " << M << endl;
     cout << "M_boundary: " << M_boundary << endl;
