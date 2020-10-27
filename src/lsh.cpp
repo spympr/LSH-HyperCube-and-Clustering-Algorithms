@@ -219,8 +219,8 @@ void LSH::InitLSH()
     
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
-    // m = 423255;
-    m = M/2+1;
+    m = 423255;
+    // m = M/2+1;
     cout << "m: " << m << endl;
     cout << "M: " << M << endl;
     
@@ -234,7 +234,7 @@ void LSH::InitLSH()
 
     //Do exhausting search and init W...
     ExhaustingNN(this);
-    W = 50000;
+    W = 20000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...

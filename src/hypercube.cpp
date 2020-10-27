@@ -131,8 +131,8 @@ void HyperCube::InitHyperCube()
 
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
-    // m = 423255;
-    m = M/2+1;
+    m = 423255;
+    // m = M/2+1;
     cout << "m: " << m << endl;
     cout << "M: " << M << endl;
     cout << "M_boundary: " << M_boundary << endl;
@@ -149,6 +149,7 @@ void HyperCube::InitHyperCube()
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
     W = 50000;
+    // W = 20000;
     cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
