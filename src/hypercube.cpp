@@ -175,6 +175,8 @@ void HyperCube::InitHyperCube()
     //Fill Hash Tables...
     Insert_Images_To_Buckets_HyperCube(this);
 
+    Approximate_Hypercube();
+    
     //Print Buckets...
     int counter=0;
     for(int j=0;j<HashTableSize;j++)
@@ -182,7 +184,6 @@ void HyperCube::InitHyperCube()
             counter++;                
     cout << "HashTable: " << counter << " out of " << HashTableSize << endl;
 
-    Approximate_Hypercube();
 
     //Deallocation of memory of Images_Array...
     for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
