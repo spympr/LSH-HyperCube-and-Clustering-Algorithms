@@ -146,11 +146,11 @@ void HyperCube::InitHyperCube()
     tHypercube = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
+    W = 40000;
+    cout << "W: " << W << endl << endl;
+
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
-    W = 4000;
-    // W = 20000;
-    cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
     default_random_engine generator;   
@@ -177,6 +177,7 @@ void HyperCube::InitHyperCube()
 
     Approximate_Hypercube();
     
+    cout << endl;
     //Print Buckets...
     int counter=0;
     for(int j=0;j<HashTableSize;j++)
