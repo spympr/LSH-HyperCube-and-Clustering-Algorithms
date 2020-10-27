@@ -85,13 +85,11 @@ void Lloyd_Cluster::Lloyd_Update()
     //Fill vectors with features of each image of dataset...
     for(it=points.begin();it!=points.end();it++)    
     {
+        cluster = it->second->get_nearest_centroid1();
         for(int z=0;z<kmeansptr->get_dimensions();z++)
-        {
-            cluster = it->second->get_nearest_centroid1();
             vectors[cluster][z].push_back(kmeansptr->get_Images_Array()[it->first][z]);
-        }
     }
-    
+
     //Sort each vector and choose the appropriate feature (with median index) 
     //in order to have a new one centroid.
     for(int i=0;i<kmeansptr->get_K();i++)   

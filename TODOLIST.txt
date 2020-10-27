@@ -1,15 +1,8 @@
---------------Monday----------------------
-1) check only points with same gi values ✔
-------------------------------------------
-
-------------Tuesday hamod----------------
-2) questions around reverse assignment
-3) change silhouette or not? 
-4) time in cluster
-------------------------------------------
-
----------Wednesday-Thursday-Friday--------
-5) do reverse assignment (LSH or HYPERCUBE)
-6) make I/O beautiful
-7) readme
+--------- --------------------------------
+1) hypercube(bug!)
+2) cluster update very fast...(bug!)
+3) do reverse assignment (LSH or HYPERCUBE)
+4) change termination's condition in cluster?
+5) make I/O beautiful
+6) readme
 ------------------------------------------
