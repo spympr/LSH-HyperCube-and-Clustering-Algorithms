@@ -91,7 +91,7 @@ void Lloyd_Cluster::Lloyd_Update()
             vectors[cluster][z].push_back(kmeansptr->get_Images_Array()[it->first][z]);
         }
     }
-
+    
     //Sort each vector and choose the appropriate feature (with median index) 
     //in order to have a new one centroid.
     for(int i=0;i<kmeansptr->get_K();i++)   
