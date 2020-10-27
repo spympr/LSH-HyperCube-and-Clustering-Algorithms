@@ -3,14 +3,14 @@
 void Lloyd_Cluster::Lloyd_Clustering()
 {
     //Threshold epsilon...
-    float epsilon=0.001;
+    float ratio,epsilon=0.001;
 
     //Original array of kmeans centroids...
     int* indexes = kmeansptr->get_centroids();
 
     //Store previous and current average_silhouette in this array..
-    float average_sihouettes[2];
-    average_sihouettes[0]=2;
+    float objectives_values[2];
+    objectives_values[0]=100;
 
     //Allocate memory for array with silhouette values...
     float* silhouette_array = new float[kmeansptr->get_K()+1];    
@@ -29,16 +29,17 @@ void Lloyd_Cluster::Lloyd_Clustering()
     {
         Lloyd_Assign();
 
-        // Lloyd_Objective();
+        objectives_values[1] = Lloyd_Objective();
+        ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
+        objectives_values[0] = objectives_values[1];
+        cout << ratio << "<" << epsilon << endl;
+        if(ratio<epsilon)   break;
         
-        average_sihouettes[1] = Silhouette(&points,kmeansptr->get_K(),&silhouette_array);
-        cout << average_sihouettes[1] << "-" << average_sihouettes[0] << "<" << epsilon << endl;
-        if(abs(average_sihouettes[1]-average_sihouettes[0])<epsilon) break;
-        average_sihouettes[0] = average_sihouettes[1];
-
         Lloyd_Update();
     }
     auto end = chrono::high_resolution_clock::now(); 
+    
+    Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
 
     Lloyd_Print(silhouette_array,chrono::duration_cast<chrono::seconds>(end - start).count());
 
@@ -109,7 +110,7 @@ void Lloyd_Cluster::Lloyd_Update()
     delete [] vectors;    
 }
 
-void Lloyd_Cluster::Lloyd_Objective()
+float Lloyd_Cluster::Lloyd_Objective()
 {
     float avg_sum;
     int K=kmeansptr->get_K(),cluster,sums[K];
@@ -123,13 +124,9 @@ void Lloyd_Cluster::Lloyd_Objective()
         sums[cluster] += ManhattanDistance(kmeansptr->get_Images_Array()[it->first],centroids[cluster],kmeansptr->get_dimensions());
     }
     
-    for(int i=0;i<K;i++)  
-    {
-            cout << sums[i] << " ";
-            avg_sum+=sums[i];
-    }
-    cout << endl << (float)avg_sum/(float)K << endl;
-    
+    for(int i=0;i<K;i++)    avg_sum+=sums[i];
+
+    return (float)avg_sum/(float)K;
 }
 
 void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)

@@ -50,7 +50,7 @@ class Lloyd_Cluster
         void Lloyd_Assign();
         void Lloyd_Update();
         void Lloyd_Print(float* ,int);
-        void Lloyd_Objective();
+        float Lloyd_Objective();
 };
 
 #endif

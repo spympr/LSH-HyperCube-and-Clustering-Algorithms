@@ -195,31 +195,52 @@ void kmeans::centroid_initialization()
     }
 }
 
-float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_array)
+float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_array,kmeans* kmeansptr)
 {
     //Declaration of important structures,variables...
-    map <int,Nearest_Centroids*>::iterator it;
-    int ai,bi,cluster;
-    float average_silhouette = 0.0;
+    int cluster1,cluster2,images_in_cluster1,images_in_cluster2;
+    float ai,bi,average_silhouette = 0.0;
     int images_in_cluster[K];
+    item* current_image;
     
     //Initialize arrays with zeros...
     for(int i=0;i<K;i++)  (*silhouette_array)[i] = 0.0;
     for(int i=0;i<K;i++)  images_in_cluster[i] = 0;
 
+    map <int,Nearest_Centroids*>::iterator it;
     //Iterate whole map so as to calculate silhouette for points of each cluster...
     for(it=map_ptr->begin();it!=map_ptr->end();it++)    
     {
-        ai = it->second->get_dist1();
-        bi = it->second->get_dist2();
-        cluster = it->second->get_nearest_centroid1();
+        images_in_cluster1 = 0;
+        images_in_cluster2 = 0;
+        cluster1 = it->second->get_nearest_centroid1();
+        cluster2 = it->second->get_nearest_centroid2();
+        current_image = kmeansptr->get_Images_Array()[it->first];
+
+        map <int,Nearest_Centroids*>::iterator it1;
+        for(it1=map_ptr->begin();it1!=map_ptr->end();it1++)    
+        {
+            if(it1->second->get_nearest_centroid1()==cluster1)
+            {
+                ai += ManhattanDistance(kmeansptr->get_Images_Array()[it1->first],current_image,kmeansptr->get_dimensions());
+                images_in_cluster1++;
+            }   
+            if(it1->second->get_nearest_centroid2()==cluster2)
+            {
+                bi += ManhattanDistance(kmeansptr->get_Images_Array()[it1->first],current_image,kmeansptr->get_dimensions());
+                images_in_cluster2++;
+            }
+        }
+        
+        ai/=images_in_cluster1;
+        bi/=images_in_cluster2;
 
         if(ai < bi)     
-            (*silhouette_array)[cluster] += (1-((float)ai/(float)bi));
+            (*silhouette_array)[cluster1] += (1-((float)ai/(float)bi));
         else if(ai > bi)    
-            (*silhouette_array)[cluster] += (((float)bi/(float)ai)-1);
+            (*silhouette_array)[cluster1] += (((float)bi/(float)ai)-1);
         
-        images_in_cluster[cluster] += 1;
+        images_in_cluster[cluster1] += 1;
     }
     
     //Calculate mean si of each cluster..
