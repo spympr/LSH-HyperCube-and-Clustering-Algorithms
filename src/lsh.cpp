@@ -232,10 +232,11 @@ void LSH::InitLSH()
     tLSH = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
+    W = 40000;
+    cout << "W: " << W << endl << endl;
+
     //Do exhausting search and init W...
     ExhaustingNN(this);
-    W = 20000;
-    cout << "W: " << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
     default_random_engine generator;   
@@ -255,6 +256,7 @@ void LSH::InitLSH()
 
     Approximate_LSH();
 
+    cout << endl;
     //Print Buckets...
     for(int i=0;i<L;i++)
     {
@@ -270,7 +272,6 @@ void LSH::InitLSH()
         }
         cout << "HashTable " << i << ": " << counter << ", " << sum << endl;
     }
-    cout << endl;
 
     //Deallocation of memory of Images_Array...
     for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];

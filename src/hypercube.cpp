@@ -131,8 +131,8 @@ void HyperCube::InitHyperCube()
 
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
-    // m = 423255;
-    m = 2;
+    m = 423255;
+    // m = 2;
     cout << "m: " << m << endl;
     cout << "M: " << M << endl;
     cout << "M_boundary: " << M_boundary << endl;
@@ -146,7 +146,7 @@ void HyperCube::InitHyperCube()
     tHypercube = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
-    W = 4000;
+    W = 400;
     cout << "W: " << W << endl << endl;
 
     //Do exhausting search and init W...
