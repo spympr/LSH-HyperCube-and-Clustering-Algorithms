@@ -40,8 +40,9 @@ void Lloyd_Cluster::Lloyd_Clustering()
     }
     auto end = chrono::high_resolution_clock::now(); 
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
+    
     Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
-
+    
     Lloyd_Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
     delete [] silhouette_array;
