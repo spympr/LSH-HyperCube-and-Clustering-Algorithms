@@ -21,6 +21,9 @@ class Lloyd_Cluster
             //Allocate memory for centroids of each cluster (centroids_dimensions=K*image_dimensions).
             centroids = new item*[kmeansptr->get_K()];
             for(int i=0;i<kmeansptr->get_K();i++) centroids[i] = new item[kmeansptr->get_dimensions()];
+            for(int i=0;i<kmeansptr->get_K();i++) 
+                for(int z=0;z<kmeansptr->get_dimensions();z++) 
+                    centroids[i][z]=0;
             
             //Allocate memory for each class Nearest_Centroids (each image has one pointer to an object of Nearest_Centroids).
             for(int i=0;i<kmeansptr->get_number_of_images();i++)
