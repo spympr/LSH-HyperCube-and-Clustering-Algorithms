@@ -17,7 +17,8 @@ class Lloyd_Cluster
         {   
             //Allocate memory for kmeans pointer (helpful class kmeans).
             kmeansptr = new kmeans(input_file,conf);
-            
+            cout << endl << "Images:" << kmeansptr->get_number_of_images() << endl << "Dimensions:" << sqrt(kmeansptr->get_dimensions()) << "x" << sqrt(kmeansptr->get_dimensions()) << endl <<  "Κ:" << kmeansptr->get_K() << endl;
+
             //Allocate memory for centroids of each cluster (centroids_dimensions=K*image_dimensions).
             centroids = new item*[kmeansptr->get_K()];
             for(int i=0;i<kmeansptr->get_K();i++) centroids[i] = new item[kmeansptr->get_dimensions()];

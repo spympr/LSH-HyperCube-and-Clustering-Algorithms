@@ -17,7 +17,6 @@ class kmeans
             Read_BF(&Images_Array,&number_of_images,&cols,&rows,input_file,60);
             dimensions = cols*rows;
             info_initialization(conf);
-            cout << endl << "Images:" << number_of_images << endl << "Dimensions:" << rows << "x" << cols << endl <<  "Κ:" << K << endl;
             centroids = new int[K];
             centroid_initialization();
         }
