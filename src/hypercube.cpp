@@ -290,8 +290,8 @@ void HyperCube::Approximate_Hypercube()
             dist_AF += (double)(HyperCube_Distances[k])/(double)True_Distances[i][k];
         }
 
-        tHypercube[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
-        cout << "tHypercube: " << tHypercube[i] << "ms" << endl << "tTrue: " << tTrue[i] << "ms";
+        tHypercube[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
+        cout << "tHypercube: " << tHypercube[i] << "μs" << endl << "tTrue: " << tTrue[i] << "ms";
         time_error += tHypercube[i]/tTrue[i];
 
         Approximate_Range_Search(i,fi_query_values[i]);
