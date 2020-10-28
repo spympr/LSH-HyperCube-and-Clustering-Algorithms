@@ -16,7 +16,7 @@ void ExhaustingNN(LSH* info)
             info->get_True_Distances()[i][k] = pq.top();
             pq.pop();
         }
-        info->get_tTrue()[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
+        info->get_tTrue()[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
     }
 }
 
@@ -36,7 +36,7 @@ void ExhaustingNN_HC(HyperCube* info)
             info->get_True_Distances()[i][k] = pq.top();
             pq.pop();
         }
-        info->get_tTrue()[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();  
+        info->get_tTrue()[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
     }
 }
 
