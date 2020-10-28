@@ -131,7 +131,7 @@ void LSH::Approximate_LSH()
             dist_AF += (double)(LSH_Distances[k])/(double)True_Distances[i][k];
         }
         tLSH[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
-        cout << "tLSH: " << tLSH[i] << "μs" << endl << "tTrue: " << tTrue[i] << "ms";
+        cout << "tLSH: " << tLSH[i] << "μs" << endl << "tTrue: " << tTrue[i] << "μs";
         time_error += tLSH[i]/tTrue[i];
 
         Approximate_Range_Search(i);

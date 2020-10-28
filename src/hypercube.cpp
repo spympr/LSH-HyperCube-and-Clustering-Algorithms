@@ -112,10 +112,10 @@ void HyperCube::InitHyperCube()
     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,10);
 
     //Printing...
-    cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
+    cout << endl << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows <<  "x" << Columns << endl;
 
     //Initilization of dimensions of each Image,k, HashTableSize...
     dimensions = Rows*Columns;
@@ -133,10 +133,10 @@ void HyperCube::InitHyperCube()
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
     // m = 2;
-    cout << "m: " << m << endl;
-    cout << "M: " << M << endl;
-    cout << "M_boundary: " << M_boundary << endl;
-    cout << "Probes: " << probes << endl;
+    cout << "m:" << m << endl;
+    cout << "M:" << M << endl;
+    cout << "M_boundary:" << M_boundary << endl;
+    cout << "Probes:" << probes << endl;
 
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
@@ -146,8 +146,8 @@ void HyperCube::InitHyperCube()
     tHypercube = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
-    W = 40000;
-    cout << "W: " << W << endl << endl;
+    W = 4000;
+    cout << "W:" << W << endl << endl;
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
@@ -256,7 +256,7 @@ void HyperCube::Approximate_Hypercube()
                         int hamming_distance = hammingDistance(fi_query_values[i],j);
                         if(hamming_distance == count_hamming)
                         {
-                            cout << endl << "query_bucket= " << fi_query_values[i]  << " bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
+                            // cout << endl << "query_bucket= " << fi_query_values[i]  << " bucket=" << j << " hamming=" << count_hamming << " " << count_images << "<" << M_boundary << " " << count_probes << "<" << probes << endl;
                             vector<pair<item*,unsigned int>>::iterator it;
 
                             for(it=hash_cell->images.begin();it!=hash_cell->images.end();it++)    
@@ -268,7 +268,8 @@ void HyperCube::Approximate_Hypercube()
                             count_probes++;
                         }
                     }
-                    if(count_images == M_boundary)  break;
+                    if((count_images == M_boundary) || (count_probes == probes))  break;
+                    // if((count_images == M_boundary))  break;
                 }
                 count_hamming++;
             }
@@ -291,7 +292,7 @@ void HyperCube::Approximate_Hypercube()
         }
 
         tHypercube[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
-        cout << "tHypercube: " << tHypercube[i] << "μs" << endl << "tTrue: " << tTrue[i] << "ms";
+        cout << "tHypercube: " << tHypercube[i] << "μs" << endl << "tTrue: " << tTrue[i] << "μs";
         time_error += tHypercube[i]/tTrue[i];
 
         Approximate_Range_Search(i,fi_query_values[i]);
@@ -303,7 +304,7 @@ void HyperCube::Approximate_Hypercube()
 
 void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_value)
 {
-    auto start = chrono::high_resolution_clock::now();
+    // auto start = chrono::high_resolution_clock::now();
     int HyperCube_nns[N], count_hamming=1,count_images=0, count_probes=0; 
     priority_queue<int, vector<int>, greater<int>> neighboors;
 
@@ -351,12 +352,13 @@ void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_v
                     }
                 }
                 if(count_images == M_boundary)  break;
+                if(count_probes == probes)  break;
             }
             count_hamming++;
         }
     }
 
-    auto end = chrono::high_resolution_clock::now(); 
+    // auto end = chrono::high_resolution_clock::now(); 
 
     cout << endl << "R-near neighbors:" << endl;
     if(neighboors.empty())  cout << "None" << endl;
