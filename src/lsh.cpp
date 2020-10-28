@@ -205,7 +205,7 @@ void LSH::InitLSH()
     int Rows=0,Columns=0;
 
     //Read input binary file...
-    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,60);
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
     Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
@@ -248,7 +248,7 @@ void LSH::InitLSH()
     tLSH = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
-    W = 400;
+    W = 4000;
     file << "W:" << W << endl << endl;
 
     //Do exhausting search and init W...

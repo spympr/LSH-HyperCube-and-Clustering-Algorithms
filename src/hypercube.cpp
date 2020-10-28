@@ -109,7 +109,7 @@ void HyperCube::InitHyperCube()
     int Rows,Columns;
     
     //Read input binary file...
-    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,60);
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
     Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
@@ -142,12 +142,12 @@ void HyperCube::InitHyperCube()
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
     for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
-
+    
     //Initialization of tTrue,tLSH arrays...
     tHypercube = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
-    W = 4000;
+    W = 400;
     file << "W:" << W << endl << endl;
 
     //Do exhausting search and init W...
