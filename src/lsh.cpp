@@ -202,13 +202,14 @@ void LSH::Approximate_Range_Search(int query_index)
 void LSH::InitLSH()
 {
     //Declaration of variables...
-    int Rows,Columns;
+    int Rows=0,Columns=0;
 
     //Read input binary file...
-    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,60);
     
     //Read query binary file...
     Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
+<<<<<<< HEAD
 
     file.open(output_file,ios::out);
 
@@ -220,6 +221,11 @@ void LSH::InitLSH()
 
     //Printing...
     // cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
+=======
+
+    //Printing...
+    cout << endl << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows << "x" << Columns << endl;
+>>>>>>> 841ec984077f406b113cb34314f3a4e3fc93d3e4
     
     //Initilization of W(grid), dimensions of each Image...
     dimensions = Columns*Rows;
@@ -240,9 +246,14 @@ void LSH::InitLSH()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
+<<<<<<< HEAD
     // m = M/2+1;
     file << "m: " << m << endl;
     file << "M: " << M << endl;
+=======
+    cout << "m:" << m << endl;
+    cout << "M:" << M << endl;
+>>>>>>> 841ec984077f406b113cb34314f3a4e3fc93d3e4
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
@@ -253,7 +264,11 @@ void LSH::InitLSH()
     tTrue = new double[Num_of_Queries];
 
     W = 40000;
+<<<<<<< HEAD
     file << "W: " << W << endl << endl;
+=======
+    cout << "W:" << W << endl << endl;
+>>>>>>> 841ec984077f406b113cb34314f3a4e3fc93d3e4
 
     //Do exhausting search and init W...
     ExhaustingNN(this);
@@ -313,6 +328,7 @@ void LSH::InitLSH()
                 delete Hash_Tables[i][j];
         delete [] Hash_Tables[i];
     }
+    delete [] Hash_Tables;
 
     //Deallocation of memory of True_Distances...
     for(int i=0;i<Num_of_Queries;i++)  

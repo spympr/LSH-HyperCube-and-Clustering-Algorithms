@@ -207,10 +207,10 @@ void kmeans::centroid_initialization()
 float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_array,kmeans* kmeansptr)
 {
     //Declaration of important structures,variables...
-    int cluster1,cluster2,images_in_cluster1,images_in_cluster2;
-    float ai,bi,average_silhouette = 0.0;
+    int cluster1=0,cluster2=0,images_in_cluster1=0,images_in_cluster2=0;
+    float ai=0.0,bi=0.0,average_silhouette = 0.0;
     int images_in_cluster[K];
-    item* current_image;
+    item* current_image = NULL;
     
     //Initialize arrays with zeros...
     for(int i=0;i<K;i++)  (*silhouette_array)[i] = 0.0;
@@ -255,9 +255,7 @@ float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_
     //Calculate mean si of each cluster..
     for(int i=0;i<K;i++) 
     {
-        // cout << "Cluster " << i << ": " << (*silhouette_array)[i] << "/" << images_in_cluster[i];
         (*silhouette_array)[i]/=(float)images_in_cluster[i];
-        // cout << "=" << (*silhouette_array)[i] << endl << endl;
         average_silhouette+=(*silhouette_array)[i];
     }
 

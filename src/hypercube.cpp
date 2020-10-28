@@ -109,10 +109,10 @@ void HyperCube::InitHyperCube()
     int Rows,Columns;
     
     //Read input binary file...
-    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,60);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,10);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
 
     file.open(output_file,ios::out);
 
@@ -134,11 +134,18 @@ void HyperCube::InitHyperCube()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
+<<<<<<< HEAD
     // m = 2;
     file << "m:" << m << endl;
     file << "M:" << M << endl;
     file << "M_boundary:" << M_boundary << endl;
     file << "Probes:" << probes << endl;
+=======
+    cout << "m:" << m << endl;
+    cout << "M:" << M << endl;
+    cout << "M_boundary:" << M_boundary << endl;
+    cout << "Probes:" << probes << endl;
+>>>>>>> 841ec984077f406b113cb34314f3a4e3fc93d3e4
 
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
