@@ -7,7 +7,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
     double clustering_time;
 
     //Original array of kmeans centroids...
-    int* indexes = kmeansptr->get_centroids();
+    int* indexes = kmeansptr->get_centroids(),iters=0;
 
     //Store previous and current objective value in this array..
     float objectives_values[2];
@@ -33,15 +33,46 @@ void Lloyd_Cluster::Lloyd_Clustering()
         objectives_values[1] = Lloyd_Objective();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
-        cout << ratio << "<" << epsilon << endl;
+        cout << "Reduction's rate change of objective function's value: " << ratio << endl;
         if(ratio<epsilon)   break;
         
         Lloyd_Update();
+        iters++;
     }
     auto end = chrono::high_resolution_clock::now(); 
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
-    
-    Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
+    cout << endl << "Converged with " << iters << " updates!" << endl;
+    // Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
+
+    // map <int,Nearest_Centroids*>::iterator it;
+    // int cluster = 0,counter=0;
+    // for(it=points.begin();it!=points.end();it++)    
+    // {
+    //     if(counter<3 && it->second->get_nearest_centroid1()==cluster)
+    //     {
+    //         for(int i=0;i<28;i++)
+    //         {
+    //             for(int j=0;j<28;j++)
+    //             {
+    //                 item temp = kmeansptr->get_Images_Array()[it->first][i*28+j];
+    //                 if(temp<10) cout << temp << "   ";
+    //                 else if(temp<100) cout << temp << "  ";
+    //                 else cout << temp << " ";
+    //             }
+    //             cout << endl;
+    //         }
+    //         cout << endl << endl;
+    //         counter++;
+    //     }
+    //     if(counter==3)
+    //     {
+    //         counter=0;
+    //         cluster++;
+    //         cout << "=======================================================================================" << endl;
+    //         cout << "=======================================================================================" << endl;
+    //     }
+    //     if(cluster==kmeansptr->get_K()) break;
+    // }
 
     Lloyd_Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
@@ -101,12 +132,12 @@ void Lloyd_Cluster::Lloyd_Update()
     {
         for(int z=0;z<kmeansptr->get_dimensions();z++)
         {
-            sort(vectors[i][z].begin(),vectors[i][z].end());
+            std::sort(vectors[i][z].begin(),vectors[i][z].end());
             median_index = ceil((double)vectors[i][z].size()/(double)2); 
             centroids[i][z] = vectors[i][z][median_index];
-        }   
+        }
     }
-    
+
     //Deallocate memory for vectors...
     for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
     delete [] vectors;    
@@ -150,7 +181,7 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
     
     for(int i=0;i<K;i++)   
     {
-        cout << "CLUSTER-" << i+1 << "  {" << images_in_cluster[i] << ", [ ";
+        cout << "CLUSTER-" << i << "  {" << images_in_cluster[i] << ", [ ";
         for(int z=0;z<kmeansptr->get_dimensions();z++)  cout << centroids[i][z] << " "; 
         cout << "]}" << endl << endl;
     }
@@ -169,7 +200,7 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
     {
         for(int i=0;i<K;i++)   
         {
-            cout << "CLUSTER-" << i+1 << "{" << "centroid?" << ",  ";
+            cout << "CLUSTER-" << i << "{" << "centroid?" << ",  ";
             for(it=points.begin();it!=points.end();it++)    
             {
                 cluster = it->second->get_nearest_centroid1();
