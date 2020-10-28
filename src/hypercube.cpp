@@ -134,6 +134,10 @@ void HyperCube::InitHyperCube()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
+<<<<<<< HEAD
+=======
+    // m = 2;
+>>>>>>> 858e9cfe659429e42e651380534cb1cb0f26cfe7
     file << "m:" << m << endl;
     file << "M:" << M << endl;
     file << "M_boundary:" << M_boundary << endl;

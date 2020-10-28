@@ -10,14 +10,17 @@ class Lloyd_Cluster
         kmeans* kmeansptr;
         item** centroids;
         map <int,Nearest_Centroids*> points;
+        fstream file;
         
     public:
 
         Lloyd_Cluster(string input_file,string output_file_,string conf,string comp):complete(comp),output_file(output_file_)
         {   
+            file.open(output_file,ios::out);
+            
             //Allocate memory for kmeans pointer (helpful class kmeans).
             kmeansptr = new kmeans(input_file,conf);
-            cout << endl << "Images:" << kmeansptr->get_number_of_images() << endl << "Dimensions:" << sqrt(kmeansptr->get_dimensions()) << "x" << sqrt(kmeansptr->get_dimensions()) << endl <<  "Κ:" << kmeansptr->get_K() << endl;
+            file << endl << "Images:" << kmeansptr->get_number_of_images() << endl << "Dimensions:" << sqrt(kmeansptr->get_dimensions()) << "x" << sqrt(kmeansptr->get_dimensions()) << endl <<  "Κ:" << kmeansptr->get_K() << endl;
 
             //Allocate memory for centroids of each cluster (centroids_dimensions=K*image_dimensions).
             centroids = new item*[kmeansptr->get_K()];
