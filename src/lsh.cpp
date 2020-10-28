@@ -193,10 +193,10 @@ void LSH::InitLSH()
     int Rows=0,Columns=0;
 
     //Read input binary file...
-    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,60);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
 
     //Printing...
     cout << endl << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows << "x" << Columns << endl;
