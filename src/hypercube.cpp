@@ -114,8 +114,10 @@ void HyperCube::InitHyperCube()
     //Read query binary file...
     Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,10);
 
+    file.open(output_file,ios::out);
+
     //Printing...
-    cout << endl << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows <<  "x" << Columns << endl;
+    file << endl << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows <<  "x" << Columns << endl;
 
     //Initilization of dimensions of each Image,k, HashTableSize...
     dimensions = Rows*Columns;
@@ -133,10 +135,10 @@ void HyperCube::InitHyperCube()
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
     // m = 2;
-    cout << "m:" << m << endl;
-    cout << "M:" << M << endl;
-    cout << "M_boundary:" << M_boundary << endl;
-    cout << "Probes:" << probes << endl;
+    file << "m:" << m << endl;
+    file << "M:" << M << endl;
+    file << "M_boundary:" << M_boundary << endl;
+    file << "Probes:" << probes << endl;
 
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
@@ -147,7 +149,7 @@ void HyperCube::InitHyperCube()
     tTrue = new double[Num_of_Queries];
 
     W = 4000;
-    cout << "W:" << W << endl << endl;
+    file << "W:" << W << endl << endl;
 
     //Do exhausting search and init W...
     ExhaustingNN_HC(this);
@@ -177,13 +179,13 @@ void HyperCube::InitHyperCube()
 
     Approximate_Hypercube();
     
-    cout << endl;
+    file << endl;
     //Print Buckets...
     int counter=0;
     for(int j=0;j<HashTableSize;j++)
         if(Hash_Table[j]!=NULL)
             counter++;                
-    cout << "HashTable: " << counter << " out of " << HashTableSize << endl;
+    file << "HashTable: " << counter << " out of " << HashTableSize << endl;
 
 
     //Deallocation of memory of Images_Array...
@@ -277,29 +279,29 @@ void HyperCube::Approximate_Hypercube()
 
         auto end = chrono::high_resolution_clock::now(); 
 
-        cout << endl << "--------------------------------------------" << endl;
-        cout << "Query: " << Queries_Array[i][dimensions] << endl;
+        file << endl << "--------------------------------------------" << endl;
+        file << "Query: " << Queries_Array[i][dimensions] << endl;
 
         for(int k=0;k<N;k++)
         {
             HyperCube_Distances[k] = distances.top().first;
             HyperCube_nns[k] = distances.top().second;
             distances.pop();
-            cout << "Nearest neighbor-" << k+1 << ": " << HyperCube_nns[k] << endl;
-            cout << "distanceHyperCube: " << HyperCube_Distances[k] << endl;
-            cout << "distanceTrue: " << True_Distances[i][k] << endl << endl;
+            file << "Nearest neighbor-" << k+1 << ": " << HyperCube_nns[k] << endl;
+            file << "distanceHyperCube: " << HyperCube_Distances[k] << endl;
+            file << "distanceTrue: " << True_Distances[i][k] << endl << endl;
             dist_AF += (double)(HyperCube_Distances[k])/(double)True_Distances[i][k];
         }
 
         tHypercube[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
-        cout << "tHypercube: " << tHypercube[i] << "μs" << endl << "tTrue: " << tTrue[i] << "μs";
+        file << "tHypercube: " << tHypercube[i] << "μs" << endl << "tTrue: " << tTrue[i] << "μs";
         time_error += tHypercube[i]/tTrue[i];
 
         Approximate_Range_Search(i,fi_query_values[i]);
     }
 
-    cout << endl << "HyperCube's Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
-    cout << endl << "tHyperCube/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
+    file << endl << "HyperCube's Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
+    file << endl << "tHyperCube/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
 }
 
 void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_value)
@@ -360,13 +362,13 @@ void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_v
 
     // auto end = chrono::high_resolution_clock::now(); 
 
-    cout << endl << "R-near neighbors:" << endl;
-    if(neighboors.empty())  cout << "None" << endl;
+    file << endl << "R-near neighbors:" << endl;
+    if(neighboors.empty())  file << "None" << endl;
     else
     {
         for(int k=0;k<neighboors.size();k++)
         { 
-            cout << neighboors.top() << endl;
+            file << neighboors.top() << endl;
             neighboors.pop();
         }    
     }  

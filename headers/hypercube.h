@@ -14,6 +14,7 @@ class HyperCube
         Bucket** Hash_Table;
         string input_file,query_file,output_file;
         map<unsigned int,unsigned int>* f_i_map;
+        fstream file;
 
     public:
 

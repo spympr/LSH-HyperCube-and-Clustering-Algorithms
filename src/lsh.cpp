@@ -80,10 +80,17 @@ Bucket*** LSH::get_Hash_Tables()
     return Hash_Tables;
 }
 
+// fstream LSH::get_file()
+// {
+//     return file;
+// }
+
 void LSH::Approximate_LSH()
 {   
     for(int i=0;i<Num_of_Queries;i++)
     {
+        // file.open(output_file,ios::out);
+
         int LSH_nns[N],LSH_Distances[N]; 
         auto start = chrono::high_resolution_clock::now(); 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
@@ -117,32 +124,36 @@ void LSH::Approximate_LSH()
 
         auto end = chrono::high_resolution_clock::now(); 
         
-        cout << endl << "--------------------------------------------" << endl;
-        cout << "Query: " << Queries_Array[i][dimensions] << endl;
+        file << endl << "--------------------------------------------" << endl;
+        file << "Query: " << Queries_Array[i][dimensions] << endl;
         
         for(int k=0;k<N;k++)
         {
             LSH_Distances[k] = distances.top().first;
             LSH_nns[k] = distances.top().second;
             distances.pop();
-            cout << "Nearest neighbor-" << k+1 << ": " << LSH_nns[k] << endl;
-            cout << "distanceLSH: " << LSH_Distances[k] << endl;
-            cout << "distanceTrue: " << True_Distances[i][k] << endl << endl;
+            file << "Nearest neighbor-" << k+1 << ": " << LSH_nns[k] << endl;
+            file << "distanceLSH: " << LSH_Distances[k] << endl;
+            file << "distanceTrue: " << True_Distances[i][k] << endl << endl;
             dist_AF += (double)(LSH_Distances[k])/(double)True_Distances[i][k];
         }
         tLSH[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
-        cout << "tLSH: " << tLSH[i] << "μs" << endl << "tTrue: " << tTrue[i] << "μs";
+        file << "tLSH: " << tLSH[i] << "μs" << endl << "tTrue: " << tTrue[i] << "μs";
         time_error += tLSH[i]/tTrue[i];
 
         Approximate_Range_Search(i);
     }
 
-    cout << endl << "LSH Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
-    cout << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
+    // file.open(output_file,ios::out);
+
+    file << endl << "LSH Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
+    file << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
 }
 
 void LSH::Approximate_Range_Search(int query_index)
 {   
+    // file.open(output_file,ios::out);
+
     priority_queue<int, vector<int>, greater<int>> neighboors; 
     unordered_set<int> indexes_of_images;
 
@@ -175,16 +186,17 @@ void LSH::Approximate_Range_Search(int query_index)
         }
     }
     
-    cout << endl << "R-near neighbors:" << endl;
-    if(neighboors.empty())  cout << "None" << endl;
+    file << endl << "R-near neighbors:" << endl;
+    if(neighboors.empty())  file << "None" << endl;
     else
     {
         for(int k=0;k<neighboors.size();k++)
         { 
-            cout << neighboors.top() << endl;
+            file << neighboors.top() << endl;
             neighboors.pop();
         }    
-    }    
+    }   
+
 }
 
 void LSH::InitLSH()
@@ -196,10 +208,18 @@ void LSH::InitLSH()
     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,10);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
+
+    file.open(output_file,ios::out);
+
+    if(file)
+    {
+        file << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
+    }
+    else cout << "Problem\n";
 
     //Printing...
-    cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
+    // cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
     
     //Initilization of W(grid), dimensions of each Image...
     dimensions = Columns*Rows;
@@ -221,8 +241,8 @@ void LSH::InitLSH()
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
     // m = M/2+1;
-    cout << "m: " << m << endl;
-    cout << "M: " << M << endl;
+    file << "m: " << m << endl;
+    file << "M: " << M << endl;
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
@@ -233,7 +253,7 @@ void LSH::InitLSH()
     tTrue = new double[Num_of_Queries];
 
     W = 40000;
-    cout << "W: " << W << endl << endl;
+    file << "W: " << W << endl << endl;
 
     //Do exhausting search and init W...
     ExhaustingNN(this);
@@ -256,7 +276,7 @@ void LSH::InitLSH()
 
     Approximate_LSH();
 
-    cout << endl;
+    file << endl;
     //Print Buckets...
     for(int i=0;i<L;i++)
     {
@@ -270,7 +290,7 @@ void LSH::InitLSH()
                 sum+=Hash_Tables[i][j]->images.size();
             }                
         }
-        cout << "HashTable " << i << ": " << counter << ", " << sum << endl;
+        file << "HashTable " << i << ": " << counter << ", " << sum << endl;
     }
 
     //Deallocation of memory of Images_Array...
@@ -303,4 +323,6 @@ void LSH::InitLSH()
     delete [] tLSH;
     delete [] tTrue;
     delete [] modulars;
+
+    // file.close();
 }

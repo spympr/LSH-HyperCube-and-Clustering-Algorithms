@@ -16,6 +16,7 @@ class LSH
         item **Images_Array,**Queries_Array;
         Bucket*** Hash_Tables;
         string input_file,query_file,output_file;
+        fstream file;
 
     public:
         LSH(string input_file_,string query_file_,string output_file_,int L_,int N_,int k_,int R_)
@@ -44,6 +45,7 @@ class LSH
         item** get_Images_Array();
         item** get_Queries_Array();
         Bucket*** get_Hash_Tables();
+        fstream get_file();
 };
 
 #endif
