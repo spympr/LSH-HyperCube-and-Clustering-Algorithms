@@ -24,7 +24,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
         for(int j=0;j<kmeansptr->get_dimensions();j++)
             centroids[i][j] = kmeansptr->get_Images_Array()[indexes[i]][j];
     }
-    cout << endl;
+    file << endl;
     
     auto start = chrono::high_resolution_clock::now();
     while(true)
@@ -34,7 +34,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
         objectives_values[1] = Lloyd_Objective();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
-        cout << "Reduction's rate change of objective function's value: " << ratio << endl;
+        file << "Reduction's rate change of objective function's value: " << ratio << endl;
         if(ratio<epsilon)   break;
         
         Lloyd_Update();
@@ -42,7 +42,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
     }
     auto end = chrono::high_resolution_clock::now(); 
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
-    cout << endl << "Converged with " << iters << " updates!" << endl;
+    file << endl << "Converged with " << iters << " updates!" << endl;
 
     Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
     
@@ -149,39 +149,39 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
         images_in_cluster[cluster]++;
     }
 
-    cout << endl << "Algorithm: Lloyds" << endl;
+    file << endl << "Algorithm: Lloyds" << endl;
     
     for(int i=0;i<K;i++)   
     {
-        cout << "CLUSTER-" << i << "  {" << images_in_cluster[i] << ", [ ";
-        for(int z=0;z<kmeansptr->get_dimensions();z++)  cout << centroids[i][z] << " "; 
-        cout << "]}" << endl << endl;
+        file << "CLUSTER-" << i << "  {" << images_in_cluster[i] << ", [ ";
+        for(int z=0;z<kmeansptr->get_dimensions();z++)  file << centroids[i][z] << " "; 
+        file << "]}" << endl << endl;
     }
     
-    cout << "clustering_time: " << time << "s" << endl << endl << "Silhouette: [ ";
+    file << "clustering_time: " << time << "s" << endl << endl << "Silhouette: [ ";
 
     for(int i=0;i<=K;i++)   
     {
-        cout << fixed << setprecision(3) << silhouette_array[i];
-        if(i<K) cout << ", ";
-        else    cout << " ]";
+        file << fixed << setprecision(3) << silhouette_array[i];
+        if(i<K) file << ", ";
+        else    file << " ]";
     }
-    cout << endl << endl;
+    file << endl << endl;
 
     if(complete=="yes")
     {
         for(int i=0;i<K;i++)   
         {
-            cout << "CLUSTER-" << i << "{ [ ";
-            for(int z=0;z<kmeansptr->get_dimensions();z++)  cout << centroids[i][z] << " "; 
-            cout << "], Images: ";
+            file << "CLUSTER-" << i << "{ [ ";
+            for(int z=0;z<kmeansptr->get_dimensions();z++)  file << centroids[i][z] << " "; 
+            file << "], Images: ";
 
             for(it=points.begin();it!=points.end();it++)    
             {
                 cluster = it->second->get_nearest_centroid1();
-                if(cluster==i)  cout << it->first << ", "; 
+                if(cluster==i)  file << it->first << ", "; 
             }
-            cout << "}" << endl << endl;
+            file << "}" << endl << endl;
         }
     }
 }
