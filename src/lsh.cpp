@@ -214,7 +214,7 @@ void LSH::InitLSH()
 
     if(file)
     {
-        file << endl << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows << "x" << Columns << endl;
+        file << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows << "x" << Columns << endl;
     }
     else cout << "Problem\n";
 
