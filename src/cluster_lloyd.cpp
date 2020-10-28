@@ -42,38 +42,9 @@ void Lloyd_Cluster::Lloyd_Clustering()
     auto end = chrono::high_resolution_clock::now(); 
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
     cout << endl << "Converged with " << iters << " updates!" << endl;
-    // Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
 
-    // map <int,Nearest_Centroids*>::iterator it;
-    // int cluster = 0,counter=0;
-    // for(it=points.begin();it!=points.end();it++)    
-    // {
-    //     if(counter<3 && it->second->get_nearest_centroid1()==cluster)
-    //     {
-    //         for(int i=0;i<28;i++)
-    //         {
-    //             for(int j=0;j<28;j++)
-    //             {
-    //                 item temp = kmeansptr->get_Images_Array()[it->first][i*28+j];
-    //                 if(temp<10) cout << temp << "   ";
-    //                 else if(temp<100) cout << temp << "  ";
-    //                 else cout << temp << " ";
-    //             }
-    //             cout << endl;
-    //         }
-    //         cout << endl << endl;
-    //         counter++;
-    //     }
-    //     if(counter==3)
-    //     {
-    //         counter=0;
-    //         cluster++;
-    //         cout << "=======================================================================================" << endl;
-    //         cout << "=======================================================================================" << endl;
-    //     }
-    //     if(cluster==kmeansptr->get_K()) break;
-    // }
-
+    Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
+    
     Lloyd_Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
     delete [] silhouette_array;
@@ -132,7 +103,7 @@ void Lloyd_Cluster::Lloyd_Update()
     {
         for(int z=0;z<kmeansptr->get_dimensions();z++)
         {
-            std::sort(vectors[i][z].begin(),vectors[i][z].end());
+            sort(vectors[i][z].begin(),vectors[i][z].end());
             median_index = ceil((double)vectors[i][z].size()/(double)2); 
             centroids[i][z] = vectors[i][z][median_index];
         }
