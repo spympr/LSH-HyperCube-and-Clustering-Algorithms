@@ -109,15 +109,15 @@ void HyperCube::InitHyperCube()
     int Rows,Columns;
     
     //Read input binary file...
-    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,60);
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
 
     file.open(output_file,ios::out);
 
     //Printing...
-    file << endl << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows <<  "x" << Columns << endl;
+    file << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows <<  "x" << Columns << endl;
 
     //Initilization of dimensions of each Image,k, HashTableSize...
     dimensions = Rows*Columns;
@@ -134,7 +134,6 @@ void HyperCube::InitHyperCube()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
-    // m = 2;
     file << "m:" << m << endl;
     file << "M:" << M << endl;
     file << "M_boundary:" << M_boundary << endl;
@@ -143,12 +142,12 @@ void HyperCube::InitHyperCube()
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
     for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
-
+    
     //Initialization of tTrue,tLSH arrays...
     tHypercube = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
-    W = 4000;
+    W = 40000;
     file << "W:" << W << endl << endl;
 
     //Do exhausting search and init W...
@@ -166,55 +165,9 @@ void HyperCube::InitHyperCube()
         for(int j=0;j<dimensions;j++)   
             s_i[i][j] = distribution(generator);        
     }
-
-    // for(int i=0;i<k;i++)
-    // {
-    //     for(int j=0;j<dimensions;j++)
-    //         cout << s_i[i][j] << " ";
-    //     cout << endl;
-    // }
         
     //Fill Hash Table...
     Insert_Images_To_Buckets_HyperCube(this);
-
-    Approximate_Hypercube();
-    
-    file << endl;
-    //Print Buckets...
-    int counter=0;
-    for(int j=0;j<HashTableSize;j++)
-        if(Hash_Table[j]!=NULL)
-            counter++;                
-    file << "HashTable: " << counter << " out of " << HashTableSize << endl;
-
-
-    //Deallocation of memory of Images_Array...
-    for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
-    delete [] Images_Array;
-
-    //Deallocation of memory of Queries_Array...
-    for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
-    delete [] Queries_Array;
-
-    //Deallocation of memory of s_i...
-    for(int i=0;i<k;i++)    delete [] s_i[i];
-    delete [] s_i;        
-
-    //Deallocation of memory of Hash_Tables...
-    for(int j=0;j<(HashTableSize);j++)   
-        if(Hash_Table[j]!=NULL)
-            delete Hash_Table[j];
-    delete [] Hash_Table;
-
-    //Deallocation of memory of True_Distances...
-    for(int i=0;i<Num_of_Queries;i++)  
-        delete [] True_Distances[i];
-    delete [] True_Distances;
-    
-    //Deallocation of memory of tLSH,tTrue,modulars...
-    delete [] tHypercube;
-    delete [] tTrue;
-    delete [] modulars;
 }
 
 void HyperCube::Approximate_Hypercube()
@@ -302,6 +255,14 @@ void HyperCube::Approximate_Hypercube()
 
     file << endl << "HyperCube's Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
     file << endl << "tHyperCube/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
+
+    file << endl;
+    //Print Buckets...
+    int counter=0;
+    for(int j=0;j<HashTableSize;j++)
+        if(Hash_Table[j]!=NULL)
+            counter++;                
+    file << "HashTable: " << counter << " out of " << HashTableSize << endl;
 }
 
 void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_value)
@@ -372,4 +333,37 @@ void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_v
             neighboors.pop();
         }    
     }  
+}
+
+void HyperCube::Deallocation_of_Memory()
+{
+    delete [] f_i_map;
+
+    //Deallocation of memory of Images_Array...
+    for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
+    delete [] Images_Array;
+
+    //Deallocation of memory of Queries_Array...
+    for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
+    delete [] Queries_Array;
+
+    //Deallocation of memory of s_i...
+    for(int i=0;i<k;i++)    delete [] s_i[i];
+    delete [] s_i;        
+
+    //Deallocation of memory of Hash_Tables...
+    for(int j=0;j<(HashTableSize);j++)   
+        if(Hash_Table[j]!=NULL)
+            delete Hash_Table[j];
+    delete [] Hash_Table;
+
+    //Deallocation of memory of True_Distances...
+    for(int i=0;i<Num_of_Queries;i++)  
+        delete [] True_Distances[i];
+    delete [] True_Distances;
+    
+    //Deallocation of memory of tLSH,tTrue,modulars...
+    delete [] tHypercube;
+    delete [] tTrue;
+    delete [] modulars;
 }

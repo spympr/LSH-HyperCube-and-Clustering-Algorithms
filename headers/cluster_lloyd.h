@@ -11,6 +11,7 @@ class Lloyd_Cluster
         item** centroids;
         map <int,Nearest_Centroids*> points;
         fstream file;
+        float epsilon=1e-3;
         
     public:
 
@@ -31,10 +32,7 @@ class Lloyd_Cluster
             
             //Allocate memory for each class Nearest_Centroids (each image has one pointer to an object of Nearest_Centroids).
             for(int i=0;i<kmeansptr->get_number_of_images();i++)
-            {
-                Nearest_Centroids* temp = new Nearest_Centroids();
-                points[i] = temp;
-            }
+                points[i] = new Nearest_Centroids();
 
             //Begin Clustering...
             Lloyd_Clustering();

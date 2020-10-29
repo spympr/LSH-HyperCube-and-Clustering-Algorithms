@@ -9,7 +9,7 @@ class Bucket;
 class LSH
 {
     private:
-        int Num_of_Images,Num_of_Queries,k,L,R,dimensions,W,N,m,M,HashTableSize;
+        int Num_of_Images,Num_of_Queries=1,k,L,R,dimensions,W,N,m,M,HashTableSize;
         int* modulars;
         double *tLSH,*tTrue,dist_AF,time_error;;
         int **s_i,**True_Distances;
@@ -21,13 +21,17 @@ class LSH
     public:
         LSH(string input_file_,string query_file_,string output_file_,int L_,int N_,int k_,int R_)
         :input_file(input_file_),query_file(query_file_),output_file(output_file_),L(L_),N(N_),k(k_),R(R_),dist_AF(0.0),time_error(0.0)
+        {}
+
+        ~LSH()
         {
-            InitLSH();
+            Deallocation_of_Memory();
         }
 
         void Approximate_LSH();
         void Approximate_Range_Search(int);
         void InitLSH();
+        void Deallocation_of_Memory();
         
         int get_dimensions();
         int get_M();

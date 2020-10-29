@@ -144,16 +144,29 @@ void LSH::Approximate_LSH()
         Approximate_Range_Search(i);
     }
 
-    // file.open(output_file,ios::out);
-
     file << endl << "LSH Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
     file << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
+    
+    file << endl;
+    //Print Buckets...
+    for(int i=0;i<L;i++)
+    {
+        int counter=0;
+        int sum=0;
+        for(int j=0;j<HashTableSize;j++)
+        {
+            if(Hash_Tables[i][j]!=NULL)
+            {
+                counter++;
+                sum+=Hash_Tables[i][j]->images.size();
+            }                
+        }
+        file << "HashTable " << i << ": " << counter << ", " << sum << endl;
+    }
 }
 
 void LSH::Approximate_Range_Search(int query_index)
 {   
-    // file.open(output_file,ios::out);
-
     priority_queue<int, vector<int>, greater<int>> neighboors; 
     unordered_set<int> indexes_of_images;
 
@@ -205,22 +218,19 @@ void LSH::InitLSH()
     int Rows=0,Columns=0;
 
     //Read input binary file...
-    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,60);
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1000);
-
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
+   
     file.open(output_file,ios::out);
 
     if(file)
     {
-        file << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
+        file << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows << "x" << Columns << endl;
     }
     else cout << "Problem\n";
 
-    //Printing...
-    // cout << endl << "Images: " << Num_of_Images << endl << "Queries: " << Num_of_Queries << endl << "Rows: " << Rows << endl << "Columns: " << Columns << endl;
-    
     //Initilization of W(grid), dimensions of each Image...
     dimensions = Columns*Rows;
     HashTableSize = Num_of_Images/8;
@@ -240,9 +250,8 @@ void LSH::InitLSH()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
-    // m = M/2+1;
-    file << "m: " << m << endl;
-    file << "M: " << M << endl;
+    file << "m:" << m << endl;
+    file << "M:" << M << endl;
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
@@ -252,8 +261,8 @@ void LSH::InitLSH()
     tLSH = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
-    W = 40000;
-    file << "W: " << W << endl << endl;
+    W = 4000;
+    file << "W:" << W << endl << endl;
 
     //Do exhausting search and init W...
     ExhaustingNN(this);
@@ -273,26 +282,10 @@ void LSH::InitLSH()
 
     //Fill Hash Tables...
     Insert_Images_To_Buckets_LSH(this);
+}
 
-    Approximate_LSH();
-
-    file << endl;
-    //Print Buckets...
-    for(int i=0;i<L;i++)
-    {
-        int counter=0;
-        int sum=0;
-        for(int j=0;j<HashTableSize;j++)
-        {
-            if(Hash_Tables[i][j]!=NULL)
-            {
-                counter++;
-                sum+=Hash_Tables[i][j]->images.size();
-            }                
-        }
-        file << "HashTable " << i << ": " << counter << ", " << sum << endl;
-    }
-
+void LSH::Deallocation_of_Memory()
+{
     //Deallocation of memory of Images_Array...
     for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
     delete [] Images_Array;
@@ -324,6 +317,4 @@ void LSH::InitLSH()
     delete [] tLSH;
     delete [] tTrue;
     delete [] modulars;
-
-    // file.close();
 }

@@ -22,18 +22,18 @@ class HyperCube
         : k(k_),M_boundary(M_boundary_),probes(probes_),R(R_),input_file(input_file_),query_file(query_file_),output_file(output_file_),N(N_),dist_AF(0.0),time_error(0.0)
         {         
             f_i_map = new map<unsigned int, unsigned int>[k];
-            InitHyperCube();
         }
 
         ~HyperCube()
         {
-            delete [] f_i_map;
+            Deallocation_of_Memory();
         }
 
         int hammingDistance(int , int );
         void InitHyperCube();
         void Approximate_Hypercube();
         void Approximate_Range_Search(int ,unsigned int );
+        void Deallocation_of_Memory();
 
         int get_dimensions();
         int get_M_boundary();
