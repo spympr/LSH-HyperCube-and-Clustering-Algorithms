@@ -55,9 +55,80 @@ Bucket*** RA_LSH::get_Hash_Tables()
     return Hash_Tables;
 }
 
+void RA_LSH::Map_Init()
+{
+    map <int,Nearest_Centroids*>::iterator it;
+
+    for(it=(*points).begin();it!=(*points).end();it++) 
+        it->second->set_nearest_centroid1(-1);
+}
+
 void RA_LSH::RA_LSH_Assign()
 {
-    
+    int image_index = 0, nearest_centroid1=0, nearest_centroid2=0;
+
+    for(int i=0;i<K;i++)
+    {
+        unsigned int gi_values[L];
+        
+        Reverse_Assignment_LSH_Centroid_in_Bucket(this,gi_values,centroids[i]);
+
+        //For each Hash Table
+        for(int j=0;j<L;j++)
+        {
+            Bucket* temp = Hash_Tables[j][gi_values[j]];
+
+            if(temp!=NULL)
+            {
+                vector<pair<item*,unsigned int>>::iterator it;
+                
+                //For each image in Bucket...
+                for(it=temp->images.begin();it!=temp->images.end();it++)    
+                {
+                    image_index = it->first[dimensions];
+                    nearest_centroid1 = (*points)[image_index]->get_nearest_centroid1();
+
+                    //In case there isn't first centroid yet
+                    if(nearest_centroid1 == -1)
+                    {
+                        (*points)[image_index]->set_nearest_centroid1(i);
+                        (*points)[image_index]->set_dist1(ManhattanDistance(it->first, centroids[i], dimensions));
+
+                        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances2; 
+                        
+                        for(int z=0;z<K;z++)
+                            if(z!=i)
+                                distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
+                        
+                        (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
+                        (*points)[image_index]->set_dist2(distances2.top().first);
+                    }
+                    //In case we have already assign a centroid, we have to check if we found a new centroid much closer than the previous one
+                    else
+                    {
+                        item new_distance1 = ManhattanDistance(it->first,centroids[i],dimensions);
+                        item old_distance1 = ManhattanDistance(it->first,centroids[nearest_centroid1],dimensions);
+                        
+                        //Change the old centroid with the new one
+                        if(new_distance1 < old_distance1)
+                        {
+                            (*points)[image_index]->set_nearest_centroid1(i);
+                            (*points)[image_index]->set_dist1(new_distance1);
+
+                            priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances2; 
+                        
+                            for(int z=0;z<K;z++)
+                                if(z!=i)
+                                    distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
+                            
+                            (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
+                            (*points)[image_index]->set_dist2(distances2.top().first);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 // void LSH::Approximate_LSH()

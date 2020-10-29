@@ -2,25 +2,26 @@
 #define RA_LSH_H
 
 #include "../headers/kmeans.h"
+
 //Forward declaration
-class Bucket;
+// class Bucket;
 
 class RA_LSH
 {
     private:
-        int Num_of_Images,k,L,dimensions,W,m,M,HashTableSize;
+        int Num_of_Images,k,L,dimensions,W,m,M,HashTableSize,K;
         int* modulars;
         int **s_i;
         item **Images_Array;
         Bucket*** Hash_Tables;
         string input_file,output_file;
         fstream file;
-        map <int,Nearest_Centroids*>* points;
+        map<int,Nearest_Centroids*>* points;
         item** centroids;
 
     public:
-        RA_LSH(string input_file_,string output_file_,int L_,int k_, map <int,Nearest_Centroids*>* points_, item** centroids_)
-        :input_file(input_file_),output_file(output_file_),L(L_),k(k_),points(points_),centroids(centroids_)
+        RA_LSH(string input_file_,string output_file_,int L_,int k_,map<int,Nearest_Centroids*>* points_, item** centroids_, int K_)
+        :input_file(input_file_),output_file(output_file_),L(L_),k(k_),points(points_),centroids(centroids_),K(K_)
         {}
 
         ~RA_LSH()
@@ -33,6 +34,7 @@ class RA_LSH
         void Approximate_Range_Search(int);
         void InitLSH();
         void Deallocation_of_Memory();
+        void Map_Init();
         
         int get_dimensions();
         int get_M();
