@@ -3,7 +3,7 @@
 
 #include "../headers/kmeans.h"
 
-//Forward declaration
+// //Forward declaration
 class kmeans;
 class Nearest_Centroids;
 
@@ -19,14 +19,13 @@ class RA_LSH
         fstream file;
         map<int,Nearest_Centroids*>* points;
         item** centroids;
+        kmeans* kmeansptr;
 
     public:
-        RA_LSH(string output_file_,map<int,Nearest_Centroids*>* points_,item** centroids_,kmeans* kmeansptr)
-        :output_file(output_file_),points(points_),centroids(centroids_),K(kmeansptr->get_K()),dimensions(kmeansptr->get_dimensions()),L(kmeansptr->get_L()),k(kmeansptr->get_LSH_k())
+        RA_LSH(string output_file_,map<int,Nearest_Centroids*>* points_,item** centroids_,kmeans* kmeansptr_)
+        :output_file(output_file_),points(points_),centroids(centroids_),kmeansptr(kmeansptr_)
         {
-            Num_of_Images = kmeansptr->get_number_of_images();
-            Images_Array = kmeansptr->get_Images_Array();
-            HashTableSize = Num_of_Images/8;
+            Initialize_Values();
         }
 
         ~RA_LSH()
@@ -39,6 +38,7 @@ class RA_LSH
         void Deallocation_of_Memory();
         void Map_Init();
         void Exhausting_For_Non_Assign_Points();
+        void Initialize_Values();
         
         int get_dimensions();
         int get_M();

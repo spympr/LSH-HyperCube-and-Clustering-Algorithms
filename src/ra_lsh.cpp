@@ -67,13 +67,15 @@ void RA_LSH::Map_Init()
 void RA_LSH::RA_LSH_Assign()
 {
     int image_index = 0, nearest_centroid1=0, nearest_centroid2=0;
+    
+    cout << "PAME " << Num_of_Images << " " << k << " " << L << " " << dimensions << " " << W << " " << m << " " << M << " " << HashTableSize << " " << K << endl;
 
     for(int i=0;i<K;i++)
     {
         unsigned int gi_values[L];
-        cout << "edw1 " << endl;
+        cout << "EDW1" << endl;
         Reverse_Assignment_LSH_Centroid_in_Bucket(this,gi_values,centroids[i]);
-        cout << "edw2 " << endl;
+        cout << "EDW2 " << endl;
 
         //For each Hash Table...
         for(int j=0;j<L;j++)
@@ -174,6 +176,7 @@ void RA_LSH::Init_RA_LSH()
     m = 423255;
     W = 4000;
     
+    
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
     for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
@@ -211,4 +214,15 @@ void RA_LSH::Deallocation_of_Memory()
     }
     delete [] Hash_Tables;
     delete [] modulars;
+}
+
+void RA_LSH::Initialize_Values()
+{
+    K = kmeansptr->get_K();
+    dimensions = kmeansptr->get_dimensions();
+    L = kmeansptr->get_L();
+    k = kmeansptr->get_LSH_k();
+    Num_of_Images = kmeansptr->get_number_of_images();
+    Images_Array = kmeansptr->get_Images_Array();
+    HashTableSize = Num_of_Images/8;
 }

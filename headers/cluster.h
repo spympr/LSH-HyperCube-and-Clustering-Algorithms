@@ -3,6 +3,8 @@
 
 #include "../headers/kmeans.h"
 
+class RA_LSH;
+
 class Cluster
 {
     private:
@@ -26,18 +28,6 @@ class Cluster
             //Allocate memory for kmeans pointer (helpful class kmeans).
             kmeansptr = new kmeans(input_file,conf);
             
-            //Check which method we have...
-            if(method==lsh_method)
-            {
-                lshptr = new RA_LSH(output_file,&points,centroids,kmeansptr);    
-                lshptr->Init_RA_LSH();
-            }
-            else if(method==hc_method)
-            {
-                // hcptr = new HyperCube(input_file,query_file,output_file,N,kmeansptr->get_HC_k(),R,kmeansptr->get_HC_M(),kmeansptr->get_probes());  
-                // hcptr->InitHyperCube();
-            }
-            
             file << "Images:" << kmeansptr->get_number_of_images() << endl << "Dimensions:" << sqrt(kmeansptr->get_dimensions()) << "x" << sqrt(kmeansptr->get_dimensions()) << endl <<  "Κ:" << kmeansptr->get_K() << endl << "ε:" << epsilon << endl;
 
             //Allocate memory for centroids of each cluster (centroids_dimensions=K*image_dimensions).
@@ -50,6 +40,18 @@ class Cluster
             //Allocate memory for each class Nearest_Centroids (each image has one pointer to an object of Nearest_Centroids).
             for(int i=0;i<kmeansptr->get_number_of_images();i++)
                 points[i] = new Nearest_Centroids();
+            
+            //Check which method we have...
+            if(method==lsh_method)
+            {
+                lshptr = new RA_LSH(output_file,&points,centroids,kmeansptr);    
+                lshptr->Init_RA_LSH();
+            }
+            else if(method==hc_method)
+            {
+                // hcptr = new HyperCube(input_file,query_file,output_file,N,kmeansptr->get_HC_k(),R,kmeansptr->get_HC_M(),kmeansptr->get_probes());  
+                // hcptr->InitHyperCube();
+            }
         }
 
         ~Cluster()
