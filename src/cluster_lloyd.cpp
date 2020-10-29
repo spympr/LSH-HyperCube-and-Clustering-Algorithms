@@ -3,7 +3,7 @@
 void Lloyd_Cluster::Lloyd_Clustering()
 {
     //Important variables..
-    float ratio,epsilon=0.001;
+    float ratio;
     double clustering_time=0.0;
 
     //Original array of kmeans centroids...
@@ -32,7 +32,9 @@ void Lloyd_Cluster::Lloyd_Clustering()
         Lloyd_Assign();
 
         objectives_values[1] = Lloyd_Objective();
+        
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
+        
         objectives_values[0] = objectives_values[1];
         file << "Reduction's rate change of objective function's value: " << ratio << endl;
         if(ratio<epsilon)   break;
@@ -44,7 +46,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
     file << endl << "Converged with " << iters << " updates!" << endl;
 
-    Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
+    // Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
     
     Lloyd_Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
@@ -131,7 +133,8 @@ float Lloyd_Cluster::Lloyd_Objective()
     
     for(int i=0;i<K;i++)    avg_sum+=sums[i];
 
-    return (float)avg_sum/(float)K;
+    // return (float)avg_sum/(float)K;
+    return avg_sum;
 }
 
 void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)

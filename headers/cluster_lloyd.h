@@ -11,6 +11,7 @@ class Lloyd_Cluster
         item** centroids;
         map <int,Nearest_Centroids*> points;
         fstream file;
+        float epsilon=1e-3;
         
     public:
 
