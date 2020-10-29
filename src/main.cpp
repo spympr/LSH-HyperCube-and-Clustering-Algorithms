@@ -199,7 +199,7 @@ int main(int argc, char** argv)
             file.open(output_file, std::ofstream::out | std::ofstream::trunc);
             file.close();
 
-            cout << "PLease give a new query file:\n";
+            cout << "Please give a new query file:\n";
             cin >> query_file;
         } 
     }
