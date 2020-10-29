@@ -1,4 +1,4 @@
-#include "../headers/cluster_lloyd.h"
+#include "../headers/cluster.h"
 
 int main(int argc, char** argv)
 {
@@ -160,19 +160,18 @@ int main(int argc, char** argv)
         {
             if(strcmp(method.c_str(),"Classic") == 0)   
             {
-                Lloyd_Cluster Lloyd(input_file,output_file,configuration_file,complete);
+                Cluster Lloyd(input_file,output_file,configuration_file,complete,lloyd_method);
+                Lloyd.Clustering();
             }
             else if(strcmp(method.c_str(),"LSH") == 0)  
             {
-                LSH lsh(input_file,query_file,output_file,L,N,k,R);    
-                lsh.InitLSH();
-                //reverse_lsh...
+                Cluster RA_LSH(input_file,output_file,configuration_file,complete,lsh_method);
+                RA_LSH.Clustering();
             }
             else if(strcmp(method.c_str(),"Hypercube") == 0)
             {
-                HyperCube cube(input_file,query_file,output_file,N,k,R,M,probes);  
-                cube.InitHyperCube();
-                //reverse_hypercube...
+                Cluster RA_HC(input_file,output_file,configuration_file,complete,hc_method);
+                RA_HC.Clustering();
             }
             else
             {

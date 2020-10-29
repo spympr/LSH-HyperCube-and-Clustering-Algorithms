@@ -1,9 +1,9 @@
-#ifndef CLUSTER_LLOYD_H
-#define CLUSTER_LLOYD_H
+#ifndef CLUSTER_H
+#define CLUSTER_H
 
 #include "../headers/kmeans.h"
 
-class Lloyd_Cluster
+class Cluster
 {
     private:
         string complete,output_file;
@@ -12,11 +12,24 @@ class Lloyd_Cluster
         map <int,Nearest_Centroids*> points;
         fstream file;
         float epsilon=1e-3;
+        LSH* lshptr;
+        HyperCube* hcptr;
         
     public:
 
-        Lloyd_Cluster(string input_file,string output_file_,string conf,string comp):complete(comp),output_file(output_file_)
+        Cluster(string input_file,string output_file_,string conf,string comp,Clustering_Method method):complete(comp),output_file(output_file_),lshptr(NULL),hcptr(NULL)
         {   
+            if(method==lsh_method)
+            {
+                // LSH lsh(input_file,query_file,output_file,L,N,k,R);    
+                // lsh.InitLSH();
+            }
+            else if(method==hc_method)
+            {
+                // HyperCube cube(input_file,query_file,output_file,N,k,R,M,probes);  
+                // cube.InitHyperCube();
+            }
+
             file.open(output_file,ios::out);
             
             //Allocate memory for kmeans pointer (helpful class kmeans).
@@ -33,12 +46,9 @@ class Lloyd_Cluster
             //Allocate memory for each class Nearest_Centroids (each image has one pointer to an object of Nearest_Centroids).
             for(int i=0;i<kmeansptr->get_number_of_images();i++)
                 points[i] = new Nearest_Centroids();
-
-            //Begin Clustering...
-            Lloyd_Clustering();
         }
 
-        ~Lloyd_Cluster()
+        ~Cluster()
         {
             //Deallocate memory for each pointer to class Nearest_Centroids.
             for(int i=0;i<kmeansptr->get_number_of_images();i++)    delete points[i];
@@ -51,11 +61,13 @@ class Lloyd_Cluster
             delete kmeansptr;
         }
         
-        void Lloyd_Clustering();
+        void Clustering();
         void Lloyd_Assign();
-        void Lloyd_Update();
-        void Lloyd_Print(float* ,int);
-        float Lloyd_Objective();
+        void RA_LSH_Assign();
+        void RA_HC_Assign();
+        void Update();
+        void Print(float* ,int);
+        float Objective_Value();
 };
 
 #endif
