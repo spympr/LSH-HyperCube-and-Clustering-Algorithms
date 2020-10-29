@@ -168,7 +168,7 @@ void Reverse_Assignment_LSH_Centroid_in_Bucket(LSH* info, unsigned int* gi_query
 
             for(int z=0;z<info->get_dimensions();z++)
             {
-                a_i[z] = floor((double)((*centroid) - info->get_s_i()[i*info->get_k()+j][z])/(double)(info->get_W()));
+                a_i[z] = floor((double)(centroid[z] - info->get_s_i()[i*info->get_k()+j][z])/(double)(info->get_W()));
             }
             h_p[j] = Calculate_hp_LSH(a_i,info);
         }
@@ -191,7 +191,7 @@ void Reverse_Assignment_HyperCube_Centroid_in_Bucket(HyperCube* info,unsigned in
 
         for(int z=0;z<info->get_dimensions();z++)
         {
-            a_i[z] = floor((double)((*centroid) - info->get_s_i()[j][z])/(double)(info->get_W()));
+            a_i[z] = floor((double)(centroid[z] - info->get_s_i()[j][z])/(double)(info->get_W()));
             // cout << a_i[z] << " " ;
         }
         // cout << endl;
