@@ -32,9 +32,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
         Lloyd_Assign();
 
         objectives_values[1] = Lloyd_Objective();
-        
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
-        
         objectives_values[0] = objectives_values[1];
         file << "Reduction's rate change of objective function's value: " << ratio << endl;
         if(ratio<epsilon)   break;
@@ -55,6 +53,8 @@ void Lloyd_Cluster::Lloyd_Clustering()
 
 void Lloyd_Cluster::Lloyd_Assign()
 {
+    int dist1,n1,dist2,n2;
+
     //For each point of dataset keep 2 nearest centroids and the appropriate distances in our map...
     for(int i=0;i<kmeansptr->get_number_of_images();i++)
     {
@@ -65,15 +65,15 @@ void Lloyd_Cluster::Lloyd_Assign()
             distances.push(make_pair(ManhattanDistance(kmeansptr->get_Images_Array()[i],centroids[j],kmeansptr->get_dimensions()),j));
         
         //Store distance and index of first nearest centroid...
-        int dist1 = distances.top().first;
-        int n1 = distances.top().second;
+        dist1 = distances.top().first;
+        n1 = distances.top().second;
         
         //Pop up first pair...
         distances.pop();
         
         //Store distance and index of second nearest centroid...
-        int dist2 = distances.top().first;
-        int n2 = distances.top().second;
+        dist2 = distances.top().first;
+        n2 = distances.top().second;
 
         //Pass these values to class Nearest_Centroids of each point of dataset...
         points[i]->set_dist1(dist1);
@@ -108,7 +108,8 @@ void Lloyd_Cluster::Lloyd_Update()
         {
             sort(vectors[i][z].begin(),vectors[i][z].end());
             median_index = ceil((double)vectors[i][z].size()/(double)2); 
-            centroids[i][z] = vectors[i][z][median_index];
+            // centroids[i][z] = vectors[i][z][median_index];
+            centroids[i][z] = vectors[i][z].at(median_index);
         }
     }
 
@@ -133,7 +134,6 @@ float Lloyd_Cluster::Lloyd_Objective()
     
     for(int i=0;i<K;i++)    avg_sum+=sums[i];
 
-    // return (float)avg_sum/(float)K;
     return avg_sum;
 }
 
