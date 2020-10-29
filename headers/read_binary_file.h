@@ -20,6 +20,8 @@
 using namespace std;
 using namespace std::chrono;
 
+enum Clustering_Method{lloyd_method,lsh_method,hc_method};
+
 typedef int item;
 
 #include "../headers/lsh.h"

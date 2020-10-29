@@ -1,6 +1,6 @@
-#include "../headers/cluster_lloyd.h"
+#include "../headers/cluster.h"
 
-void Lloyd_Cluster::Lloyd_Clustering()
+void Cluster::Clustering()
 {
     //Important variables..
     float ratio;
@@ -31,14 +31,14 @@ void Lloyd_Cluster::Lloyd_Clustering()
     {
         Lloyd_Assign();
 
-        objectives_values[1] = Lloyd_Objective();
+        objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
         file << "Reduction's rate change of objective function's value: " << ratio << endl;
         file << "Obj val: " << objectives_values[1] << endl;
         if(ratio<epsilon)   break;
         
-        Lloyd_Update();
+        Update();
         iters++;
     }
     auto end = chrono::high_resolution_clock::now(); 
@@ -47,12 +47,12 @@ void Lloyd_Cluster::Lloyd_Clustering()
 
     Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
     
-    Lloyd_Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
+    Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
     delete [] silhouette_array;
 }
 
-void Lloyd_Cluster::Lloyd_Assign()
+void Cluster::Lloyd_Assign()
 {
     int dist1,n1,dist2,n2;
 
@@ -84,7 +84,7 @@ void Lloyd_Cluster::Lloyd_Assign()
     }
 }
 
-void Lloyd_Cluster::Lloyd_Update()
+void Cluster::Update()
 {    
     map <int,Nearest_Centroids*>::iterator it;
     int cluster=0,median_index=0;
@@ -145,7 +145,7 @@ void Lloyd_Cluster::Lloyd_Update()
     } 
 }
 
-float Lloyd_Cluster::Lloyd_Objective()
+float Cluster::Objective_Value()
 {
     float avg_sum=0.0;
     int K=kmeansptr->get_K(),cluster=0,sums[K];
@@ -164,7 +164,7 @@ float Lloyd_Cluster::Lloyd_Objective()
     return avg_sum;
 }
 
-void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
+void Cluster::Print(float* silhouette_array,int time)
 {
     //Declaration of important structures,variables...
     int cluster=0,K=kmeansptr->get_K();
@@ -214,4 +214,14 @@ void Lloyd_Cluster::Lloyd_Print(float* silhouette_array,int time)
             file << "}" << endl << endl;
         }
     }
+}
+
+void Cluster::RA_LSH_Assign()
+{
+
+}
+
+void Cluster::RA_HC_Assign()
+{
+    
 }
