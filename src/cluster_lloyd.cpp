@@ -35,6 +35,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
         file << "Reduction's rate change of objective function's value: " << ratio << endl;
+        file << "Obj val: " << objectives_values[1] << endl;
         if(ratio<epsilon)   break;
         
         Lloyd_Update();

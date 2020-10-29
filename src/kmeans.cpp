@@ -231,18 +231,18 @@ void Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_a
         {
             if(it1->second->get_nearest_centroid1()==cluster1)
             {
-                ai += ManhattanDistance(kmeansptr->get_Images_Array()[it1->first],current_image,kmeansptr->get_dimensions());
+                ai += (float)(ManhattanDistance(kmeansptr->get_Images_Array()[it1->first],current_image,kmeansptr->get_dimensions()));
                 images_in_cluster1++;
             }   
             if(it1->second->get_nearest_centroid1()==cluster2)
             {
-                bi += ManhattanDistance(kmeansptr->get_Images_Array()[it1->first],current_image,kmeansptr->get_dimensions());
+                bi += (float)(ManhattanDistance(kmeansptr->get_Images_Array()[it1->first],current_image,kmeansptr->get_dimensions()));
                 images_in_cluster2++;
             }
         }
         
-        ai/=images_in_cluster1;
-        bi/=images_in_cluster2;
+        ai/=(float)images_in_cluster1;
+        bi/=(float)images_in_cluster2;
 
         if(ai < bi)     
             (*silhouette_array)[cluster1] += (1-((float)ai/(float)bi));
