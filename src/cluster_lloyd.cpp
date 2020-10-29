@@ -44,7 +44,7 @@ void Lloyd_Cluster::Lloyd_Clustering()
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
     file << endl << "Converged with " << iters << " updates!" << endl;
 
-    // Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
+    Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
     
     Lloyd_Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 

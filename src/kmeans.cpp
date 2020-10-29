@@ -234,7 +234,7 @@ void Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_a
                 ai += ManhattanDistance(kmeansptr->get_Images_Array()[it1->first],current_image,kmeansptr->get_dimensions());
                 images_in_cluster1++;
             }   
-            if(it1->second->get_nearest_centroid2()==cluster2)
+            if(it1->second->get_nearest_centroid1()==cluster2)
             {
                 bi += ManhattanDistance(kmeansptr->get_Images_Array()[it1->first],current_image,kmeansptr->get_dimensions());
                 images_in_cluster2++;

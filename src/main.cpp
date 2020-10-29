@@ -1,5 +1,4 @@
 #include "../headers/cluster_lloyd.h"
-// #include "../headers/exhausting.h"
 
 int main(int argc, char** argv)
 {
