@@ -168,8 +168,6 @@ void HyperCube::InitHyperCube()
         
     //Fill Hash Table...
     Insert_Images_To_Buckets_HyperCube(this);
-
-    Approximate_Hypercube();
 }
 
 void HyperCube::Approximate_Hypercube()
