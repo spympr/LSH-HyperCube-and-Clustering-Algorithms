@@ -35,6 +35,20 @@ int Calculate_hp_LSH(int* a_i, LSH* info)
     return mod(sum,info->get_M());
 }
 
+int Calculate_hp_RA_LSH(int* a_i, RA_LSH* info)
+{
+    unsigned int sum = 0,first_term,second_term,temp_term;
+
+    for(int i=1; i<=info->get_dimensions();i++)
+    {
+        first_term = mod(a_i[info->get_dimensions()-i],info->get_M());
+        second_term = info->get_modulars()[i-1];
+        temp_term = first_term*second_term;
+        sum += mod(temp_term,info->get_M());
+    }
+    return mod(sum,info->get_M());
+}
+
 int Calculate_hp_HyperCube(int* a_i, HyperCube* info)
 {
     unsigned int sum = 0,first_term,second_term,temp_term;
@@ -67,6 +81,35 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
                 }
                 // cout << endl;
                 h_p[j] = Calculate_hp_LSH(a_i,info);
+                // if(image<10)    cout << h_p[j] << endl;
+            }
+            for(int j=0;j<info->get_k();j++)
+            {
+                g_i[image][i] += (h_p[j] << ((info->get_k()-(j+1))*8));                
+            }
+            g_i[image][i] = g_i[image][i]%(info->get_HashTableSize());
+        }
+    }
+}
+
+void gi_values_of_train_RA_LSH(RA_LSH* info,unsigned int** g_i)
+{
+    for(int image=0;image<info->get_Num_of_Images();image++)
+    {
+        for(int i=0;i<info->get_L();i++)
+        {
+            int h_p[info->get_k()];
+            for(int j=0;j<info->get_k();j++)
+            {
+                int a_i[info->get_dimensions()];
+
+                for(int z=0;z<info->get_dimensions();z++)
+                {
+                    a_i[z] = floor((double)((info->get_Images_Array()[image][z] - info->get_s_i()[(i*info->get_k())+j][z]))/(double)(info->get_W()));
+                    // cout << a_i[z] << " ";
+                }
+                // cout << endl;
+                h_p[j] = Calculate_hp_RA_LSH(a_i,info);
                 // if(image<10)    cout << h_p[j] << endl;
             }
             for(int j=0;j<info->get_k();j++)
@@ -155,7 +198,7 @@ void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
     }
 }
 
-void Reverse_Assignment_LSH_Centroid_in_Bucket(LSH* info, unsigned int* gi_query_values, item* centroid)
+void Reverse_Assignment_LSH_Centroid_in_Bucket(RA_LSH* info, unsigned int* gi_query_values, item* centroid)
 {
     for(int i=0;i<info->get_L();i++)
     {
@@ -170,7 +213,7 @@ void Reverse_Assignment_LSH_Centroid_in_Bucket(LSH* info, unsigned int* gi_query
             {
                 a_i[z] = floor((double)(centroid[z] - info->get_s_i()[i*info->get_k()+j][z])/(double)(info->get_W()));
             }
-            h_p[j] = Calculate_hp_LSH(a_i,info);
+            h_p[j] = Calculate_hp_RA_LSH(a_i,info);
         }
         
         for(int j=0;j<info->get_k();j++)
@@ -269,4 +312,33 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
 
     //Deallocation of memory...
     delete [] f_i;
+}
+
+void Insert_Images_To_Buckets_RA_LSH(RA_LSH* info)
+{
+    //Allocate memory so as to store temporarily g_i values...
+    unsigned int** g_i = new unsigned int*[info->get_Num_of_Images()];
+    for(int i=0;i<info->get_Num_of_Images();i++)  
+    {
+        g_i[i] = new unsigned int[info->get_L()];
+        for(int j=0;j<info->get_L();j++)  g_i[i][j]=0;
+    }
+
+    //Call function so as to compute all g_i values...
+    gi_values_of_train_RA_LSH(info,g_i);
+    
+    //Fill buckets of Hash_Table...
+    for(int i=0;i<info->get_Num_of_Images();i++)
+    {
+        for(int j=0;j<info->get_L();j++)
+        {
+            if(info->get_Hash_Tables()[j][g_i[i][j]]==NULL)  info->get_Hash_Tables()[j][g_i[i][j]] = new Bucket();
+            info->get_Hash_Tables()[j][g_i[i][j]]->add(info->get_Images_Array()[i],g_i[i][j]);    
+        }
+    }
+
+    //Deallocation of memory...
+    for(int i=0;i<info->get_Num_of_Images();i++)  
+        delete [] g_i[i];
+    delete [] g_i;
 }

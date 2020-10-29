@@ -1,4 +1,4 @@
-#include "../headers/exhausting.h"
+#include "../headers/kmeans.h"
 
 int RA_LSH::get_dimensions()
 {
@@ -53,6 +53,82 @@ item** RA_LSH::get_Images_Array()
 Bucket*** RA_LSH::get_Hash_Tables()
 {
     return Hash_Tables;
+}
+
+void RA_LSH::Map_Init()
+{
+    map <int,Nearest_Centroids*>::iterator it;
+
+    for(it=(*points).begin();it!=(*points).end();it++) 
+        it->second->set_nearest_centroid1(-1);
+}
+
+void RA_LSH::RA_LSH_Assign()
+{
+    int image_index = 0, nearest_centroid1=0, nearest_centroid2=0;
+
+    for(int i=0;i<K;i++)
+    {
+        unsigned int gi_values[L];
+        
+        Reverse_Assignment_LSH_Centroid_in_Bucket(this,gi_values,centroids[i]);
+
+        //For each Hash Table
+        for(int j=0;j<L;j++)
+        {
+            Bucket* temp = Hash_Tables[j][gi_values[j]];
+
+            if(temp!=NULL)
+            {
+                vector<pair<item*,unsigned int>>::iterator it;
+                
+                //For each image in Bucket...
+                for(it=temp->images.begin();it!=temp->images.end();it++)    
+                {
+                    image_index = it->first[dimensions];
+                    nearest_centroid1 = (*points)[image_index]->get_nearest_centroid1();
+
+                    //In case there isn't first centroid yet
+                    if(nearest_centroid1 == -1)
+                    {
+                        (*points)[image_index]->set_nearest_centroid1(i);
+                        (*points)[image_index]->set_dist1(ManhattanDistance(it->first, centroids[i], dimensions));
+
+                        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances2; 
+                        
+                        for(int z=0;z<K;z++)
+                            if(z!=i)
+                                distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
+                        
+                        (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
+                        (*points)[image_index]->set_dist2(distances2.top().first);
+                    }
+                    //In case we have already assign a centroid, we have to check if we found a new centroid much closer than the previous one
+                    else
+                    {
+                        item new_distance1 = ManhattanDistance(it->first,centroids[i],dimensions);
+                        item old_distance1 = ManhattanDistance(it->first,centroids[nearest_centroid1],dimensions);
+                        
+                        //Change the old centroid with the new one
+                        if(new_distance1 < old_distance1)
+                        {
+                            (*points)[image_index]->set_nearest_centroid1(i);
+                            (*points)[image_index]->set_dist1(new_distance1);
+
+                            priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances2; 
+                        
+                            for(int z=0;z<K;z++)
+                                if(z!=i)
+                                    distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
+                            
+                            (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
+                            (*points)[image_index]->set_dist2(distances2.top().first);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 // void LSH::Approximate_LSH()
@@ -182,109 +258,109 @@ Bucket*** RA_LSH::get_Hash_Tables()
 
 // }
 
-// void LSH::InitLSH()
-// {
-//     //Declaration of variables...
-//     int Rows=0,Columns=0;
+void RA_LSH::InitLSH()
+{
+    //Declaration of variables...
+    int Rows=0,Columns=0;
 
-//     //Read input binary file...
-//     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
+    //Read input binary file...
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
-//     //Read query binary file...
-//     Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
+    // //Read query binary file...
+    // Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
    
-//     file.open(output_file,ios::out);
+    file.open(output_file,ios::out);
 
-//     if(file)
-//     {
-//         file << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows << "x" << Columns << endl;
-//     }
-//     else cout << "Problem\n";
+    if(file)
+    {
+        file << "Images:" << Num_of_Images << endl << "Dimensions:" << Rows << "x" << Columns << endl;
+    }
+    else cout << "Problem\n";
 
-//     //Initilization of W(grid), dimensions of each Image...
-//     dimensions = Columns*Rows;
-//     HashTableSize = Num_of_Images/8;
+    //Initilization of W(grid), dimensions of each Image...
+    dimensions = Columns*Rows;
+    HashTableSize = Num_of_Images/8;
 
-//     //Declaration of hash tables...
-//     Hash_Tables = new Bucket**[L];
-//     for(int i=0;i<L;i++)    
-//     {
-//         Hash_Tables[i] = new Bucket*[HashTableSize];
-//         for(int j=0;j<HashTableSize;j++)   Hash_Tables[i][j]=NULL;                
-//     }
+    //Declaration of hash tables...
+    Hash_Tables = new Bucket**[L];
+    for(int i=0;i<L;i++)    
+    {
+        Hash_Tables[i] = new Bucket*[HashTableSize];
+        for(int j=0;j<HashTableSize;j++)   Hash_Tables[i][j]=NULL;                
+    }
 
-//     //Initialization of 2D array True_Distances...
-//     True_Distances = new int*[Num_of_Queries];
-//     for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new  int[N];
+    // //Initialization of 2D array True_Distances...
+    // True_Distances = new int*[Num_of_Queries];
+    // for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new  int[N];
     
-//     //Initialization of m,M...
-//     M = pow(2,floor((double)32/(double)k));
-//     m = 423255;
-//     file << "m:" << m << endl;
-//     file << "M:" << M << endl;
+    //Initialization of m,M...
+    M = pow(2,floor((double)32/(double)k));
+    m = 423255;
+    file << "m:" << m << endl;
+    file << "M:" << M << endl;
     
-//     //Calculation of m^d-1modM array...
-//     modulars = new int[dimensions];
-//     for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
+    //Calculation of m^d-1modM array...
+    modulars = new int[dimensions];
+    for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
 
-//     //Initialization of tTrue,tLSH arrays...
-//     tLSH = new double[Num_of_Queries];
-//     tTrue = new double[Num_of_Queries];
+    // //Initialization of tTrue,tLSH arrays...
+    // tLSH = new double[Num_of_Queries];
+    // tTrue = new double[Num_of_Queries];
 
-//     W = 4000;
-//     file << "W:" << W << endl << endl;
+    W = 4000;
+    file << "W:" << W << endl << endl;
 
-//     //Do exhausting search and init W...
-//     ExhaustingNN(this);
+    // //Do exhausting search and init W...
+    // ExhaustingNN(this);
 
-//     //Initialization of uniform_int_distribution class...
-//     default_random_engine generator;   
-//     uniform_int_distribution<int> distribution(0,W);
+    //Initialization of uniform_int_distribution class...
+    default_random_engine generator;   
+    uniform_int_distribution<int> distribution(0,W);
     
-//     //Initialization of L*k*d(imensions) random s_i integers...
-//     s_i = new int*[L*k];
-//     for(int i=0;i<(L*k);i++)
-//     {
-//         s_i[i] = new int[dimensions];
-//         for(int j=0;j<dimensions;j++)   
-//             s_i[i][j] = distribution(generator);
-//     }
+    //Initialization of L*k*d(imensions) random s_i integers...
+    s_i = new int*[L*k];
+    for(int i=0;i<(L*k);i++)
+    {
+        s_i[i] = new int[dimensions];
+        for(int j=0;j<dimensions;j++)   
+            s_i[i][j] = distribution(generator);
+    }
 
-//     //Fill Hash Tables...
-//     Insert_Images_To_Buckets_LSH(this);
-// }
+    //Fill Hash Tables...
+    Insert_Images_To_Buckets_RA_LSH(this);
+}
 
-// void LSH::Deallocation_of_Memory()
-// {
-//     //Deallocation of memory of Images_Array...
-//     for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
-//     delete [] Images_Array;
+void RA_LSH::Deallocation_of_Memory()
+{
+    //Deallocation of memory of Images_Array...
+    for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
+    delete [] Images_Array;
 
-//     //Deallocation of memory of Queries_Array...
-//     for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
-//     delete [] Queries_Array;
+    // //Deallocation of memory of Queries_Array...
+    // for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
+    // delete [] Queries_Array;
 
-//     //Deallocation of memory of s_i...
-//     for(int i=0;i<(k*L);i++)    delete [] s_i[i];
-//     delete [] s_i;        
+    //Deallocation of memory of s_i...
+    for(int i=0;i<(k*L);i++)    delete [] s_i[i];
+    delete [] s_i;        
 
-//     //Deallocation of memory of Hash_Tables...
-//     for(int i=0;i<L;i++)    
-//     {
-//         for(int j=0;j<(HashTableSize);j++)   
-//             if(Hash_Tables[i][j]!=NULL)
-//                 delete Hash_Tables[i][j];
-//         delete [] Hash_Tables[i];
-//     }
-//     delete [] Hash_Tables;
+    //Deallocation of memory of Hash_Tables...
+    for(int i=0;i<L;i++)    
+    {
+        for(int j=0;j<(HashTableSize);j++)   
+            if(Hash_Tables[i][j]!=NULL)
+                delete Hash_Tables[i][j];
+        delete [] Hash_Tables[i];
+    }
+    delete [] Hash_Tables;
 
-//     //Deallocation of memory of True_Distances...
-//     for(int i=0;i<Num_of_Queries;i++)  
-//         delete [] True_Distances[i];
-//     delete [] True_Distances;
+    // //Deallocation of memory of True_Distances...
+    // for(int i=0;i<Num_of_Queries;i++)  
+    //     delete [] True_Distances[i];
+    // delete [] True_Distances;
     
-//     //Deallocation of memory of tLSH,tTrue,modulars...
-//     delete [] tLSH;
-//     delete [] tTrue;
-//     delete [] modulars;
-// }
+    // //Deallocation of memory of tLSH,tTrue,modulars...
+    // delete [] tLSH;
+    // delete [] tTrue;
+    delete [] modulars;
+}
