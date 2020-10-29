@@ -68,15 +68,13 @@ void RA_LSH::RA_LSH_Assign()
 {
     int image_index = 0, nearest_centroid1=0, nearest_centroid2=0;
     
-    cout << "PAME " << Num_of_Images << " " << k << " " << L << " " << dimensions << " " << W << " " << m << " " << M << " " << HashTableSize << " " << K << endl;
+    Map_Init();
 
     for(int i=0;i<K;i++)
     {
         unsigned int gi_values[L];
-        cout << "EDW1" << endl;
         Reverse_Assignment_LSH_Centroid_in_Bucket(this,gi_values,centroids[i]);
-        cout << "EDW2 " << endl;
-
+        
         //For each Hash Table...
         for(int j=0;j<L;j++)
         {
@@ -103,7 +101,7 @@ void RA_LSH::RA_LSH_Assign()
                         for(int z=0;z<K;z++)
                             if(z!=i)
                                 distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
-                        
+
                         (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
                         (*points)[image_index]->set_dist2(distances2.top().first);
                     }
