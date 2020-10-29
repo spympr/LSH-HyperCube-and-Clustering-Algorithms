@@ -34,7 +34,7 @@ void Cluster::Clustering()
         objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
-        file << "Reduction's rate change of objective function's value: " << ratio << endl;
+        file << "Reduction's rate change of objective function's value: " << ratio << ", Cost:" << objectives_values[1] << endl;
         if(ratio<epsilon)   break;
         
         Update();
@@ -88,60 +88,60 @@ void Cluster::Update()
     map <int,Nearest_Centroids*>::iterator it;
     int cluster=0,median_index=0;
 
-    // //Initialize K*dimensions vectors...
-    // vector<item>** vectors = new vector<item>*[kmeansptr->get_K()];
-    // for(int i=0;i<kmeansptr->get_K();i++)   vectors[i] = new vector<item>[kmeansptr->get_dimensions()]; 
+    //Initialize K*dimensions vectors...
+    vector<item>** vectors = new vector<item>*[kmeansptr->get_K()];
+    for(int i=0;i<kmeansptr->get_K();i++)   vectors[i] = new vector<item>[kmeansptr->get_dimensions()]; 
 
-    // //Fill vectors with features of each image of dataset...
-    // for(it=points.begin();it!=points.end();it++)    
-    // {
-    //     cluster = it->second->get_nearest_centroid1();
-    //     for(int z=0;z<kmeansptr->get_dimensions();z++)
-    //         vectors[cluster][z].push_back(kmeansptr->get_Images_Array()[it->first][z]);
-    // }
+    //Fill vectors with features of each image of dataset...
+    for(it=points.begin();it!=points.end();it++)    
+    {
+        cluster = it->second->get_nearest_centroid1();
+        for(int z=0;z<kmeansptr->get_dimensions();z++)
+            vectors[cluster][z].push_back(kmeansptr->get_Images_Array()[it->first][z]);
+    }
 
-    // //Sort each vector and choose the appropriate feature (with median index) 
-    // //in order to have a new one centroid.
-    // for(int i=0;i<kmeansptr->get_K();i++)   
-    // {
-    //     for(int z=0;z<kmeansptr->get_dimensions();z++)
-    //     {
-    //         if(vectors[i][z].size()!=0)
-    //         {
-    //             sort(vectors[i][z].begin(),vectors[i][z].end());
-    //             median_index = vectors[i][z].size()/2; 
-    //             centroids[i][z] = vectors[i][z][median_index];
-    //         }
-    //     }
-    // }
-    // 
-    // //Deallocate memory for vectors...
-    // for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
-    // delete [] vectors;   
-
-    vector <item> vec;
-
+    //Sort each vector and choose the appropriate feature (with median index) 
+    //in order to have a new one centroid.
     for(int i=0;i<kmeansptr->get_K();i++)   
     {
         for(int z=0;z<kmeansptr->get_dimensions();z++)
         {
-            vec.clear();
-
-            for(it=points.begin();it!=points.end();it++)    
+            if(vectors[i][z].size()!=0)
             {
-                cluster = it->second->get_nearest_centroid1();
-                if(cluster==i)
-                    vec.push_back(kmeansptr->get_Images_Array()[it->first][z]);
-            }
-
-            if(vec.size()!=0)
-            {
-                sort(vec.begin(),vec.end());
-                median_index = vec.size()/2; 
-                centroids[i][z] = vec[median_index];
+                sort(vectors[i][z].begin(),vectors[i][z].end());
+                median_index = vectors[i][z].size()/2; 
+                centroids[i][z] = vectors[i][z][median_index];
             }
         }
-    } 
+    }
+    
+    //Deallocate memory for vectors...
+    for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
+    delete [] vectors;   
+
+    // vector <item> vec;
+
+    // for(int i=0;i<kmeansptr->get_K();i++)   
+    // {
+    //     for(int z=0;z<kmeansptr->get_dimensions();z++)
+    //     {
+    //         vec.clear();
+
+    //         for(it=points.begin();it!=points.end();it++)    
+    //         {
+    //             cluster = it->second->get_nearest_centroid1();
+    //             if(cluster==i)
+    //                 vec.push_back(kmeansptr->get_Images_Array()[it->first][z]);
+    //         }
+
+    //         if(vec.size()!=0)
+    //         {
+    //             sort(vec.begin(),vec.end());
+    //             median_index = vec.size()/2; 
+    //             centroids[i][z] = vec[median_index];
+    //         }
+    //     }
+    // } 
 }
 
 float Cluster::Objective_Value()

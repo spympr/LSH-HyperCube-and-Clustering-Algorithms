@@ -26,6 +26,8 @@ typedef int item;
 
 #include "../headers/lsh.h"
 #include "../headers/hypercube.h"
+#include "../headers/ra_lsh.h"
+// #include "../headers/hypercube.h"
 
 int ReverseInt(int);
 void Read_BF(item***,int*,int*,int*,string,int a);

@@ -1,35 +1,73 @@
-cluster: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster_lloyd.o
-	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster_lloyd.o -o cluster
+# cluster: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o
+# 	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o -o cluster
 
-lsh: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster_lloyd.o
-	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster_lloyd.o -o lsh
+# lsh: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o
+# 	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o -o lsh
 
-cube: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster_lloyd.o
-	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster_lloyd.o -o cube
+# cube: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o
+# 	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o -o cube
+
+# build/main.o: src/main.cpp
+# 	g++ -c src/main.cpp -o build/main.o
+
+# build/read_binary_file.o: src/read_binary_file.cpp 
+# 	g++ -c src/read_binary_file.cpp -o build/read_binary_file.o
+
+# build/bucket.o: src/bucket.cpp 
+# 	g++ -c src/bucket.cpp -o build/bucket.o
+
+# build/exhausting.o: src/exhausting.cpp 
+# 	g++ -c src/exhausting.cpp -o build/exhausting.o
+
+# build/lsh.o: src/lsh.cpp 
+# 	g++ -c src/lsh.cpp -o build/lsh.o
+
+# build/hypercube.o: src/hypercube.cpp 
+# 	g++ -c src/hypercube.cpp -o build/hypercube.o
+
+# build/kmeans.o: src/kmeans.cpp 
+# 	g++ -c src/kmeans.cpp -o build/kmeans.o
+
+# build/cluster.o: src/cluster.cpp 
+# 	g++ -c src/cluster.cpp -o build/cluster.o
+	
+# clean:
+# 	rm cube lsh cluster build/*.o
+
+############################################################
+
+cluster: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o
+	g++ -Ofast build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o -o cluster
+
+lsh: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o
+	g++ -Ofast build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o -o lsh
+
+cube: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o
+	g++ -Ofast build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o -o cube
 
 build/main.o: src/main.cpp
-	g++ -c src/main.cpp -o build/main.o
+	g++ -Ofast -c src/main.cpp -o build/main.o
 
-build/read_binary_file.o: src/read_binary_file.cpp headers/read_binary_file.h
-	g++ -c src/read_binary_file.cpp -o build/read_binary_file.o
+build/read_binary_file.o: src/read_binary_file.cpp 
+	g++ -Ofast -c src/read_binary_file.cpp -o build/read_binary_file.o
 
-build/bucket.o: src/bucket.cpp headers/bucket.h
-	g++ -c src/bucket.cpp -o build/bucket.o
+build/bucket.o: src/bucket.cpp 
+	g++ -Ofast -c src/bucket.cpp -o build/bucket.o
 
-build/exhausting.o: src/exhausting.cpp headers/exhausting.h
-	g++ -c src/exhausting.cpp -o build/exhausting.o
+build/exhausting.o: src/exhausting.cpp 
+	g++ -Ofast -c src/exhausting.cpp -o build/exhausting.o
 
-build/lsh.o: src/lsh.cpp headers/lsh.h
-	g++ -c src/lsh.cpp -o build/lsh.o
+build/lsh.o: src/lsh.cpp 
+	g++ -Ofast -c src/lsh.cpp -o build/lsh.o
 
-build/hypercube.o: src/hypercube.cpp headers/hypercube.h
-	g++ -c src/hypercube.cpp -o build/hypercube.o
+build/hypercube.o: src/hypercube.cpp 
+	g++ -Ofast -c src/hypercube.cpp -o build/hypercube.o
 
-build/kmeans.o: src/kmeans.cpp headers/kmeans.h
-	g++ -c src/kmeans.cpp -o build/kmeans.o
+build/kmeans.o: src/kmeans.cpp 
+	g++ -Ofast -c src/kmeans.cpp -o build/kmeans.o
 
-build/cluster_lloyd.o: src/cluster_lloyd.cpp headers/cluster_lloyd.h
-	g++ -c src/cluster_lloyd.cpp -o build/cluster_lloyd.o
+build/cluster.o: src/cluster.cpp 
+	g++ -Ofast -c src/cluster.cpp -o build/cluster.o
 	
 clean:
 	rm cube lsh cluster build/*.o

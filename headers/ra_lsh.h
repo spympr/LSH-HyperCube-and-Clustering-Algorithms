@@ -1,15 +1,15 @@
-#ifndef LSH_H
-#define LSH_H
+#ifndef RA_LSH_H
+#define RA_LSH_H
 
 #include "../headers/exhausting.h" 
 
 //Forward declaration
 class Bucket;
 
-class LSH
+class RA_LSH
 {
     private:
-        int Num_of_Images,Num_of_Queries,k,L,R,dimensions,W,N,m,M,HashTableSize;
+        int Num_of_Images,Num_of_Queries=1,k,L,R,dimensions,W,N,m,M,HashTableSize;
         int* modulars;
         double *tLSH,*tTrue,dist_AF,time_error;;
         int **s_i,**True_Distances;
@@ -19,11 +19,11 @@ class LSH
         fstream file;
 
     public:
-        LSH(string input_file_,string query_file_,string output_file_,int L_,int N_,int k_,int R_)
+        RA_LSH(string input_file_,string query_file_,string output_file_,int L_,int N_,int k_,int R_)
         :input_file(input_file_),query_file(query_file_),output_file(output_file_),L(L_),N(N_),k(k_),R(R_),dist_AF(0.0),time_error(0.0)
         {}
 
-        ~LSH()
+        ~RA_LSH()
         {
             Deallocation_of_Memory();
         }
