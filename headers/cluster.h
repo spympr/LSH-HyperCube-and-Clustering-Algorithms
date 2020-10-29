@@ -29,8 +29,8 @@ class Cluster
             //Check which method we have...
             if(method==lsh_method)
             {
-                lshptr = new RA_LSH(input_file,output_file,kmeansptr->get_L(),kmeansptr->get_LSH_k(),&points,centroids,kmeansptr->get_K());    
-                lshptr->InitLSH();
+                lshptr = new RA_LSH(output_file,&points,centroids,kmeansptr);    
+                lshptr->Init_RA_LSH();
             }
             else if(method==hc_method)
             {

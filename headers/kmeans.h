@@ -3,6 +3,8 @@
 
 #include "../headers/exhausting.h"
 
+void Read_BF(item ***, int *, int *, int *, std::__cxx11::string, int );
+
 class kmeans
 {
     private:
@@ -12,7 +14,8 @@ class kmeans
         double kmeans_time;
 
     public:
-        kmeans(string input_file,string conf): L(3),LSH_k(4),HC_M(10),HC_k(3),probes(2)
+        kmeans(string input_file,string conf)
+        :L(3),LSH_k(4),HC_M(10),HC_k(3),probes(2)
         {
             Read_BF(&Images_Array,&number_of_images,&cols,&rows,input_file,1);
             dimensions = cols*rows;

@@ -70,10 +70,11 @@ void RA_LSH::RA_LSH_Assign()
     for(int i=0;i<K;i++)
     {
         unsigned int gi_values[L];
-        
+        cout << "edw1 " << endl;
         Reverse_Assignment_LSH_Centroid_in_Bucket(this,gi_values,centroids[i]);
+        cout << "edw2 " << endl;
 
-        //For each Hash Table
+        //For each Hash Table...
         for(int j=0;j<L;j++)
         {
             Bucket* temp = Hash_Tables[j][gi_values[j]];
@@ -88,7 +89,7 @@ void RA_LSH::RA_LSH_Assign()
                     image_index = it->first[dimensions];
                     nearest_centroid1 = (*points)[image_index]->get_nearest_centroid1();
 
-                    //In case there isn't first centroid yet
+                    //In case there isn't first centroid yet...
                     if(nearest_centroid1 == -1)
                     {
                         (*points)[image_index]->set_nearest_centroid1(i);
@@ -109,7 +110,7 @@ void RA_LSH::RA_LSH_Assign()
                         item new_distance1 = ManhattanDistance(it->first,centroids[i],dimensions);
                         item old_distance1 = ManhattanDistance(it->first,centroids[nearest_centroid1],dimensions);
                         
-                        //Change the old centroid with the new one
+                        //Change the old centroid with the new one...
                         if(new_distance1 < old_distance1)
                         {
                             (*points)[image_index]->set_nearest_centroid1(i);
@@ -157,29 +158,8 @@ void RA_LSH::Exhausting_For_Non_Assign_Points()
     }
 }
 
-void RA_LSH::InitLSH()
+void RA_LSH::Init_RA_LSH()
 {
-    //Declaration of variables...
-    int Rows=0,Columns=0;
-
-    //Read input binary file...
-    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
-    
-    // //Read query binary file...
-    // Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
-   
-    file.open(output_file,ios::out);
-
-    if(file)
-    {
-        file << "Images:" << Num_of_Images << endl << "Dimensions:" << Rows << "x" << Columns << endl;
-    }
-    else cout << "Problem\n";
-
-    //Initilization of W(grid), dimensions of each Image...
-    dimensions = Columns*Rows;
-    HashTableSize = Num_of_Images/8;
-
     //Declaration of hash tables...
     Hash_Tables = new Bucket**[L];
     for(int i=0;i<L;i++)    
@@ -191,15 +171,11 @@ void RA_LSH::InitLSH()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
-    file << "m:" << m << endl;
-    file << "M:" << M << endl;
+    W = 4000;
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
     for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
-
-    W = 4000;
-    file << "W:" << W << endl << endl;
 
     //Initialization of uniform_int_distribution class...
     default_random_engine generator;   
@@ -220,10 +196,6 @@ void RA_LSH::InitLSH()
 
 void RA_LSH::Deallocation_of_Memory()
 {
-    //Deallocation of memory of Images_Array...
-    for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
-    delete [] Images_Array;
-
     //Deallocation of memory of s_i...
     for(int i=0;i<(k*L);i++)    delete [] s_i[i];
     delete [] s_i;        

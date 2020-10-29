@@ -25,13 +25,14 @@ void Cluster::Clustering()
             centroids[i][j] = kmeansptr->get_Images_Array()[indexes[i]][j];
     }
     file << endl;
-    
+    cout << "eftasa edw " << endl;
     auto start = chrono::high_resolution_clock::now();
     while(true)
     {
         if(method==lloyd_method)    Lloyd_Assign();
         if(method==lsh_method)  lshptr->RA_LSH_Assign();  
         // if(method==hc_method)    Lloyd_Assign();
+        cout << "eftasa edw " << endl;
 
         objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];

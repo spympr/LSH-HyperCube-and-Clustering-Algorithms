@@ -4,7 +4,7 @@
 #include "../headers/kmeans.h"
 
 //Forward declaration
-// class Bucket;
+class Nearest_Centroids;
 
 class RA_LSH
 {
@@ -14,15 +14,19 @@ class RA_LSH
         int **s_i;
         item **Images_Array;
         Bucket*** Hash_Tables;
-        string input_file,output_file;
+        string output_file;
         fstream file;
         map<int,Nearest_Centroids*>* points;
         item** centroids;
 
     public:
-        RA_LSH(string input_file_,string output_file_,int L_,int k_,map<int,Nearest_Centroids*>* points_, item** centroids_, int K_)
-        :input_file(input_file_),output_file(output_file_),L(L_),k(k_),points(points_),centroids(centroids_),K(K_)
-        {}
+        RA_LSH(string output_file_,map<int,Nearest_Centroids*>* points_,item** centroids_,kmeans* kmeansptr)
+        :output_file(output_file_),points(points_),centroids(centroids_),K(kmeansptr->get_K()),dimensions(kmeansptr->get_dimensions()),L(kmeansptr->get_L()),k(kmeansptr->get_LSH_k())
+        {
+            Num_of_Images = kmeansptr->get_number_of_images();
+            Images_Array = kmeansptr->get_Images_Array();
+            HashTableSize = Num_of_Images/8;
+        }
 
         ~RA_LSH()
         {
@@ -30,7 +34,7 @@ class RA_LSH
         }
 
         void RA_LSH_Assign();
-        void InitLSH();
+        void Init_RA_LSH();
         void Deallocation_of_Memory();
         void Map_Init();
         void Exhausting_For_Non_Assign_Points();
