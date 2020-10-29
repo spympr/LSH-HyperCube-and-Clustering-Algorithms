@@ -38,7 +38,7 @@ class Cluster
                 // hcptr->InitHyperCube();
             }
             
-            file << "Images:" << kmeansptr->get_number_of_images() << endl << "Dimensions:" << sqrt(kmeansptr->get_dimensions()) << "x" << sqrt(kmeansptr->get_dimensions()) << endl <<  "Κ:" << kmeansptr->get_K() << endl;
+            file << "Images:" << kmeansptr->get_number_of_images() << endl << "Dimensions:" << sqrt(kmeansptr->get_dimensions()) << "x" << sqrt(kmeansptr->get_dimensions()) << endl <<  "Κ:" << kmeansptr->get_K() << endl << "ε:" << epsilon << endl;
 
             //Allocate memory for centroids of each cluster (centroids_dimensions=K*image_dimensions).
             centroids = new item*[kmeansptr->get_K()];

@@ -29,12 +29,14 @@ void Cluster::Clustering()
     auto start = chrono::high_resolution_clock::now();
     while(true)
     {
-        Lloyd_Assign();
+        if(method==lloyd_method)    Lloyd_Assign();
+        // if(method==lsh_method)    Lloyd_Assign();
+        // if(method==hc_method)    Lloyd_Assign();
 
         objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
-        file << "Reduction's rate change of objective function's value: " << ratio << ", Cost:" << objectives_values[1] << endl;
+        file << "Reduction's rate change of objective function's value:" << ratio << endl << "Cost:" << objectives_values[1] << endl << endl;
         if(ratio<epsilon)   break;
         
         FastUpdate();
@@ -45,7 +47,7 @@ void Cluster::Clustering()
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
     file << endl << "Converged with " << iters << " updates!" << endl;
 
-    // Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
+    Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
     
     Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
