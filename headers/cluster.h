@@ -18,7 +18,8 @@ class Cluster
         
     public:
 
-        Cluster(string input_file,string output_file_,string conf,string comp,Clustering_Method method_):complete(comp),output_file(output_file_),lshptr(NULL),hcptr(NULL),method(method_)
+        Cluster(string input_file,string output_file_,string conf,string comp,Clustering_Method method_)
+        :complete(comp),output_file(output_file_),lshptr(NULL),hcptr(NULL),method(method_)
         {   
             file.open(output_file,ios::out);
             
@@ -71,7 +72,8 @@ class Cluster
         void Lloyd_Assign();
         void RA_LSH_Assign();
         void RA_HC_Assign();
-        void Update();
+        void FastUpdate();
+        void SlowUpdate();
         void Print(float* ,int);
         float Objective_Value();
 };

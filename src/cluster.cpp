@@ -37,14 +37,15 @@ void Cluster::Clustering()
         file << "Reduction's rate change of objective function's value: " << ratio << ", Cost:" << objectives_values[1] << endl;
         if(ratio<epsilon)   break;
         
-        Update();
+        FastUpdate();
+        // SlowUpdate();
         iters++;
     }
     auto end = chrono::high_resolution_clock::now(); 
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
     file << endl << "Converged with " << iters << " updates!" << endl;
 
-    Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
+    // Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
     
     Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));
 
@@ -83,7 +84,7 @@ void Cluster::Lloyd_Assign()
     }
 }
 
-void Cluster::Update()
+void Cluster::FastUpdate()
 {    
     map <int,Nearest_Centroids*>::iterator it;
     int cluster=0,median_index=0;
@@ -118,30 +119,36 @@ void Cluster::Update()
     //Deallocate memory for vectors...
     for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
     delete [] vectors;   
+}
 
-    // vector <item> vec;
+void Cluster::SlowUpdate()
+{
+    map <int,Nearest_Centroids*>::iterator it;
+    int cluster=0,median_index=0;
 
-    // for(int i=0;i<kmeansptr->get_K();i++)   
-    // {
-    //     for(int z=0;z<kmeansptr->get_dimensions();z++)
-    //     {
-    //         vec.clear();
+    vector <item> vec;
 
-    //         for(it=points.begin();it!=points.end();it++)    
-    //         {
-    //             cluster = it->second->get_nearest_centroid1();
-    //             if(cluster==i)
-    //                 vec.push_back(kmeansptr->get_Images_Array()[it->first][z]);
-    //         }
+    for(int i=0;i<kmeansptr->get_K();i++)   
+    {
+        for(int z=0;z<kmeansptr->get_dimensions();z++)
+        {
+            vec.clear();
 
-    //         if(vec.size()!=0)
-    //         {
-    //             sort(vec.begin(),vec.end());
-    //             median_index = vec.size()/2; 
-    //             centroids[i][z] = vec[median_index];
-    //         }
-    //     }
-    // } 
+            for(it=points.begin();it!=points.end();it++)    
+            {
+                cluster = it->second->get_nearest_centroid1();
+                if(cluster==i)
+                    vec.push_back(kmeansptr->get_Images_Array()[it->first][z]);
+            }
+
+            if(vec.size()!=0)
+            {
+                sort(vec.begin(),vec.end());
+                median_index = vec.size()/2; 
+                centroids[i][z] = vec[median_index];
+            }
+        }
+    } 
 }
 
 float Cluster::Objective_Value()
