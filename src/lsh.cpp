@@ -235,7 +235,7 @@ void LSH::InitLSH()
 
     //Initialization of 2D array True_Distances...
     True_Distances = new int*[Num_of_Queries];
-    for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new int[N];
+    for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new  int[N];
     
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
