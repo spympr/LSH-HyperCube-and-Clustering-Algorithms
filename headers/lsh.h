@@ -21,8 +21,41 @@ class LSH
     public:
         LSH(string input_file_,string query_file_,string output_file_,int L_,int N_,int k_,int R_)
         :input_file(input_file_),query_file(query_file_),output_file(output_file_),L(L_),N(N_),k(k_),R(R_),dist_AF(0.0),time_error(0.0)
+        {}
+
+        ~LSH()
         {
-            InitLSH();
+            //Deallocation of memory of Images_Array...
+            for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
+            delete [] Images_Array;
+
+            //Deallocation of memory of Queries_Array...
+            for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
+            delete [] Queries_Array;
+
+            //Deallocation of memory of s_i...
+            for(int i=0;i<(k*L);i++)    delete [] s_i[i];
+            delete [] s_i;        
+
+            //Deallocation of memory of Hash_Tables...
+            for(int i=0;i<L;i++)    
+            {
+                for(int j=0;j<(HashTableSize);j++)   
+                    if(Hash_Tables[i][j]!=NULL)
+                        delete Hash_Tables[i][j];
+                delete [] Hash_Tables[i];
+            }
+            delete [] Hash_Tables;
+
+            //Deallocation of memory of True_Distances...
+            for(int i=0;i<Num_of_Queries;i++)  
+                delete [] True_Distances[i];
+            delete [] True_Distances;
+            
+            //Deallocation of memory of tLSH,tTrue,modulars...
+            delete [] tLSH;
+            delete [] tTrue;
+            delete [] modulars;
         }
 
         void Approximate_LSH();

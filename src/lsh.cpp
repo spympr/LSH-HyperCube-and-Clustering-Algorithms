@@ -144,16 +144,29 @@ void LSH::Approximate_LSH()
         Approximate_Range_Search(i);
     }
 
-    // file.open(output_file,ios::out);
-
     file << endl << "LSH Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
     file << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
+    
+    file << endl;
+    //Print Buckets...
+    for(int i=0;i<L;i++)
+    {
+        int counter=0;
+        int sum=0;
+        for(int j=0;j<HashTableSize;j++)
+        {
+            if(Hash_Tables[i][j]!=NULL)
+            {
+                counter++;
+                sum+=Hash_Tables[i][j]->images.size();
+            }                
+        }
+        file << "HashTable " << i << ": " << counter << ", " << sum << endl;
+    }
 }
 
 void LSH::Approximate_Range_Search(int query_index)
 {   
-    // file.open(output_file,ios::out);
-
     priority_queue<int, vector<int>, greater<int>> neighboors; 
     unordered_set<int> indexes_of_images;
 
@@ -269,55 +282,4 @@ void LSH::InitLSH()
 
     //Fill Hash Tables...
     Insert_Images_To_Buckets_LSH(this);
-
-    Approximate_LSH();
-
-    file << endl;
-    //Print Buckets...
-    for(int i=0;i<L;i++)
-    {
-        int counter=0;
-        int sum=0;
-        for(int j=0;j<HashTableSize;j++)
-        {
-            if(Hash_Tables[i][j]!=NULL)
-            {
-                counter++;
-                sum+=Hash_Tables[i][j]->images.size();
-            }                
-        }
-        file << "HashTable " << i << ": " << counter << ", " << sum << endl;
-    }
-
-    //Deallocation of memory of Images_Array...
-    for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
-    delete [] Images_Array;
-
-    //Deallocation of memory of Queries_Array...
-    for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
-    delete [] Queries_Array;
-
-    //Deallocation of memory of s_i...
-    for(int i=0;i<(k*L);i++)    delete [] s_i[i];
-    delete [] s_i;        
-
-    //Deallocation of memory of Hash_Tables...
-    for(int i=0;i<L;i++)    
-    {
-        for(int j=0;j<(HashTableSize);j++)   
-            if(Hash_Tables[i][j]!=NULL)
-                delete Hash_Tables[i][j];
-        delete [] Hash_Tables[i];
-    }
-    delete [] Hash_Tables;
-
-    //Deallocation of memory of True_Distances...
-    for(int i=0;i<Num_of_Queries;i++)  
-        delete [] True_Distances[i];
-    delete [] True_Distances;
-    
-    //Deallocation of memory of tLSH,tTrue,modulars...
-    delete [] tLSH;
-    delete [] tTrue;
-    delete [] modulars;
 }
