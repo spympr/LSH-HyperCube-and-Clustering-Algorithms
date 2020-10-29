@@ -204,7 +204,7 @@ void kmeans::centroid_initialization()
     kmeans_time = chrono::duration_cast<chrono::seconds>(end - start).count();
 }
 
-float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_array,kmeans* kmeansptr)
+void Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_array,kmeans* kmeansptr)
 {
     //Declaration of important structures,variables...
     int cluster1=0,cluster2=0,images_in_cluster1=0,images_in_cluster2=0;
@@ -261,6 +261,4 @@ float Silhouette(map <int,Nearest_Centroids*>* map_ptr,int K,float** silhouette_
 
     //Store average silhouette value in last pos of array...
     (*silhouette_array)[K] = average_silhouette/(float)K;
-
-    return average_silhouette/(float)K;
 }
