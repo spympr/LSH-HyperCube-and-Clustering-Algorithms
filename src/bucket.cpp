@@ -155,6 +155,54 @@ void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
     }
 }
 
+void Reverse_Assignment_LSH_Centroid_in_Bucket(LSH* info, unsigned int* gi_query_values, item* centroid)
+{
+    for(int i=0;i<info->get_L();i++)
+    {
+        gi_query_values[i] = 0;
+
+        int h_p[info->get_k()];
+        for(int j=0;j<info->get_k();j++)
+        {
+            int a_i[info->get_dimensions()];
+
+            for(int z=0;z<info->get_dimensions();z++)
+            {
+                a_i[z] = floor((double)((*centroid) - info->get_s_i()[i*info->get_k()+j][z])/(double)(info->get_W()));
+            }
+            h_p[j] = Calculate_hp_LSH(a_i,info);
+        }
+        
+        for(int j=0;j<info->get_k();j++)
+        {
+            gi_query_values[i] += (h_p[j] << ((info->get_k()-(j+1))*8));                
+        }
+        gi_query_values[i] = gi_query_values[i]%(info->get_HashTableSize());
+    }
+}
+
+void Reverse_Assignment_HyperCube_Centroid_in_Bucket(HyperCube* info,unsigned int* f_i, int* centroid)
+{    
+    int h_p[info->get_k()];
+    int f_i_values[info->get_k()];
+    for(int j=0;j<info->get_k();j++)
+    {
+        int a_i[info->get_dimensions()];
+
+        for(int z=0;z<info->get_dimensions();z++)
+        {
+            a_i[z] = floor((double)((*centroid) - info->get_s_i()[j][z])/(double)(info->get_W()));
+            // cout << a_i[z] << " " ;
+        }
+        // cout << endl;
+        h_p[j] = Calculate_hp_HyperCube(a_i,info);
+        // cout << h_p[j] << " ";
+        
+        f_i_values[j] = info->get_f_i_map()[j][h_p[j]];
+    }
+    for(int j=0;j<info->get_k();j++)  f_i += (f_i_values[j] << ((info->get_k()-(j+1))));     
+}
+
 void Insert_Images_To_Buckets_LSH(LSH* info)
 {
     //Allocate memory so as to store temporarily g_i values...

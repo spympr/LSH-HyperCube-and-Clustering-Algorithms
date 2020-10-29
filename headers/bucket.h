@@ -21,5 +21,7 @@ void fi_values_of_query(HyperCube*, unsigned int*);
 void Insert_Images_To_Buckets_LSH(LSH*);
 void Insert_Images_To_Buckets_HyperCube(HyperCube* info);
 void gi_values_of_query(LSH*, unsigned int* , int);
+void Reverse_Assignment_LSH_Centroid_in_Bucket(LSH*, unsigned int*, item*);
+void Reverse_Assignment_HyperCube_Centroid_in_Bucket(HyperCube*,unsigned int*, int*);
 
 #endif
