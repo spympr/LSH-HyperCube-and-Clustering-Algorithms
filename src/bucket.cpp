@@ -181,7 +181,7 @@ void Reverse_Assignment_LSH_Centroid_in_Bucket(LSH* info, unsigned int* gi_query
     }
 }
 
-void Reverse_Assignment_HyperCube_Centroid_in_Bucket(HyperCube* info,unsigned int* f_i, int* centroid)
+void Reverse_Assignment_HyperCube_Centroid_in_Bucket(HyperCube* info,unsigned int* f_i, item* centroid)
 {    
     int h_p[info->get_k()];
     int f_i_values[info->get_k()];
