@@ -161,12 +161,20 @@ int main(int argc, char** argv)
         {
             if(strcmp(method.c_str(),"Classic") == 0)   
             {
-                LSH lsh(input_file,query_file,output_file,L,N,k,R);    
-                lsh.InitLSH();
                 Lloyd_Cluster Lloyd(input_file,output_file,configuration_file,complete);
             }
-            else if(strcmp(method.c_str(),"LSH") == 0)  cout << " ";
-            else if(strcmp(method.c_str(),"Hypercube") == 0) cout << " ";
+            else if(strcmp(method.c_str(),"LSH") == 0)  
+            {
+                LSH lsh(input_file,query_file,output_file,L,N,k,R);    
+                lsh.InitLSH();
+                //reverse_lsh...
+            }
+            else if(strcmp(method.c_str(),"Hypercube") == 0)
+            {
+                HyperCube cube(input_file,query_file,output_file,N,k,R,M,probes);  
+                cube.InitHyperCube();
+                //reverse_hypercube...
+            }
             else
             {
                 cout << endl << "Invalid method! Please try to pich one of these methods: [Classic,LSH,Hypercube]" << endl;
