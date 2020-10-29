@@ -4,6 +4,7 @@
 #include "../headers/kmeans.h"
 
 //Forward declaration
+class kmeans;
 class Nearest_Centroids;
 
 class RA_LSH
