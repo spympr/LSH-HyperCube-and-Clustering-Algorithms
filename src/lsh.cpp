@@ -283,3 +283,38 @@ void LSH::InitLSH()
     //Fill Hash Tables...
     Insert_Images_To_Buckets_LSH(this);
 }
+
+void LSH::Deallocation_of_Memory()
+{
+    //Deallocation of memory of Images_Array...
+    for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
+    delete [] Images_Array;
+
+    //Deallocation of memory of Queries_Array...
+    for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
+    delete [] Queries_Array;
+
+    //Deallocation of memory of s_i...
+    for(int i=0;i<(k*L);i++)    delete [] s_i[i];
+    delete [] s_i;        
+
+    //Deallocation of memory of Hash_Tables...
+    for(int i=0;i<L;i++)    
+    {
+        for(int j=0;j<(HashTableSize);j++)   
+            if(Hash_Tables[i][j]!=NULL)
+                delete Hash_Tables[i][j];
+        delete [] Hash_Tables[i];
+    }
+    delete [] Hash_Tables;
+
+    //Deallocation of memory of True_Distances...
+    for(int i=0;i<Num_of_Queries;i++)  
+        delete [] True_Distances[i];
+    delete [] True_Distances;
+    
+    //Deallocation of memory of tLSH,tTrue,modulars...
+    delete [] tLSH;
+    delete [] tTrue;
+    delete [] modulars;
+}

@@ -129,7 +129,6 @@ int main(int argc, char** argv)
 
     while(true)
     {
-
         if(strcmp(argv[0],"./lsh") == 0)    
         {
             LSH lsh(input_file,query_file,output_file,L,N,k,R);    
@@ -144,7 +143,12 @@ int main(int argc, char** argv)
         }          
         else if(strcmp(argv[0],"./cluster") == 0)   
         {
-            if(strcmp(method.c_str(),"Classic") == 0)   Lloyd_Cluster Lloyd(input_file,output_file,configuration_file,complete);
+            if(strcmp(method.c_str(),"Classic") == 0)   
+            {
+                LSH lsh(input_file,query_file,output_file,L,N,k,R);    
+                lsh.InitLSH();
+                Lloyd_Cluster Lloyd(input_file,output_file,configuration_file,complete);
+            }
             else if(strcmp(method.c_str(),"LSH") == 0)  cout << " ";
             else if(strcmp(method.c_str(),"Hypercube") == 0) cout << " ";
             else

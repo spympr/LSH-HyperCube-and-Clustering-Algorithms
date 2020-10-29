@@ -334,3 +334,36 @@ void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_v
         }    
     }  
 }
+
+void HyperCube::Deallocation_of_Memory()
+{
+    delete [] f_i_map;
+
+    //Deallocation of memory of Images_Array...
+    for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
+    delete [] Images_Array;
+
+    //Deallocation of memory of Queries_Array...
+    for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
+    delete [] Queries_Array;
+
+    //Deallocation of memory of s_i...
+    for(int i=0;i<k;i++)    delete [] s_i[i];
+    delete [] s_i;        
+
+    //Deallocation of memory of Hash_Tables...
+    for(int j=0;j<(HashTableSize);j++)   
+        if(Hash_Table[j]!=NULL)
+            delete Hash_Table[j];
+    delete [] Hash_Table;
+
+    //Deallocation of memory of True_Distances...
+    for(int i=0;i<Num_of_Queries;i++)  
+        delete [] True_Distances[i];
+    delete [] True_Distances;
+    
+    //Deallocation of memory of tLSH,tTrue,modulars...
+    delete [] tHypercube;
+    delete [] tTrue;
+    delete [] modulars;
+}
