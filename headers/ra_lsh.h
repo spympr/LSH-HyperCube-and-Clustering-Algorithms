@@ -1,8 +1,7 @@
 #ifndef RA_LSH_H
 #define RA_LSH_H
 
-#include "../headers/exhausting.h" 
-
+#include "../headers/kmeans.h"
 //Forward declaration
 class Bucket;
 
@@ -16,10 +15,12 @@ class RA_LSH
         Bucket*** Hash_Tables;
         string input_file,output_file;
         fstream file;
+        map <int,Nearest_Centroids*>* points;
+        item** centroids;
 
     public:
-        RA_LSH(string input_file_,string output_file_,int L_,int k_)
-        :input_file(input_file_),output_file(output_file_),L(L_),k(k_)
+        RA_LSH(string input_file_,string output_file_,int L_,int k_, map <int,Nearest_Centroids*>* points_, item** centroids_)
+        :input_file(input_file_),output_file(output_file_),L(L_),k(k_),points(points_),centroids(centroids_)
         {}
 
         ~RA_LSH()
@@ -28,6 +29,7 @@ class RA_LSH
         }
 
         void Approximate_LSH();
+        void RA_LSH_Assign();
         void Approximate_Range_Search(int);
         void InitLSH();
         void Deallocation_of_Memory();

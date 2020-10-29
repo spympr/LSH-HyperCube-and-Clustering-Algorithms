@@ -1,4 +1,4 @@
-#include "../headers/exhausting.h"
+#include "../headers/kmeans.h"
 
 int RA_LSH::get_dimensions()
 {
@@ -53,6 +53,11 @@ item** RA_LSH::get_Images_Array()
 Bucket*** RA_LSH::get_Hash_Tables()
 {
     return Hash_Tables;
+}
+
+void RA_LSH::RA_LSH_Assign()
+{
+    
 }
 
 // void LSH::Approximate_LSH()
@@ -182,109 +187,109 @@ Bucket*** RA_LSH::get_Hash_Tables()
 
 // }
 
-// void LSH::InitLSH()
-// {
-//     //Declaration of variables...
-//     int Rows=0,Columns=0;
+void RA_LSH::InitLSH()
+{
+    //Declaration of variables...
+    int Rows=0,Columns=0;
 
-//     //Read input binary file...
-//     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
+    //Read input binary file...
+    Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
-//     //Read query binary file...
-//     Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
+    // //Read query binary file...
+    // Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
    
-//     file.open(output_file,ios::out);
+    file.open(output_file,ios::out);
 
-//     if(file)
-//     {
-//         file << "Images:" << Num_of_Images << endl << "Queries:" << Num_of_Queries << endl << "Dimensions:" << Rows << "x" << Columns << endl;
-//     }
-//     else cout << "Problem\n";
+    if(file)
+    {
+        file << "Images:" << Num_of_Images << endl << "Dimensions:" << Rows << "x" << Columns << endl;
+    }
+    else cout << "Problem\n";
 
-//     //Initilization of W(grid), dimensions of each Image...
-//     dimensions = Columns*Rows;
-//     HashTableSize = Num_of_Images/8;
+    //Initilization of W(grid), dimensions of each Image...
+    dimensions = Columns*Rows;
+    HashTableSize = Num_of_Images/8;
 
-//     //Declaration of hash tables...
-//     Hash_Tables = new Bucket**[L];
-//     for(int i=0;i<L;i++)    
-//     {
-//         Hash_Tables[i] = new Bucket*[HashTableSize];
-//         for(int j=0;j<HashTableSize;j++)   Hash_Tables[i][j]=NULL;                
-//     }
+    //Declaration of hash tables...
+    Hash_Tables = new Bucket**[L];
+    for(int i=0;i<L;i++)    
+    {
+        Hash_Tables[i] = new Bucket*[HashTableSize];
+        for(int j=0;j<HashTableSize;j++)   Hash_Tables[i][j]=NULL;                
+    }
 
-//     //Initialization of 2D array True_Distances...
-//     True_Distances = new int*[Num_of_Queries];
-//     for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new  int[N];
+    // //Initialization of 2D array True_Distances...
+    // True_Distances = new int*[Num_of_Queries];
+    // for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new  int[N];
     
-//     //Initialization of m,M...
-//     M = pow(2,floor((double)32/(double)k));
-//     m = 423255;
-//     file << "m:" << m << endl;
-//     file << "M:" << M << endl;
+    //Initialization of m,M...
+    M = pow(2,floor((double)32/(double)k));
+    m = 423255;
+    file << "m:" << m << endl;
+    file << "M:" << M << endl;
     
-//     //Calculation of m^d-1modM array...
-//     modulars = new int[dimensions];
-//     for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
+    //Calculation of m^d-1modM array...
+    modulars = new int[dimensions];
+    for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
 
-//     //Initialization of tTrue,tLSH arrays...
-//     tLSH = new double[Num_of_Queries];
-//     tTrue = new double[Num_of_Queries];
+    // //Initialization of tTrue,tLSH arrays...
+    // tLSH = new double[Num_of_Queries];
+    // tTrue = new double[Num_of_Queries];
 
-//     W = 4000;
-//     file << "W:" << W << endl << endl;
+    W = 4000;
+    file << "W:" << W << endl << endl;
 
-//     //Do exhausting search and init W...
-//     ExhaustingNN(this);
+    // //Do exhausting search and init W...
+    // ExhaustingNN(this);
 
-//     //Initialization of uniform_int_distribution class...
-//     default_random_engine generator;   
-//     uniform_int_distribution<int> distribution(0,W);
+    //Initialization of uniform_int_distribution class...
+    default_random_engine generator;   
+    uniform_int_distribution<int> distribution(0,W);
     
-//     //Initialization of L*k*d(imensions) random s_i integers...
-//     s_i = new int*[L*k];
-//     for(int i=0;i<(L*k);i++)
-//     {
-//         s_i[i] = new int[dimensions];
-//         for(int j=0;j<dimensions;j++)   
-//             s_i[i][j] = distribution(generator);
-//     }
+    //Initialization of L*k*d(imensions) random s_i integers...
+    s_i = new int*[L*k];
+    for(int i=0;i<(L*k);i++)
+    {
+        s_i[i] = new int[dimensions];
+        for(int j=0;j<dimensions;j++)   
+            s_i[i][j] = distribution(generator);
+    }
 
-//     //Fill Hash Tables...
-//     Insert_Images_To_Buckets_LSH(this);
-// }
+    //Fill Hash Tables...
+    Insert_Images_To_Buckets_RA_LSH(this);
+}
 
-// void LSH::Deallocation_of_Memory()
-// {
-//     //Deallocation of memory of Images_Array...
-//     for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
-//     delete [] Images_Array;
+void RA_LSH::Deallocation_of_Memory()
+{
+    //Deallocation of memory of Images_Array...
+    for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
+    delete [] Images_Array;
 
-//     //Deallocation of memory of Queries_Array...
-//     for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
-//     delete [] Queries_Array;
+    // //Deallocation of memory of Queries_Array...
+    // for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
+    // delete [] Queries_Array;
 
-//     //Deallocation of memory of s_i...
-//     for(int i=0;i<(k*L);i++)    delete [] s_i[i];
-//     delete [] s_i;        
+    //Deallocation of memory of s_i...
+    for(int i=0;i<(k*L);i++)    delete [] s_i[i];
+    delete [] s_i;        
 
-//     //Deallocation of memory of Hash_Tables...
-//     for(int i=0;i<L;i++)    
-//     {
-//         for(int j=0;j<(HashTableSize);j++)   
-//             if(Hash_Tables[i][j]!=NULL)
-//                 delete Hash_Tables[i][j];
-//         delete [] Hash_Tables[i];
-//     }
-//     delete [] Hash_Tables;
+    //Deallocation of memory of Hash_Tables...
+    for(int i=0;i<L;i++)    
+    {
+        for(int j=0;j<(HashTableSize);j++)   
+            if(Hash_Tables[i][j]!=NULL)
+                delete Hash_Tables[i][j];
+        delete [] Hash_Tables[i];
+    }
+    delete [] Hash_Tables;
 
-//     //Deallocation of memory of True_Distances...
-//     for(int i=0;i<Num_of_Queries;i++)  
-//         delete [] True_Distances[i];
-//     delete [] True_Distances;
+    // //Deallocation of memory of True_Distances...
+    // for(int i=0;i<Num_of_Queries;i++)  
+    //     delete [] True_Distances[i];
+    // delete [] True_Distances;
     
-//     //Deallocation of memory of tLSH,tTrue,modulars...
-//     delete [] tLSH;
-//     delete [] tTrue;
-//     delete [] modulars;
-// }
+    // //Deallocation of memory of tLSH,tTrue,modulars...
+    // delete [] tLSH;
+    // delete [] tTrue;
+    delete [] modulars;
+}
