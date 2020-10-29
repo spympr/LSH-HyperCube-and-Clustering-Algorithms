@@ -125,14 +125,14 @@ int main(int argc, char** argv)
                 }
             }
 
-            if(method == "LSH")
+            if((strcmp(method.c_str(),"LSH") == 0))
             {
                 k=4;
                 L=5;
                 N=1;
                 R=10000;
             }
-            else if(method == "Hypercube")
+            else if(strcmp(method.c_str(),"Hypercube") == 0)
             {
                 k=14;
                 N=1;
