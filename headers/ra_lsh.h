@@ -35,6 +35,7 @@ class RA_LSH
         void InitLSH();
         void Deallocation_of_Memory();
         void Map_Init();
+        void Exhausting_For_Non_Assign_Points();
         
         int get_dimensions();
         int get_M();
