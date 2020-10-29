@@ -106,13 +106,15 @@ void Lloyd_Cluster::Lloyd_Update()
     // {
     //     for(int z=0;z<kmeansptr->get_dimensions();z++)
     //     {
-    //         sort(vectors[i][z].begin(),vectors[i][z].end());
-    //         median_index = vectors[i][z].size()/2; 
-    //         // centroids[i][z] = vectors[i][z][median_index];
-    //         centroids[i][z] = vectors[i][z].at(median_index);
+    //         if(vectors[i][z].size()!=0)
+    //         {
+    //             sort(vectors[i][z].begin(),vectors[i][z].end());
+    //             median_index = vectors[i][z].size()/2; 
+    //             centroids[i][z] = vectors[i][z][median_index];
+    //         }
     //     }
     // }
-
+    // 
     // //Deallocate memory for vectors...
     // for(int i=0;i<kmeansptr->get_K();i++)   delete [] vectors[i];
     // delete [] vectors;   
@@ -132,9 +134,12 @@ void Lloyd_Cluster::Lloyd_Update()
                     vec.push_back(kmeansptr->get_Images_Array()[it->first][z]);
             }
 
-            sort(vec.begin(),vec.end());
-            median_index = vec.size()/2; 
-            centroids[i][z] = vec[median_index];
+            if(vec.size()!=0)
+            {
+                sort(vec.begin(),vec.end());
+                median_index = vec.size()/2; 
+                centroids[i][z] = vec[median_index];
+            }
         }
     } 
 }
