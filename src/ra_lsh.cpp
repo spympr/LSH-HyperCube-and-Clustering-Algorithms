@@ -157,133 +157,6 @@ void RA_LSH::Exhausting_For_Non_Assign_Points()
     }
 }
 
-// void LSH::Approximate_LSH()
-// {   
-//     for(int i=0;i<Num_of_Queries;i++)
-//     {
-//         // file.open(output_file,ios::out);
-
-//         int LSH_nns[N],LSH_Distances[N]; 
-//         auto start = chrono::high_resolution_clock::now(); 
-//         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
-//         unordered_set<int> indexes_of_images;
-
-//         unsigned int gi_query_values[L];
-        
-//         gi_values_of_query(this, gi_query_values, i);
-
-//         for(int j=0;j<L;j++)
-//         {
-//             Bucket* temp = Hash_Tables[j][gi_query_values[j]];
-
-//             if(temp != NULL)
-//             {
-//                 vector<pair<item*,unsigned int>>::iterator it;
-                
-//                 for(it=temp->images.begin();it!=temp->images.end();it++)    
-//                 {
-//                     if(it->second==gi_query_values[j])
-//                     {
-//                         if(indexes_of_images.find((it->first[dimensions]))==indexes_of_images.end())
-//                         {
-//                             indexes_of_images.insert(it->first[dimensions]);
-//                             distances.push(make_pair(ManhattanDistance(Queries_Array[i],it->first, dimensions), it->first[dimensions]));
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-
-//         auto end = chrono::high_resolution_clock::now(); 
-        
-//         file << endl << "--------------------------------------------" << endl;
-//         file << "Query: " << Queries_Array[i][dimensions] << endl;
-        
-//         for(int k=0;k<N;k++)
-//         {
-//             LSH_Distances[k] = distances.top().first;
-//             LSH_nns[k] = distances.top().second;
-//             distances.pop();
-//             file << "Nearest neighbor-" << k+1 << ": " << LSH_nns[k] << endl;
-//             file << "distanceLSH: " << LSH_Distances[k] << endl;
-//             file << "distanceTrue: " << True_Distances[i][k] << endl << endl;
-//             dist_AF += (double)(LSH_Distances[k])/(double)True_Distances[i][k];
-//         }
-//         tLSH[i] = chrono::duration_cast<chrono::microseconds>(end - start).count();  
-//         file << "tLSH: " << tLSH[i] << "μs" << endl << "tTrue: " << tTrue[i] << "μs";
-//         time_error += tLSH[i]/tTrue[i];
-
-//         Approximate_Range_Search(i);
-//     }
-
-//     file << endl << "LSH Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
-//     file << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
-    
-//     file << endl;
-//     //Print Buckets...
-//     for(int i=0;i<L;i++)
-//     {
-//         int counter=0;
-//         int sum=0;
-//         for(int j=0;j<HashTableSize;j++)
-//         {
-//             if(Hash_Tables[i][j]!=NULL)
-//             {
-//                 counter++;
-//                 sum+=Hash_Tables[i][j]->images.size();
-//             }                
-//         }
-//         file << "HashTable " << i << ": " << counter << ", " << sum << endl;
-//     }
-// }
-
-// void LSH::Approximate_Range_Search(int query_index)
-// {   
-//     priority_queue<int, vector<int>, greater<int>> neighboors; 
-//     unordered_set<int> indexes_of_images;
-
-//     unsigned int gi_query_values[L];
-
-//     gi_values_of_query(this, gi_query_values, query_index);
-
-//     for(int j=0;j<L;j++)
-//     {
-//         Bucket* temp = Hash_Tables[j][gi_query_values[j]];
-
-//         if(temp != NULL)
-//         {
-//             vector<pair<item*,unsigned int>>::iterator it;
-
-//             for(it=temp->images.begin();it!=temp->images.end();it++)    
-//             {
-//                 if(ManhattanDistance(Queries_Array[query_index],it->first, dimensions) < R)
-//                 {
-//                     if(it->second==gi_query_values[j])
-//                     {
-//                         if(indexes_of_images.find((it->first[dimensions])) == indexes_of_images.end())
-//                         {
-//                                 indexes_of_images.insert((it->first[dimensions]));
-//                             neighboors.push(it->first[dimensions]);
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-    
-//     file << endl << "R-near neighbors:" << endl;
-//     if(neighboors.empty())  file << "None" << endl;
-//     else
-//     {
-//         for(int k=0;k<neighboors.size();k++)
-//         { 
-//             file << neighboors.top() << endl;
-//             neighboors.pop();
-//         }    
-//     }   
-
-// }
-
 void RA_LSH::InitLSH()
 {
     //Declaration of variables...
@@ -315,10 +188,6 @@ void RA_LSH::InitLSH()
         for(int j=0;j<HashTableSize;j++)   Hash_Tables[i][j]=NULL;                
     }
 
-    // //Initialization of 2D array True_Distances...
-    // True_Distances = new int*[Num_of_Queries];
-    // for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new  int[N];
-    
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
@@ -329,15 +198,8 @@ void RA_LSH::InitLSH()
     modulars = new int[dimensions];
     for(int i=0;i<dimensions;i++)   modulars[i]=mod_expo(m,i,M);
 
-    // //Initialization of tTrue,tLSH arrays...
-    // tLSH = new double[Num_of_Queries];
-    // tTrue = new double[Num_of_Queries];
-
     W = 4000;
     file << "W:" << W << endl << endl;
-
-    // //Do exhausting search and init W...
-    // ExhaustingNN(this);
 
     //Initialization of uniform_int_distribution class...
     default_random_engine generator;   
@@ -362,10 +224,6 @@ void RA_LSH::Deallocation_of_Memory()
     for(int i=0;i<Num_of_Images;i++)    delete [] Images_Array[i];
     delete [] Images_Array;
 
-    // //Deallocation of memory of Queries_Array...
-    // for(int i=0;i<Num_of_Queries;i++)    delete [] Queries_Array[i];
-    // delete [] Queries_Array;
-
     //Deallocation of memory of s_i...
     for(int i=0;i<(k*L);i++)    delete [] s_i[i];
     delete [] s_i;        
@@ -379,14 +237,5 @@ void RA_LSH::Deallocation_of_Memory()
         delete [] Hash_Tables[i];
     }
     delete [] Hash_Tables;
-
-    // //Deallocation of memory of True_Distances...
-    // for(int i=0;i<Num_of_Queries;i++)  
-    //     delete [] True_Distances[i];
-    // delete [] True_Distances;
-    
-    // //Deallocation of memory of tLSH,tTrue,modulars...
-    // delete [] tLSH;
-    // delete [] tTrue;
     delete [] modulars;
 }

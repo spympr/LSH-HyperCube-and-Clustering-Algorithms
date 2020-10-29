@@ -29,9 +29,7 @@ class RA_LSH
             Deallocation_of_Memory();
         }
 
-        void Approximate_LSH();
         void RA_LSH_Assign();
-        void Approximate_Range_Search(int);
         void InitLSH();
         void Deallocation_of_Memory();
         void Map_Init();

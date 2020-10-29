@@ -30,7 +30,7 @@ void Cluster::Clustering()
     while(true)
     {
         if(method==lloyd_method)    Lloyd_Assign();
-        // if(method==lsh_method)    Lloyd_Assign();
+        if(method==lsh_method)  lshptr->RA_LSH_Assign();  
         // if(method==hc_method)    Lloyd_Assign();
 
         objectives_values[1] = Objective_Value();
