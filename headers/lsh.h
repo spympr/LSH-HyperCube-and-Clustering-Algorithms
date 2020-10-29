@@ -11,7 +11,7 @@ class LSH
     private:
         int Num_of_Images,Num_of_Queries,k,L,R,dimensions,W,N,m,M,HashTableSize;
         int* modulars;
-        double *tLSH,*tTrue,dist_AF,time_error;;
+        double *tLSH,*tTrue,dist_AF,time_error;
         int **s_i,**True_Distances;
         item **Images_Array,**Queries_Array;
         Bucket*** Hash_Tables;
@@ -49,7 +49,6 @@ class LSH
         item** get_Images_Array();
         item** get_Queries_Array();
         Bucket*** get_Hash_Tables();
-        fstream get_file();
 };
 
 #endif

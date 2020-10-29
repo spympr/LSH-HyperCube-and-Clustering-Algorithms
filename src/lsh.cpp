@@ -80,11 +80,6 @@ Bucket*** LSH::get_Hash_Tables()
     return Hash_Tables;
 }
 
-// fstream LSH::get_file()
-// {
-//     return file;
-// }
-
 void LSH::Approximate_LSH()
 {   
     for(int i=0;i<Num_of_Queries;i++)

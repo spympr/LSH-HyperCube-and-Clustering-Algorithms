@@ -12,7 +12,7 @@ class Cluster
         map <int,Nearest_Centroids*> points;
         fstream file;
         float epsilon=1e-3;
-        LSH* lshptr;
+        RA_LSH* lshptr;
         HyperCube* hcptr;
         Clustering_Method method;
         
@@ -29,8 +29,8 @@ class Cluster
             //Check which method we have...
             if(method==lsh_method)
             {
-                // lshptr = new LSH(input_file,query_file,output_file,kmeansptr->get_L(),N,kmeansptr->get_LSH_k(),R);    
-                // lshptr->InitLSH();
+                lshptr = new RA_LSH(input_file,output_file,kmeansptr->get_L(),kmeansptr->get_LSH_k());    
+                lshptr->InitLSH();
             }
             else if(method==hc_method)
             {
