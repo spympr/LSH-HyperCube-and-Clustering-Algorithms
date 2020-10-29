@@ -14,26 +14,29 @@ class Cluster
         float epsilon=1e-3;
         LSH* lshptr;
         HyperCube* hcptr;
+        Clustering_Method method;
         
     public:
 
-        Cluster(string input_file,string output_file_,string conf,string comp,Clustering_Method method):complete(comp),output_file(output_file_),lshptr(NULL),hcptr(NULL)
+        Cluster(string input_file,string output_file_,string conf,string comp,Clustering_Method method_):complete(comp),output_file(output_file_),lshptr(NULL),hcptr(NULL),method(method_)
         {   
-            if(method==lsh_method)
-            {
-                // LSH lsh(input_file,query_file,output_file,L,N,k,R);    
-                // lsh.InitLSH();
-            }
-            else if(method==hc_method)
-            {
-                // HyperCube cube(input_file,query_file,output_file,N,k,R,M,probes);  
-                // cube.InitHyperCube();
-            }
-
             file.open(output_file,ios::out);
             
             //Allocate memory for kmeans pointer (helpful class kmeans).
             kmeansptr = new kmeans(input_file,conf);
+            
+            //Check which method we have...
+            if(method==lsh_method)
+            {
+                // lshptr = new LSH(input_file,query_file,output_file,kmeansptr->get_L(),N,kmeansptr->get_LSH_k(),R);    
+                // lshptr->InitLSH();
+            }
+            else if(method==hc_method)
+            {
+                // hcptr = new HyperCube(input_file,query_file,output_file,N,kmeansptr->get_HC_k(),R,kmeansptr->get_HC_M(),kmeansptr->get_probes());  
+                // hcptr->InitHyperCube();
+            }
+            
             file << "Images:" << kmeansptr->get_number_of_images() << endl << "Dimensions:" << sqrt(kmeansptr->get_dimensions()) << "x" << sqrt(kmeansptr->get_dimensions()) << endl <<  "Κ:" << kmeansptr->get_K() << endl;
 
             //Allocate memory for centroids of each cluster (centroids_dimensions=K*image_dimensions).
@@ -59,6 +62,9 @@ class Cluster
 
             //Deallocate memory for kmeans pointer.
             delete kmeansptr;
+
+            if(method==lsh_method)  delete lshptr;
+            else if(method==hc_method)  delete hcptr;
         }
         
         void Clustering();
