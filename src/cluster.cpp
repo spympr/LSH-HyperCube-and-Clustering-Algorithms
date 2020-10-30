@@ -31,7 +31,7 @@ void Cluster::Clustering()
     {
         if(method==lloyd_method)    Lloyd_Assign();
         if(method==lsh_method)  lshptr->RA_LSH_Assign();  
-        if(method==hc_method)    hcptr->;
+        if(method==hc_method)    hcptr->RA_HyperCube_Assign();
 
         objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
@@ -142,7 +142,7 @@ void Cluster::SlowUpdate()
                 if(cluster==i)
                     vec.push_back(kmeansptr->get_Images_Array()[it->first][z]);
             }
-            
+
             if(vec.size()!=0)
             {
                 sort(vec.begin(),vec.end());
