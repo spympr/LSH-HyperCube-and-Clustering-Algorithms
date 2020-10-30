@@ -73,6 +73,18 @@ int RA_HyperCube::hammingDistance(int n1, int n2)
     return setBits; 
 } 
 
+void RA_HyperCube::Initialize_Values()
+{
+    K = kmeansptr->get_K();
+    dimensions = kmeansptr->get_dimensions();
+    k = kmeansptr->get_HC_k();
+    M_boundary = kmeansptr->get_HC_M();
+    probes = kmeansptr->get_probes();
+    Num_of_Images = kmeansptr->get_number_of_images();
+    Images_Array = kmeansptr->get_Images_Array();
+    HashTableSize = pow(2,k);
+}
+
 void RA_HyperCube::Deallocation_of_Memory()
 {
     delete [] f_i_map;
@@ -91,21 +103,10 @@ void RA_HyperCube::Deallocation_of_Memory()
     delete [] modulars;
 }
 
-void RA_HyperCube::Initialize_Values()
-{
-    K = kmeansptr->get_K();
-    dimensions = kmeansptr->get_dimensions();
-    k = kmeansptr->get_HC_k();
-    M_boundary = kmeansptr->get_HC_M();
-    probes = kmeansptr->get_probes();
-    Num_of_Images = kmeansptr->get_number_of_images();
-    Images_Array = kmeansptr->get_Images_Array();
-    HashTableSize = pow(2,k);
-    f_i_map = new map<unsigned int, unsigned int>[k];
-}
-
 void RA_HyperCube::Init_RA_HyperCube()
 {
+    f_i_map = new map<unsigned int, unsigned int>[k];
+
     //Declaration of hash tables...
     Hash_Table = new Bucket*[HashTableSize];
     for(int i=0;i<HashTableSize;i++)    Hash_Table[i] = NULL;
