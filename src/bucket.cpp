@@ -138,15 +138,11 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
             int a_i[info->get_dimensions()];
 
             for(int z=0;z<info->get_dimensions();z++)
-            {
                 a_i[z] = floor((double)((info->get_Images_Array()[image][z] - info->get_s_i()[j][z]))/(double)(info->get_W()));
-                // cout << a_i[z] << " ";
-            }
-            // cout << endl;
+
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
             
             f_i_values[j] = info->get_f_i_map()[j][h_p[j]];
-            // cout << "f_" << j << "(" << h_p[j] << ")=" << f_i_values[j] << "  ";
         }
 
         for(int j=0;j<info->get_k();j++)  f_i[image] += (f_i_values[j] << ((info->get_k()-(j+1))));
@@ -262,13 +258,9 @@ unsigned int Reverse_Assignment_HyperCube_Centroid_in_Bucket(RA_HyperCube* info,
         
         h_p[j] = Calculate_hp_RA_HyperCube(a_i,info);
         f_i_values[j] = info->get_f_i_map()[j][h_p[j]];
-        // cout << "h_p " << h_p[j] << " f_i " << f_i_values[j] << endl;
     }
-    for(int j=0;j<info->get_k();j++)  
-    {
-        f_i += (f_i_values[j] << ((info->get_k()-(j+1)))); 
-        // cout << f_i_values[j] << " " << f_i << endl;
-    }  
+    for(int j=0;j<info->get_k();j++)    f_i += (f_i_values[j] << ((info->get_k()-(j+1)))); 
+    
     return f_i;  
 }
 

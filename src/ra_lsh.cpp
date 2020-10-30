@@ -192,6 +192,21 @@ void RA_LSH::Init_RA_LSH()
 
     //Fill Hash Tables...
     Insert_Images_To_Buckets_RA_LSH(this);
+
+    for(int i=0;i<L;i++)
+    {
+        int counter=0;
+        int sum=0;
+        for(int j=0;j<HashTableSize;j++)
+        {
+            if(Hash_Tables[i][j]!=NULL)
+            {
+                counter++;
+                sum+=Hash_Tables[i][j]->images.size();
+            }                
+        }
+        cout << "HashTable " << i << ": " << counter << ", " << sum << endl;
+    }
 }
 
 void RA_LSH::Deallocation_of_Memory()
