@@ -135,7 +135,146 @@ void RA_HyperCube::Init_RA_HyperCube()
         
     //Fill Hash Table...
     //YOU HAVE TO SOLVE THIS...
-    // Insert_Images_To_Buckets_HyperCube(this);
+    Insert_Images_To_Buckets_RA_HyperCube(this);
+}
+
+void RA_HyperCube::Map_Init()
+{
+    map <int,Nearest_Centroids*>::iterator it;
+
+    for(it=(*points).begin();it!=(*points).end();it++) 
+        it->second->set_nearest_centroid1(-1);
+}
+
+void RA_HyperCube::RA_HyperCube_Assign()
+{
+    int image_index = 0, nearest_centroid1=0, nearest_centroid2=0;
+
+    Map_Init();
+    
+    for(int i=0;i<K;i++)
+    {
+        int count_hamming=1,count_images=0, count_probes=0;
+        unsigned int f_i = Reverse_Assignment_HyperCube_Centroid_in_Bucket(this,centroids[i]);     
+
+        Bucket* temp = Hash_Table[f_i];
+
+        if(temp != NULL)
+        {
+            vector<pair<item*,unsigned int>>::iterator it;
+
+            for(it=temp->images.begin();it!=temp->images.end();it++)    
+            {
+                image_index = it->first[dimensions];
+                nearest_centroid1 = (*points)[image_index]->get_nearest_centroid1();
+
+                if(nearest_centroid1 == -1)
+                {
+                    (*points)[image_index]->set_nearest_centroid1(i);
+                    (*points)[image_index]->set_dist1(ManhattanDistance(it->first, centroids[i], dimensions));
+
+                    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances2; 
+                    
+                    for(int z=0;z<K;z++)
+                        if(z!=i)
+                            distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
+
+                    (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
+                    (*points)[image_index]->set_dist2(distances2.top().first);   
+                }
+                else
+                {
+                    item new_distance1 = ManhattanDistance(it->first,centroids[i],dimensions);
+                    item old_distance1 = ManhattanDistance(it->first,centroids[nearest_centroid1],dimensions);
+                    
+                    //Change the old centroid with the new one...
+                    if(new_distance1 < old_distance1)
+                    {
+                        (*points)[image_index]->set_nearest_centroid1(i);
+                        (*points)[image_index]->set_dist1(new_distance1);
+
+                        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances2; 
+                    
+                        for(int z=0;z<K;z++)
+                            if(z!=i)
+                                distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
+                        
+                        (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
+                        (*points)[image_index]->set_dist2(distances2.top().first);
+                    }
+                }
+
+                count_images++;
+                if(count_images == M_boundary)  break;
+            }
+        }
+        if((temp == NULL) || (count_images < M_boundary))
+        {
+            while((count_probes < probes) && (count_images < M_boundary))
+            {
+                for(int j=0;j<HashTableSize;j++)
+                {
+                    Bucket* hash_cell = Hash_Table[j];
+
+                    if(hash_cell != NULL)
+                    {
+                        int hamming_distance = hammingDistance(f_i,j);
+                        if(hamming_distance == count_hamming)
+                        {
+                            vector<pair<item*,unsigned int>>::iterator it;
+
+                            for(it=hash_cell->images.begin();it!=hash_cell->images.end();it++)    
+                            {
+                                image_index = it->first[dimensions];
+                                nearest_centroid1 = (*points)[image_index]->get_nearest_centroid1();
+
+                                if(nearest_centroid1 == -1)
+                                {
+                                    (*points)[image_index]->set_nearest_centroid1(i);
+                                    (*points)[image_index]->set_dist1(ManhattanDistance(it->first, centroids[i], dimensions));
+
+                                    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances2; 
+                                    
+                                    for(int z=0;z<K;z++)
+                                        if(z!=i)
+                                            distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
+
+                                    (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
+                                    (*points)[image_index]->set_dist2(distances2.top().first);   
+                                }
+                                else
+                                {
+                                    item new_distance1 = ManhattanDistance(it->first,centroids[i],dimensions);
+                                    item old_distance1 = ManhattanDistance(it->first,centroids[nearest_centroid1],dimensions);
+                                    
+                                    //Change the old centroid with the new one...
+                                    if(new_distance1 < old_distance1)
+                                    {
+                                        (*points)[image_index]->set_nearest_centroid1(i);
+                                        (*points)[image_index]->set_dist1(new_distance1);
+
+                                        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances2; 
+                                    
+                                        for(int z=0;z<K;z++)
+                                            if(z!=i)
+                                                distances2.push(make_pair((ManhattanDistance(centroids[z],it->first,dimensions)),z));
+                                        
+                                        (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
+                                        (*points)[image_index]->set_dist2(distances2.top().first);
+                                    }
+                                }
+                                count_images++;
+                                if(count_images == M_boundary)  break;
+                            }
+                            count_probes++;
+                        }
+                    }
+                    if((count_images == M_boundary) || (count_probes == probes))  break;
+                }
+                count_hamming++;
+            }
+        }
+    }
 }
 
 // void HyperCube::Approximate_Hypercube()

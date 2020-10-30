@@ -23,8 +23,11 @@ void fi_values_of_query(HyperCube*, unsigned int*);
 void Insert_Images_To_Buckets_LSH(LSH*);
 void Insert_Images_To_Buckets_HyperCube(HyperCube*);
 void Insert_Images_To_Buckets_RA_LSH(RA_LSH*);
+void Insert_Images_To_Buckets_RA_HyperCube(RA_HyperCube*);
+void fi_values_of_train_RA_HyperCube(RA_HyperCube*,unsigned int*);
+int Calculate_hp_RA_HyperCube(int*, HyperCube*);
 void gi_values_of_query(LSH*, unsigned int* , int);
 void Reverse_Assignment_LSH_Centroid_in_Bucket(RA_LSH*, unsigned int*, item*);
-unsigned int Reverse_Assignment_HyperCube_Centroid_in_Bucket(HyperCube*, item*);
+unsigned int Reverse_Assignment_HyperCube_Centroid_in_Bucket(RA_HyperCube*, item*);
 
 #endif

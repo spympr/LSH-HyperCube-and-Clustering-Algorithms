@@ -31,7 +31,7 @@ void Cluster::Clustering()
     {
         if(method==lloyd_method)    Lloyd_Assign();
         if(method==lsh_method)  lshptr->RA_LSH_Assign();  
-        // if(method==hc_method)    Lloyd_Assign();
+        if(method==hc_method)    hcptr->;
 
         objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];

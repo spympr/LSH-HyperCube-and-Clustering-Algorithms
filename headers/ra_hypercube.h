@@ -38,6 +38,8 @@ class RA_HyperCube
         void Approximate_Range_Search(int ,unsigned int );
         void Deallocation_of_Memory();
         void Initialize_Values();
+        void RA_HyperCube_Assign();
+        void Map_Init();
 
         int get_dimensions();
         int get_M_boundary();
