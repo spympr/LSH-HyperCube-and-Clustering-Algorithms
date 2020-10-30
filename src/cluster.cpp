@@ -37,7 +37,7 @@ void Cluster::Clustering()
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
         file << "Reduction's rate change of objective function's value:" << ratio << endl << "Cost:" << objectives_values[1] << endl << endl;
-        if(ratio<epsilon)   break;
+        if(ratio<epsilon || iters==20)   break;
         
         FastUpdate();
         // SlowUpdate();

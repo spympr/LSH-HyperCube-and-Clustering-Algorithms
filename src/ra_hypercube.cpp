@@ -132,6 +132,15 @@ void RA_HyperCube::Init_RA_HyperCube()
         for(int j=0;j<dimensions;j++)   
             s_i[i][j] = distribution(generator);        
     }
+
+    //Initialization of uniform_int_distribution class...
+    default_random_engine generator1;   
+    uniform_int_distribution<int> distribution1(0,1);
+    
+    //Initialization of map...
+    for(int i=0;i<k;i++)
+        for(int j=0;j<M;j++)    
+            f_i_map[i][j] = distribution1(generator1);
         
     //Fill Hash Table...
     Insert_Images_To_Buckets_RA_HyperCube(this);
@@ -147,10 +156,10 @@ void RA_HyperCube::Map_Init()
 
 void RA_HyperCube::RA_HyperCube_Assign()
 {
-    int image_index = 0, nearest_centroid1=0, nearest_centroid2=0;
+    int image_index=0,nearest_centroid1=0,nearest_centroid2=0;
 
     Map_Init();
-    
+
     for(int i=0;i<K;i++)
     {
         int count_hamming=1,count_images=0, count_probes=0;
@@ -161,8 +170,8 @@ void RA_HyperCube::RA_HyperCube_Assign()
         if(temp != NULL)
         {
             vector<pair<item*,unsigned int>>::iterator it;
-
-            for(it=temp->images.begin();it!=temp->images.end();it++)    
+            
+            for(it=temp->images.begin();it!=temp->images.end();it++)
             {
                 image_index = it->first[dimensions];
                 nearest_centroid1 = (*points)[image_index]->get_nearest_centroid1();

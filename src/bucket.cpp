@@ -250,7 +250,7 @@ void Reverse_Assignment_LSH_Centroid_in_Bucket(RA_LSH* info, unsigned int* gi_qu
 
 unsigned int Reverse_Assignment_HyperCube_Centroid_in_Bucket(RA_HyperCube* info, item* centroid)
 {    
-    unsigned int f_i;
+    unsigned int f_i=0;
     int h_p[info->get_k()];
     int f_i_values[info->get_k()];
     for(int j=0;j<info->get_k();j++)
@@ -259,12 +259,16 @@ unsigned int Reverse_Assignment_HyperCube_Centroid_in_Bucket(RA_HyperCube* info,
 
         for(int z=0;z<info->get_dimensions();z++)
             a_i[z] = floor((double)(centroid[z] - info->get_s_i()[j][z])/(double)(info->get_W()));
-
-        h_p[j] = Calculate_hp_RA_HyperCube(a_i,info);
         
+        h_p[j] = Calculate_hp_RA_HyperCube(a_i,info);
         f_i_values[j] = info->get_f_i_map()[j][h_p[j]];
+        // cout << "h_p " << h_p[j] << " f_i " << f_i_values[j] << endl;
     }
-    for(int j=0;j<info->get_k();j++)  f_i += (f_i_values[j] << ((info->get_k()-(j+1))));   
+    for(int j=0;j<info->get_k();j++)  
+    {
+        f_i += (f_i_values[j] << ((info->get_k()-(j+1)))); 
+        // cout << f_i_values[j] << " " << f_i << endl;
+    }  
     return f_i;  
 }
 
