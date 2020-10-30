@@ -5,6 +5,7 @@ void Bucket::add(item* image,unsigned int g_i)
     images.push_back(make_pair(image,g_i));
 }
 
+//Function which returns only non negative values from mod function.
 unsigned int mod(int k, int M) 
 {   
     if ((k % M) < 0) 
@@ -13,6 +14,7 @@ unsigned int mod(int k, int M)
         return (unsigned int) (k % M);
 }
 
+//Function which implements modular exponentiation.
 int mod_expo(int base, int exponent,int modulus) 
 {
     if(modulus==1)  return 0;
@@ -21,6 +23,7 @@ int mod_expo(int base, int exponent,int modulus)
     return c;
 }
 
+//Function which calculates h_p values for LSH class.
 int Calculate_hp_LSH(int* a_i, LSH* info)
 {
     unsigned int sum = 0,first_term,second_term,temp_term;
@@ -35,6 +38,7 @@ int Calculate_hp_LSH(int* a_i, LSH* info)
     return mod(sum,info->get_M());
 }
 
+//Function which calculates h_p values for RA_LSH class.
 int Calculate_hp_RA_LSH(int* a_i, RA_LSH* info)
 {
     unsigned int sum = 0,first_term,second_term,temp_term;
@@ -49,6 +53,7 @@ int Calculate_hp_RA_LSH(int* a_i, RA_LSH* info)
     return mod(sum,info->get_M());
 }
 
+//Function which calculates h_p values for HyperCube class.
 int Calculate_hp_HyperCube(int* a_i, HyperCube* info)
 {
     unsigned int sum = 0,first_term,second_term,temp_term;
@@ -63,6 +68,7 @@ int Calculate_hp_HyperCube(int* a_i, HyperCube* info)
     return mod(sum,info->get_M());
 }
 
+//Function which calculates h_p values for RA_HyperCube class.
 int Calculate_hp_RA_HyperCube(int* a_i, RA_HyperCube* info)
 {
     unsigned int sum = 0,first_term,second_term,temp_term;
@@ -77,6 +83,7 @@ int Calculate_hp_RA_HyperCube(int* a_i, RA_HyperCube* info)
     return mod(sum,info->get_M());
 }
 
+//Function which calculates g_i values for LSH class.
 void gi_values_of_train(LSH* info,unsigned int** g_i)
 {
     for(int image=0;image<info->get_Num_of_Images();image++)
@@ -102,6 +109,7 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
     }
 }
 
+//Function which calculates g_i values for RA_LSH class.
 void gi_values_of_train_RA_LSH(RA_LSH* info,unsigned int** g_i)
 {
     for(int image=0;image<info->get_Num_of_Images();image++)
@@ -127,6 +135,7 @@ void gi_values_of_train_RA_LSH(RA_LSH* info,unsigned int** g_i)
     }
 }
 
+//Function which calculates fi values for HyperCube class.
 void fi_values_of_train(HyperCube* info,unsigned int* f_i)
 {
     for(int image=0;image<info->get_Num_of_Images();image++)
@@ -149,6 +158,7 @@ void fi_values_of_train(HyperCube* info,unsigned int* f_i)
     }
 }
 
+//Function which calculates fi values for RA_HyperCube class.
 void fi_values_of_train_RA_HyperCube(RA_HyperCube* info,unsigned int* f_i)
 {
     for(int image=0;image<info->get_Num_of_Images();image++)
@@ -171,6 +181,7 @@ void fi_values_of_train_RA_HyperCube(RA_HyperCube* info,unsigned int* f_i)
     }
 }
 
+//Function which calculates fi values of queries for HyperCube class.
 void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 {    
     for(int image=0;image<info->get_Num_of_Queries();image++)
@@ -192,6 +203,7 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
     }
 }
 
+//Function which calculates query's gi values for LSH class.
 void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
 {
     for(int i=0;i<info->get_L();i++)
@@ -218,6 +230,7 @@ void gi_values_of_query(LSH* info, unsigned int* gi_query_values, int query)
     }
 }
 
+//Function which calculates centroid's gi values for RA_LSH class.
 void Reverse_Assignment_LSH_Centroid_in_Bucket(RA_LSH* info, unsigned int* gi_query_values, item* centroid)
 {
     for(int i=0;i<info->get_L();i++)
@@ -244,6 +257,7 @@ void Reverse_Assignment_LSH_Centroid_in_Bucket(RA_LSH* info, unsigned int* gi_qu
     }
 }
 
+//Function which calculates centroid's fi value for RA_HyperCube class.
 unsigned int Reverse_Assignment_HyperCube_Centroid_in_Bucket(RA_HyperCube* info, item* centroid)
 {    
     unsigned int f_i=0;
@@ -264,6 +278,7 @@ unsigned int Reverse_Assignment_HyperCube_Centroid_in_Bucket(RA_HyperCube* info,
     return f_i;  
 }
 
+//Fill hashtables with images (data structure initialization) for LSH.
 void Insert_Images_To_Buckets_LSH(LSH* info)
 {
     //Allocate memory so as to store temporarily g_i values...
@@ -293,6 +308,7 @@ void Insert_Images_To_Buckets_LSH(LSH* info)
     delete [] g_i;
 }
 
+//Fill hashtable with images (data structure initialization) for HyperCube.
 void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
 {
     //Allocate memory so as to store temporarily f_i values...
@@ -321,6 +337,7 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
     delete [] f_i;
 }
 
+//Fill hashtables with images (data structure initialization) for RA_LSH.
 void Insert_Images_To_Buckets_RA_LSH(RA_LSH* info)
 {
     //Allocate memory so as to store temporarily g_i values...
@@ -350,6 +367,7 @@ void Insert_Images_To_Buckets_RA_LSH(RA_LSH* info)
     delete [] g_i;
 }
 
+//Fill hashtable with images (data structure initialization) for RA_HyperCube.
 void Insert_Images_To_Buckets_RA_HyperCube(RA_HyperCube* info)
 {
     //Allocate memory so as to store temporarily f_i values...

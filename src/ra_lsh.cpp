@@ -63,6 +63,8 @@ void RA_LSH::Map_Init()
         it->second->set_nearest_centroid1(-1);
 }
 
+//Assign points to centroids(clusters) with LSH method
+//and for that points which are not assigned search exhaustively...
 void RA_LSH::RA_LSH_Assign()
 {
     int image_index = 0, nearest_centroid1=0, nearest_centroid2=0;
@@ -130,7 +132,6 @@ void RA_LSH::RA_LSH_Assign()
             }
         }
     }
-
     Exhausting_For_Non_Assign_Points();
 }
 

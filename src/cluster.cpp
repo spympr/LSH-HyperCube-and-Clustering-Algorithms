@@ -24,29 +24,33 @@ void Cluster::Clustering()
         for(int j=0;j<kmeansptr->get_dimensions();j++)
             centroids[i][j] = kmeansptr->get_Images_Array()[indexes[i]][j];
     }
-    // file << endl;
 
     auto start = chrono::high_resolution_clock::now();
     while(true)
     {
+        //Assign with the appropriate method...
         if(method==lloyd_method)    Lloyd_Assign();
         if(method==lsh_method)  lshptr->RA_LSH_Assign();  
         if(method==hc_method)    hcptr->RA_HyperCube_Assign();
 
+        //Calculate objective value and if ratio is less than epsilon then stop clustering
         objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
         // file << "Reduction's rate change of objective function's value:" << ratio << endl << "Cost:" << objectives_values[1] << endl << endl;
-        if(ratio<epsilon || iters==10)   break;
+        if(ratio<epsilon || iters==20)   break;
         
+        //Update centroids with kmedians...
         FastUpdate();
         // SlowUpdate();
+
         iters++;
     }
     auto end = chrono::high_resolution_clock::now(); 
     clustering_time = chrono::duration_cast<chrono::seconds>(end - start).count();
     file << endl << "Converged with " << iters << " updates!" << endl;
 
+    //Calculate Silhouette values.
     Silhouette(&points,kmeansptr->get_K(),&silhouette_array,kmeansptr);
     
     Print(silhouette_array,(clustering_time+kmeansptr->get_kmeans_time()));

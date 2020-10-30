@@ -3,7 +3,8 @@
 
 #include "../headers/exhausting.h"
 
-void Read_BF(item ***, int *, int *, int *, std::__cxx11::string, int );
+//Forward declaration of Read_BF function...
+void Read_BF(item ***, int *, int *, int *, string, int );
 
 class kmeans
 {

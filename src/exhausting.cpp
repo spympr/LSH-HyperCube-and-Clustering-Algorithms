@@ -1,5 +1,6 @@
 #include "../headers/exhausting.h"
 
+//Search exhaustively for each query distance with each image of dataset so as to find best for LSH.
 void ExhaustingNN(LSH* info)
 {   
     for(int i=0;i<info->get_Num_of_Queries();i++)
@@ -20,6 +21,7 @@ void ExhaustingNN(LSH* info)
     }
 }
 
+//Search exhaustively for each query distance with each image of dataset so as to find best for HyperCube.
 void ExhaustingNN_HC(HyperCube* info)
 {   
     for(int i=0;i<info->get_Num_of_Queries();i++)
@@ -40,6 +42,7 @@ void ExhaustingNN_HC(HyperCube* info)
     }
 }
 
+//Function which returns manhattan distance of 2 vectors.
 item ManhattanDistance(item* x,item* y,int dimensions)
 {
     item sum=0;

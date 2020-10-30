@@ -95,6 +95,7 @@ double kmeans::get_kmeans_time()
     return kmeans_time;
 }
 
+//Function which reads cluster.conf and stores values.
 void kmeans::info_initialization(string configuration_file)
 {
     ifstream file(configuration_file);
@@ -157,6 +158,7 @@ void kmeans::centroid_initialization()
     //Initialize random generator for our float distribution function...
     default_random_engine generator;  
     
+    //For each centroid except first (which we choosed randomly)...
     for(int centroid=0;centroid<K-1;centroid++)
     {
         int min_distance;
@@ -169,6 +171,7 @@ void kmeans::centroid_initialization()
         }
         priority_queue<int> distances;
 
+        //Calculate minimum distance from distances of each image to a specific centroid and store it to D[i]...
         for(int i=0;i<number_of_images;i++)
         {
             min_distance=pow(2,25);
@@ -180,16 +183,21 @@ void kmeans::centroid_initialization()
             D_i[i] = min_distance;
             distances.push(min_distance);
         }
+        //Store max_Di...
         int max_Di = distances.top();
 
+        //Calculate P_r[0] cause we'll need it to calculate P_r[1]...
         P_r[0] = pow(((float)(D_i[0])/(float)max_Di),2);
 
+        //Calculate each Pr[r]...
         for(int r=1;r<number_of_images;r++)
             P_r[r] = P_r[r-1] + pow(((float)(D_i[r])/(float)max_Di),2);
     
+        //Pick random real number in range (0,Pr[number_of_images-1])
         uniform_real_distribution<float> distribution(float(0),P_r[number_of_images-1]);
-
         float x = distribution(generator);
+
+        //Find new index of new centroid...
         for(int r=0;r<number_of_images;r++)
         {
             if(P_r[r] >= x)  
