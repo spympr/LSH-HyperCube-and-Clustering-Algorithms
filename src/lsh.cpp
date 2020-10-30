@@ -232,12 +232,12 @@ void LSH::InitLSH()
     for(int i=0;i<L;i++)    
     {
         Hash_Tables[i] = new Bucket*[HashTableSize];
-        for(int j=0;j<HashTableSize;j++)   Hash_Tables[i][j]=NULL;                
+        for(int j=0;j<HashTableSize;j++)   Hash_Tables[i][j] = NULL;                
     }
 
     //Initialization of 2D array True_Distances...
     True_Distances = new int*[Num_of_Queries];
-    for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new  int[N];
+    for(int i=0;i<Num_of_Queries;i++)   True_Distances[i] = new int[N];
     
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
