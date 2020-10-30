@@ -15,15 +15,13 @@ class RA_LSH
         int **s_i;
         item **Images_Array;
         Bucket*** Hash_Tables;
-        string output_file;
-        fstream file;
         map<int,Nearest_Centroids*>* points;
         item** centroids;
         kmeans* kmeansptr;
 
     public:
-        RA_LSH(string output_file_,map<int,Nearest_Centroids*>* points_,item** centroids_,kmeans* kmeansptr_)
-        :output_file(output_file_),points(points_),centroids(centroids_),kmeansptr(kmeansptr_)
+        RA_LSH(map<int,Nearest_Centroids*>* points_,item** centroids_,kmeans* kmeansptr_)
+        :points(points_),centroids(centroids_),kmeansptr(kmeansptr_)
         {
             Initialize_Values();
         }

@@ -15,7 +15,7 @@ class Cluster
         fstream file;
         float epsilon=1e-3;
         RA_LSH* lshptr;
-        HyperCube* hcptr;
+        RA_HyperCube* hcptr;
         Clustering_Method method;
         
     public:
@@ -44,13 +44,13 @@ class Cluster
             //Check which method we have...
             if(method==lsh_method)
             {
-                lshptr = new RA_LSH(output_file,&points,centroids,kmeansptr);    
+                lshptr = new RA_LSH(&points,centroids,kmeansptr);    
                 lshptr->Init_RA_LSH();
             }
             else if(method==hc_method)
             {
-                // hcptr = new RA_HyperCube(input_file,query_file,output_file,N,kmeansptr->get_HC_k(),R,kmeansptr->get_HC_M(),kmeansptr->get_probes());  
-                // hcptr->InitHyperCube();
+                hcptr = new RA_HyperCube(&points,centroids,kmeansptr);
+                hcptr->Init_RA_HyperCube();
             }
         }
 
