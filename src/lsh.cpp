@@ -84,8 +84,6 @@ void LSH::Approximate_LSH()
 {   
     for(int i=0;i<Num_of_Queries;i++)
     {
-        // file.open(output_file,ios::out);
-
         int LSH_nns[N],LSH_Distances[N]; 
         auto start = chrono::high_resolution_clock::now(); 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
