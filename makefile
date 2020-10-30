@@ -1,5 +1,5 @@
-cluster: build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o build/ra_lsh.o build/main.o
-	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o build/ra_lsh.o -o cluster
+cluster: build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o build/ra_lsh.o build/ra_hypercube.o build/main.o
+	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o build/ra_lsh.o build/ra_hypercube.o -o cluster
 
 lsh: build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o
 	g++ build/main.o build/read_binary_file.o build/bucket.o build/exhausting.o build/lsh.o build/hypercube.o build/kmeans.o build/cluster.o -o lsh
@@ -33,6 +33,9 @@ build/cluster.o: src/cluster.cpp
 
 build/ra_lsh.o: src/ra_lsh.cpp
 	g++ -c src/ra_lsh.cpp -o build/ra_lsh.o
+
+build/ra_hypercube.o: src/ra_hypercube.cpp
+	g++ -c src/ra_hypercube.cpp -o build/ra_hypercube.o
 	
 clean:
 	rm cube lsh cluster build/*.o
