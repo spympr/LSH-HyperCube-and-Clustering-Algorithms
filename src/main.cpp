@@ -7,19 +7,77 @@ int main(int argc, char** argv)
 
     if(argc==1)
     {
-        cout << "Give me the path of dataset: "; 
-        cin >> input_file;
+        if(strcmp(argv[0],"./lsh") == 0)
+        {
+            cout << "Give me the path of input dataset: "; 
+            cin >> input_file;
 
-        cout << "Give me the path of queryset: "; 
-        cin >> query_file;
+            cout << "Give me the path of queryset: "; 
+            cin >> query_file;
 
-        cout << "Give me the path of exit file: "; 
-        cin >> output_file;
+            cout << "Give me the path of output file: "; 
+            cin >> output_file;
 
-        k=4;
-        L=5;
-        N=1;
-        R=1.0;
+            cout << "Give me k: "; 
+            cin >> k;
+
+            cout << "Give me L: "; 
+            cin >> L;
+
+            cout << "Give me N: "; 
+            cin >> N;
+
+            cout << "Give me R: "; 
+            cin >> R;
+        }
+        else if(strcmp(argv[0],"./cube") == 0)
+        {
+            cout << "Give me the path of input dataset: "; 
+            cin >> input_file;
+
+            cout << "Give me the path of queryset: "; 
+            cin >> query_file;
+
+            cout << "Give me the path of output file: "; 
+            cin >> output_file;
+
+            cout << "Give me k: "; 
+            cin >> k;
+
+            cout << "Give me M: "; 
+            cin >> M;
+
+            cout << "Give me probes: "; 
+            cin >> probes;
+
+            cout << "Give me N: "; 
+            cin >> N;
+
+            cout << "Give me R: "; 
+            cin >> R;   
+        }
+        else if(strcmp(argv[0],"./cluster") == 0)
+        {
+            cout << "Give me the path of input dataset: "; 
+            cin >> input_file;
+
+            cout << "Give me the path of configuration file: "; 
+            cin >> configuration_file;
+
+            cout << "Give me the path of output file: "; 
+            cin >> output_file;
+
+            cout << "Give me complete (yes or no): " << endl;
+            cin >> complete;
+
+            cout << "Give me method of assignment ('Classic','LSH','Hypercube'): " << endl;
+            cin >> method;
+        }
+        else
+        {
+            cout << "Executable isn't valid! Try ./lsh or ./cube or ./cluster !" << endl;
+            return -1;
+        }
     }
     else
     {
@@ -140,6 +198,11 @@ int main(int argc, char** argv)
                 M=10; 
             }
         }
+        else
+        {
+            cout << "Executable isn't valid! Try ./lsh or ./cube or ./cluster !" << endl;
+            return -1;
+        }   
     }
 
     while(true)
@@ -181,7 +244,7 @@ int main(int argc, char** argv)
         }
         string answer; 
 
-        cout << "\nDo you want to question something else? (y/n)\n";
+        cout << endl << "Do you want to question something else? (y/n)" << endl;
         cin >> answer;
 
         if((answer == "no") || (answer == "No") || (answer == "NO") || (answer == "n") || (answer =="N"))
