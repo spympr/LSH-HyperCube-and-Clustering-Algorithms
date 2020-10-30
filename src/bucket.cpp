@@ -89,13 +89,9 @@ void gi_values_of_train(LSH* info,unsigned int** g_i)
                 int a_i[info->get_dimensions()];
 
                 for(int z=0;z<info->get_dimensions();z++)
-                {
                     a_i[z] = floor((double)((info->get_Images_Array()[image][z] - info->get_s_i()[(i*info->get_k())+j][z]))/(double)(info->get_W()));
-                    // cout << a_i[z] << " ";
-                }
-                // cout << endl;
+
                 h_p[j] = Calculate_hp_LSH(a_i,info);
-                // if(image<10)    cout << h_p[j] << endl;
             }
             for(int j=0;j<info->get_k();j++)
             {
@@ -118,13 +114,9 @@ void gi_values_of_train_RA_LSH(RA_LSH* info,unsigned int** g_i)
                 int a_i[info->get_dimensions()];
 
                 for(int z=0;z<info->get_dimensions();z++)
-                {
                     a_i[z] = floor((double)((info->get_Images_Array()[image][z] - info->get_s_i()[(i*info->get_k())+j][z]))/(double)(info->get_W()));
-                    // cout << a_i[z] << " ";
-                }
-                // cout << endl;
+
                 h_p[j] = Calculate_hp_RA_LSH(a_i,info);
-                // if(image<10)    cout << h_p[j] << endl;
             }
             for(int j=0;j<info->get_k();j++)
             {
@@ -146,15 +138,11 @@ void fi_values_of_train_RA_HyperCube(RA_HyperCube* info,unsigned int* f_i)
             int a_i[info->get_dimensions()];
 
             for(int z=0;z<info->get_dimensions();z++)
-            {
                 a_i[z] = floor((double)((info->get_Images_Array()[image][z] - info->get_s_i()[j][z]))/(double)(info->get_W()));
-                // cout << a_i[z] << " ";
-            }
-            // cout << endl;
+
             h_p[j] = Calculate_hp_RA_HyperCube(a_i,info);
             
             f_i_values[j] = info->get_f_i_map()[j][h_p[j]];
-            // cout << "f_" << j << "(" << h_p[j] << ")=" << f_i_values[j] << "  ";
         }
 
         for(int j=0;j<info->get_k();j++)  f_i[image] += (f_i_values[j] << ((info->get_k()-(j+1))));
@@ -172,13 +160,9 @@ void fi_values_of_query(HyperCube* info,unsigned int* f_i)
             int a_i[info->get_dimensions()];
 
             for(int z=0;z<info->get_dimensions();z++)
-            {
                 a_i[z] = floor((double)(info->get_Images_Array()[image][z] - info->get_s_i()[j][z])/(double)(info->get_W()));
-                // cout << a_i[z] << " " ;
-            }
-            // cout << endl;
+
             h_p[j] = Calculate_hp_HyperCube(a_i,info);
-            // cout << h_p[j] << " ";
            
             f_i_values[j] = info->get_f_i_map()[j][h_p[j]];
         }
@@ -248,13 +232,9 @@ unsigned int Reverse_Assignment_HyperCube_Centroid_in_Bucket(RA_HyperCube* info,
         int a_i[info->get_dimensions()];
 
         for(int z=0;z<info->get_dimensions();z++)
-        {
             a_i[z] = floor((double)(centroid[z] - info->get_s_i()[j][z])/(double)(info->get_W()));
-            // cout << a_i[z] << " " ;
-        }
-        // cout << endl;
+
         h_p[j] = Calculate_hp_RA_HyperCube(a_i,info);
-        // cout << h_p[j] << " ";
         
         f_i_values[j] = info->get_f_i_map()[j][h_p[j]];
     }
@@ -359,20 +339,11 @@ void Insert_Images_To_Buckets_RA_HyperCube(RA_HyperCube* info)
     uniform_int_distribution<int> distribution(0,1);
     
     for(int i=0;i<info->get_k();i++)
-    {
-        // cout << "Map " << i << endl;
         for(int j=0;j<info->get_M();j++)    
-        {        
             info->get_f_i_map()[i][j] = distribution(generator);
-            // cout << info->get_f_i_map()[i][j] << " ";
-        }
-        // cout << endl << "=======" << endl;
-    }
 
     //Call function so as to compute all f_i values...
     fi_values_of_train_RA_HyperCube(info,f_i);
-
-    // for(int i=0;i<info->get_Num_of_Images();i++)  cout << f_i[i] << " ";
     
     //Fill buckets of L Hash_Tables...
     for(int i=0;i<info->get_Num_of_Images();i++)
