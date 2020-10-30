@@ -24,7 +24,7 @@ void Cluster::Clustering()
         for(int j=0;j<kmeansptr->get_dimensions();j++)
             centroids[i][j] = kmeansptr->get_Images_Array()[indexes[i]][j];
     }
-    file << endl;
+    // file << endl;
 
     auto start = chrono::high_resolution_clock::now();
     while(true)
@@ -36,11 +36,11 @@ void Cluster::Clustering()
         objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
-        file << "Reduction's rate change of objective function's value:" << ratio << endl << "Cost:" << objectives_values[1] << endl << endl;
-        if(ratio<epsilon || iters==20)   break;
+        // file << "Reduction's rate change of objective function's value:" << ratio << endl << "Cost:" << objectives_values[1] << endl << endl;
+        if(ratio<epsilon || iters==10)   break;
         
-        // FastUpdate();
-        SlowUpdate();
+        FastUpdate();
+        // SlowUpdate();
         iters++;
     }
     auto end = chrono::high_resolution_clock::now(); 
@@ -166,7 +166,7 @@ float Cluster::Objective_Value()
         cluster = it->second->get_nearest_centroid1();
         sums[cluster] += ManhattanDistance(kmeansptr->get_Images_Array()[it->first],centroids[cluster],kmeansptr->get_dimensions());
     }
-    
+
     for(int i=0;i<K;i++)    avg_sum+=sums[i];
 
     return avg_sum;

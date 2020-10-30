@@ -171,7 +171,7 @@ void RA_LSH::Init_RA_LSH()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
-    W = 4000;
+    W = 400;
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
