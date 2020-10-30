@@ -154,6 +154,8 @@ void RA_HyperCube::Map_Init()
         it->second->set_nearest_centroid1(-1);
 }
 
+//Assign points to centroids(clusters) with HyperCube method
+//and for that points which are not assigned search exhaustively...
 void RA_HyperCube::RA_HyperCube_Assign()
 {
     int image_index=0,nearest_centroid1=0,nearest_centroid2=0;
@@ -176,6 +178,7 @@ void RA_HyperCube::RA_HyperCube_Assign()
                 image_index = it->first[dimensions];
                 nearest_centroid1 = (*points)[image_index]->get_nearest_centroid1();
 
+                //In case there isn't first centroid yet...
                 if(nearest_centroid1 == -1)
                 {
                     (*points)[image_index]->set_nearest_centroid1(i);
@@ -190,6 +193,7 @@ void RA_HyperCube::RA_HyperCube_Assign()
                     (*points)[image_index]->set_nearest_centroid2(distances2.top().second);
                     (*points)[image_index]->set_dist2(distances2.top().first);   
                 }
+                //In case we have already assign a centroid, we have to check if we found a new centroid much closer than the previous one
                 else
                 {
                     item new_distance1 = ManhattanDistance(it->first,centroids[i],dimensions);
