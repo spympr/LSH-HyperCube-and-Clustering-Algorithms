@@ -171,7 +171,7 @@ void RA_LSH::Init_RA_LSH()
     //Initialization of m,M...
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
-    W = 4000;
+    W = 400;
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];
@@ -192,6 +192,21 @@ void RA_LSH::Init_RA_LSH()
 
     //Fill Hash Tables...
     Insert_Images_To_Buckets_RA_LSH(this);
+
+    for(int i=0;i<L;i++)
+    {
+        int counter=0;
+        int sum=0;
+        for(int j=0;j<HashTableSize;j++)
+        {
+            if(Hash_Tables[i][j]!=NULL)
+            {
+                counter++;
+                sum+=Hash_Tables[i][j]->images.size();
+            }                
+        }
+        cout << "HashTable " << i << ": " << counter << ", " << sum << endl;
+    }
 }
 
 void RA_LSH::Deallocation_of_Memory()

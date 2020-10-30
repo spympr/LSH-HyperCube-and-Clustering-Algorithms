@@ -198,7 +198,6 @@ void kmeans::centroid_initialization()
                 break;
             }
         }
-        // cout << endl << "From centroid:" << centroid+1 << " x:" << x << " " << P_r[number_of_images-1] << " r:" << centroids[centroid+1] << endl;
     }
     auto end = chrono::high_resolution_clock::now(); 
     kmeans_time = chrono::duration_cast<chrono::seconds>(end - start).count();

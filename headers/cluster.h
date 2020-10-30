@@ -76,8 +76,8 @@ class Cluster
         void RA_HC_Assign();
         void FastUpdate();
         void SlowUpdate();
-        void Print(float* ,int);
         float Objective_Value();
+        void Print(float* ,int);
 };
 
 #endif

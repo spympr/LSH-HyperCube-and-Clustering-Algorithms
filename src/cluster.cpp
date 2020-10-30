@@ -24,7 +24,7 @@ void Cluster::Clustering()
         for(int j=0;j<kmeansptr->get_dimensions();j++)
             centroids[i][j] = kmeansptr->get_Images_Array()[indexes[i]][j];
     }
-    file << endl;
+    // file << endl;
 
     auto start = chrono::high_resolution_clock::now();
     while(true)
@@ -36,8 +36,8 @@ void Cluster::Clustering()
         objectives_values[1] = Objective_Value();
         ratio = abs(objectives_values[1]-objectives_values[0])/objectives_values[0];
         objectives_values[0] = objectives_values[1];
-        file << "Reduction's rate change of objective function's value:" << ratio << endl << "Cost:" << objectives_values[1] << endl << endl;
-        if(ratio<epsilon)   break;
+        // file << "Reduction's rate change of objective function's value:" << ratio << endl << "Cost:" << objectives_values[1] << endl << endl;
+        if(ratio<epsilon || iters==10)   break;
         
         FastUpdate();
         // SlowUpdate();
@@ -166,7 +166,7 @@ float Cluster::Objective_Value()
         cluster = it->second->get_nearest_centroid1();
         sums[cluster] += ManhattanDistance(kmeansptr->get_Images_Array()[it->first],centroids[cluster],kmeansptr->get_dimensions());
     }
-    
+
     for(int i=0;i<K;i++)    avg_sum+=sums[i];
 
     return avg_sum;
@@ -187,7 +187,9 @@ void Cluster::Print(float* silhouette_array,int time)
         images_in_cluster[cluster]++;
     }
 
-    file << endl << "Algorithm: Lloyds" << endl;
+    if(method==lloyd_method)    file << endl << "Algorithm: Lloyds" << endl;
+    if(method==lsh_method)    file << endl << "Algorithm: Range Search LSH" << endl;
+    if(method==hc_method)    file << endl << "Algorithm: Range Search Hypercube" << endl;
     
     for(int i=0;i<K;i++)   
     {
@@ -222,14 +224,4 @@ void Cluster::Print(float* silhouette_array,int time)
             file << "}" << endl << endl;
         }
     }
-}
-
-void Cluster::RA_LSH_Assign()
-{
-
-}
-
-void Cluster::RA_HC_Assign()
-{
-    
 }
