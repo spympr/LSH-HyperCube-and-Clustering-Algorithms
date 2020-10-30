@@ -39,6 +39,7 @@ class RA_HyperCube
         void Deallocation_of_Memory();
         void Initialize_Values();
         void RA_HyperCube_Assign();
+        void Exhausting_For_Non_Assign_Points();
         void Map_Init();
 
         int get_dimensions();

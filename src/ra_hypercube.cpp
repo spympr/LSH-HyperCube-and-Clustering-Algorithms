@@ -274,4 +274,29 @@ void RA_HyperCube::RA_HyperCube_Assign()
             }
         }
     }
+    Exhausting_For_Non_Assign_Points();
+}
+
+void RA_HyperCube::Exhausting_For_Non_Assign_Points()
+{
+    map <int,Nearest_Centroids*>::iterator it;
+
+    for(it=(*points).begin();it!=(*points).end();it++) 
+    {
+        if(it->second->get_nearest_centroid1() ==-1)
+        {
+            priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances1;
+
+            for(int i=0;i<K;i++)
+                distances1.push(make_pair((ManhattanDistance(centroids[i],Images_Array[it->first],dimensions)),i));
+            
+            it->second->set_nearest_centroid1(distances1.top().second);
+            it->second->set_dist1(distances1.top().first);
+            
+            distances1.pop();
+
+            it->second->set_nearest_centroid2(distances1.top().second);
+            it->second->set_dist2(distances1.top().first);
+        }
+    }
 }
