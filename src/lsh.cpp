@@ -80,19 +80,26 @@ Bucket*** LSH::get_Hash_Tables()
     return Hash_Tables;
 }
 
+//Function which implements LSH algorithm for num_of_queries images.
 void LSH::Approximate_LSH()
 {   
+    //For each query of query's dataset.
     for(int i=0;i<Num_of_Queries;i++)
     {
         int LSH_nns[N],LSH_Distances[N]; 
         auto start = chrono::high_resolution_clock::now(); 
+        
+        //Use of priority queue so as to fill it with images of appropriate buckets (and keep the N best ones in the end).
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > distances; 
+        //Use of unordered set so as to keep only unique values (so as to not have duplicates of images)...
         unordered_set<int> indexes_of_images;
 
+        //Initialize L gi values and calculate them with gi_values_of_query()...
         unsigned int gi_query_values[L];
-        
         gi_values_of_query(this, gi_query_values, i);
 
+        //For each hash table, find appropriate bucket and if it's not empty iterate through all images
+        // and if image has the same gi value and isn't inside unordered set then insert image to priority queue...
         for(int j=0;j<L;j++)
         {
             Bucket* temp = Hash_Tables[j][gi_query_values[j]];
@@ -157,6 +164,8 @@ void LSH::Approximate_LSH()
     }
 }
 
+//Same logic with approximate lsh function, with the restriction that images will be 
+//inserted to priority queue only  if distance of query-image is less than R(adius).
 void LSH::Approximate_Range_Search(int query_index)
 {   
     priority_queue<int, vector<int>, greater<int>> neighboors; 

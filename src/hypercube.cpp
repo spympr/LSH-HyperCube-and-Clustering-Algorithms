@@ -90,6 +90,7 @@ Bucket** HyperCube::get_Hash_Table()
     return Hash_Table;
 }
 
+//Function which calculates hamming distance of 2 integers.
 int HyperCube::hammingDistance(int n1, int n2) 
 { 
     int x = n1 ^ n2; 
