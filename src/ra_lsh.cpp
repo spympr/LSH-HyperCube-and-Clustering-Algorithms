@@ -1,5 +1,4 @@
 #include "../headers/kmeans.h"
-// #include "../headers/exhausting.h"
 
 int RA_LSH::get_dimensions()
 {
@@ -173,7 +172,6 @@ void RA_LSH::Init_RA_LSH()
     M = pow(2,floor((double)32/(double)k));
     m = 423255;
     W = 4000;
-    
     
     //Calculation of m^d-1modM array...
     modulars = new int[dimensions];

@@ -49,7 +49,7 @@ class Cluster
             }
             else if(method==hc_method)
             {
-                // hcptr = new HyperCube(input_file,query_file,output_file,N,kmeansptr->get_HC_k(),R,kmeansptr->get_HC_M(),kmeansptr->get_probes());  
+                // hcptr = new RA_HyperCube(input_file,query_file,output_file,N,kmeansptr->get_HC_k(),R,kmeansptr->get_HC_M(),kmeansptr->get_probes());  
                 // hcptr->InitHyperCube();
             }
         }
