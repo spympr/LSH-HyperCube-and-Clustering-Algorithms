@@ -176,8 +176,11 @@ void HyperCube::Approximate_Hypercube()
     unsigned int fi_query_values[Num_of_Queries];
     for(int i=0;i<Num_of_Queries;i++)  fi_query_values[i] = 0;
     
+    //Calculate fi values of queries...
     fi_values_of_query(this, fi_query_values);
 
+    //For each query firstly go to appropriate bucket and if it is not empty push images of this bucket 
+    //into priority queue (and check if I have checked M_boundary in order to stop searching...)
     for(int i=0;i<Num_of_Queries;i++)
     {
         auto start = chrono::high_resolution_clock::now();
@@ -197,6 +200,8 @@ void HyperCube::Approximate_Hypercube()
                 if(count_images == M_boundary)  break;
             }
         }
+        //If we haven't reached M_boundary, keep searching buckets until some restriction stop our searching (probes or M_boundary)
+        //Search each bucket of hash table and check if hamming distance=1 (or 2 etc) with query's bucket...
         if((temp == NULL) || (count_images < M_boundary))
         {
             while((count_probes < probes) && (count_images < M_boundary))
@@ -263,9 +268,10 @@ void HyperCube::Approximate_Hypercube()
     file << "HashTable: " << counter << " out of " << HashTableSize << endl;
 }
 
+//We follow same logic with Approximate_Hypercube, but here we have the extra restriction 
+// that images will be inserted to priority queue only if distance of query-image is less than R(adius).
 void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_value)
 {
-    // auto start = chrono::high_resolution_clock::now();
     int HyperCube_nns[N], count_hamming=1,count_images=0, count_probes=0; 
     priority_queue<int, vector<int>, greater<int>> neighboors;
 

@@ -181,7 +181,7 @@ void fi_values_of_train_RA_HyperCube(RA_HyperCube* info,unsigned int* f_i)
     }
 }
 
-//Function which calculates query's fi value for HyperCube class.
+//Function which calculates fi values of queries for HyperCube class.
 void fi_values_of_query(HyperCube* info,unsigned int* f_i)
 {    
     for(int image=0;image<info->get_Num_of_Queries();image++)

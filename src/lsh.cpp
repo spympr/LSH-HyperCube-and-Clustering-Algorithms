@@ -164,7 +164,7 @@ void LSH::Approximate_LSH()
     }
 }
 
-//Same logic with approximate lsh function, with the restriction that images will be 
+//Same logic with approximate lsh function, with the extra restriction that images will be 
 //inserted to priority queue only  if distance of query-image is less than R(adius).
 void LSH::Approximate_Range_Search(int query_index)
 {   
