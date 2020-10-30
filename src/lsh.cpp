@@ -138,9 +138,8 @@ void LSH::Approximate_LSH()
     }
 
     file << endl << "LSH Mean Distance Error: " << dist_AF/(double)(Num_of_Queries*N) << endl;
-    file << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl;
+    file << endl << "tLSH/tTrue: " << time_error/(double)(Num_of_Queries) << endl << endl;
     
-    file << endl;
     //Print Buckets...
     for(int i=0;i<L;i++)
     {

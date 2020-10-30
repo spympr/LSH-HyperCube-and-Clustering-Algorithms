@@ -223,13 +223,3 @@ void Cluster::Print(float* silhouette_array,int time)
         }
     }
 }
-
-void Cluster::RA_LSH_Assign()
-{
-
-}
-
-void Cluster::RA_HC_Assign()
-{
-    
-}

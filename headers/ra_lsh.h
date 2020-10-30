@@ -31,12 +31,12 @@ class RA_LSH
             Deallocation_of_Memory();
         }
 
-        void RA_LSH_Assign();
         void Init_RA_LSH();
-        void Deallocation_of_Memory();
-        void Map_Init();
-        void Exhausting_For_Non_Assign_Points();
         void Initialize_Values();
+        void Map_Init();
+        void RA_LSH_Assign();
+        void Exhausting_For_Non_Assign_Points();
+        void Deallocation_of_Memory();
         
         int get_dimensions();
         int get_M();

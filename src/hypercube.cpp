@@ -193,10 +193,8 @@ void HyperCube::Approximate_Hypercube()
             {
                 distances.push(make_pair(ManhattanDistance(Queries_Array[i],it->first,dimensions), (it->first[dimensions])));
                 count_images++;
-                // cout << count_images << " ";
                 if(count_images == M_boundary)  break;
             }
-            // cout << endl;
         }
         if((temp == NULL) || (count_images < M_boundary))
         {
@@ -224,7 +222,6 @@ void HyperCube::Approximate_Hypercube()
                         }
                     }
                     if((count_images == M_boundary) || (count_probes == probes))  break;
-                    // if((count_images == M_boundary))  break;
                 }
                 count_hamming++;
             }
@@ -282,10 +279,8 @@ void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_v
             if(ManhattanDistance(Queries_Array[query_index],it->first, dimensions) < R)
                 neighboors.push(it->first[dimensions]);
             count_images++;
-            // cout << count_images << " ";
             if(count_images == M_boundary)  break;
         }
-        // cout << endl;
     }
     if((temp == NULL) || (count_images < M_boundary))
     {
@@ -320,8 +315,6 @@ void HyperCube::Approximate_Range_Search(int query_index,unsigned int fi_query_v
             count_hamming++;
         }
     }
-
-    // auto end = chrono::high_resolution_clock::now(); 
 
     file << endl << "R-near neighbors:" << endl;
     if(neighboors.empty())  file << "None" << endl;
