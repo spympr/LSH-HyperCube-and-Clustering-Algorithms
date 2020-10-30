@@ -293,8 +293,6 @@ void Insert_Images_To_Buckets_HyperCube(HyperCube* info)
 
     //Call function so as to compute all f_i values...
     fi_values_of_train(info,f_i);
-
-    // for(int i=0;i<info->get_Num_of_Images();i++)  cout << f_i[i] << " ";
     
     //Fill buckets of L Hash_Tables...
     for(int i=0;i<info->get_Num_of_Images();i++)
