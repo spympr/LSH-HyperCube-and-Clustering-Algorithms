@@ -142,7 +142,7 @@ void Cluster::SlowUpdate()
                 if(cluster==i)
                     vec.push_back(kmeansptr->get_Images_Array()[it->first][z]);
             }
-
+            
             if(vec.size()!=0)
             {
                 sort(vec.begin(),vec.end());
