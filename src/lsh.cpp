@@ -202,7 +202,6 @@ void LSH::Approximate_Range_Search(int query_index)
             neighboors.pop();
         }    
     }   
-
 }
 
 void LSH::InitLSH()
