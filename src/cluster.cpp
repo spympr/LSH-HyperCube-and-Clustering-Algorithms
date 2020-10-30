@@ -187,7 +187,9 @@ void Cluster::Print(float* silhouette_array,int time)
         images_in_cluster[cluster]++;
     }
 
-    file << endl << "Algorithm: Lloyds" << endl;
+    if(method==lloyd_method)    file << endl << "Algorithm: Lloyds" << endl;
+    if(method==lsh_method)    file << endl << "Algorithm: Range Search LSH" << endl;
+    if(method==hc_method)    file << endl << "Algorithm: Range Search Hypercube" << endl;
     
     for(int i=0;i<K;i++)   
     {
