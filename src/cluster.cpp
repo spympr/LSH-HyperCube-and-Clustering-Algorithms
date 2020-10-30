@@ -39,8 +39,8 @@ void Cluster::Clustering()
         file << "Reduction's rate change of objective function's value:" << ratio << endl << "Cost:" << objectives_values[1] << endl << endl;
         if(ratio<epsilon || iters==20)   break;
         
-        FastUpdate();
-        // SlowUpdate();
+        // FastUpdate();
+        SlowUpdate();
         iters++;
     }
     auto end = chrono::high_resolution_clock::now(); 
