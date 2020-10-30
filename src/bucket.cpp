@@ -127,6 +127,32 @@ void gi_values_of_train_RA_LSH(RA_LSH* info,unsigned int** g_i)
     }
 }
 
+void fi_values_of_train(HyperCube* info,unsigned int* f_i)
+{
+    for(int image=0;image<info->get_Num_of_Images();image++)
+    {
+        int h_p[info->get_k()];
+        int f_i_values[info->get_k()];
+        for(int j=0;j<info->get_k();j++)
+        {
+            int a_i[info->get_dimensions()];
+
+            for(int z=0;z<info->get_dimensions();z++)
+            {
+                a_i[z] = floor((double)((info->get_Images_Array()[image][z] - info->get_s_i()[j][z]))/(double)(info->get_W()));
+                // cout << a_i[z] << " ";
+            }
+            // cout << endl;
+            h_p[j] = Calculate_hp_HyperCube(a_i,info);
+            
+            f_i_values[j] = info->get_f_i_map()[j][h_p[j]];
+            // cout << "f_" << j << "(" << h_p[j] << ")=" << f_i_values[j] << "  ";
+        }
+
+        for(int j=0;j<info->get_k();j++)  f_i[image] += (f_i_values[j] << ((info->get_k()-(j+1))));
+    }
+}
+
 void fi_values_of_train_RA_HyperCube(RA_HyperCube* info,unsigned int* f_i)
 {
     for(int image=0;image<info->get_Num_of_Images();image++)
