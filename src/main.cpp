@@ -207,34 +207,40 @@ int main(int argc, char** argv)
     
     while(true)
     {
+        LSH* lsh = NULL;
+        HyperCube* cube = NULL;
+        Cluster* Lloyd = NULL;
+        Cluster* RA_LSH = NULL;
+        Cluster* RA_HC = NULL;
+
         if(strcmp(argv[0],"./lsh") == 0)    
         {
-            LSH lsh(input_file,query_file,output_file,L,N,k,R);    
-            lsh.InitLSH();
-            lsh.Approximate_LSH();
+            lsh = new LSH(input_file,query_file,output_file,L,N,k,R);    
+            lsh->InitLSH();
+            lsh->Approximate_LSH();
         }        
         else if(strcmp(argv[0],"./cube") == 0)    
         {
-            HyperCube cube(input_file,query_file,output_file,N,k,R,M,probes);  
-            cube.InitHyperCube();
-            cube.Approximate_Hypercube();
+            cube = new HyperCube(input_file,query_file,output_file,N,k,R,M,probes);  
+            cube->InitHyperCube();
+            cube->Approximate_Hypercube();
         }          
         else if(strcmp(argv[0],"./cluster") == 0)   
         {
             if(strcmp(method.c_str(),"Classic") == 0)   
             {
-                Cluster Lloyd(input_file,output_file,configuration_file,complete,lloyd_method);
-                Lloyd.Clustering();
+                Lloyd = new Cluster(input_file,output_file,configuration_file,complete,lloyd_method);
+                Lloyd->Clustering();
             }
             else if(strcmp(method.c_str(),"LSH") == 0)  
             {
-                Cluster RA_LSH(input_file,output_file,configuration_file,complete,lsh_method);
-                RA_LSH.Clustering();
+                RA_LSH = new Cluster(input_file,output_file,configuration_file,complete,lsh_method);
+                RA_LSH->Clustering();
             }
             else if(strcmp(method.c_str(),"Hypercube") == 0)
             {
-                Cluster RA_HC(input_file,output_file,configuration_file,complete,hc_method);
-                RA_HC.Clustering();
+                RA_HC = new Cluster(input_file,output_file,configuration_file,complete,hc_method);
+                RA_HC->Clustering();
             }
             else
             {
@@ -263,6 +269,15 @@ int main(int argc, char** argv)
             cout << "Please give a new query file:\n";
             cin >> query_file;
         } 
+
+        if(strcmp(argv[0],"./lsh") == 0)    delete lsh;       
+        else if(strcmp(argv[0],"./cube") == 0)  delete cube;      
+        else if(strcmp(argv[0],"./cluster") == 0)   
+        {
+            if(strcmp(method.c_str(),"Classic") == 0)   delete Lloyd;
+            else if(strcmp(method.c_str(),"LSH") == 0)  delete RA_LSH;
+            else if(strcmp(method.c_str(),"Hypercube") == 0)    delete RA_HC;
+        }
     }
     return 0; 
 }
