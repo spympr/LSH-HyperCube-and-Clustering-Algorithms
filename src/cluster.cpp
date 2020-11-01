@@ -41,8 +41,8 @@ void Cluster::Clustering()
         if(ratio<epsilon || iters==20)   break;
         
         //Update centroids with kmedians...
-        FastUpdate();
-        // SlowUpdate();
+        SlowUpdate();
+        // FastUpdate();
 
         iters++;
     }

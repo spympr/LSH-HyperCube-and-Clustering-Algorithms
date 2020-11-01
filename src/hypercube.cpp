@@ -148,7 +148,7 @@ void HyperCube::InitHyperCube()
     tHypercube = new double[Num_of_Queries];
     tTrue = new double[Num_of_Queries];
 
-    W = 40000;
+    W = 4000;
     file << "W:" << W << endl << endl;
 
     //Do exhausting search and init W...
