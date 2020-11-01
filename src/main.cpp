@@ -253,6 +253,15 @@ int main(int argc, char** argv)
         cout << endl << "Do you want to question something else? (y/n)" << endl;
         cin >> answer;
 
+        if(strcmp(argv[0],"./lsh") == 0)    delete lsh;       
+        else if(strcmp(argv[0],"./cube") == 0)  delete cube;      
+        else if(strcmp(argv[0],"./cluster") == 0)   
+        {
+            if(strcmp(method.c_str(),"Classic") == 0)   delete Lloyd;
+            else if(strcmp(method.c_str(),"LSH") == 0)  delete RA_LSH;
+            else if(strcmp(method.c_str(),"Hypercube") == 0)    delete RA_HC;
+        }
+        
         if((answer == "no") || (answer == "No") || (answer == "NO") || (answer == "n") || (answer =="N"))
         {
             fstream file;
@@ -270,14 +279,6 @@ int main(int argc, char** argv)
             cin >> query_file;
         } 
 
-        if(strcmp(argv[0],"./lsh") == 0)    delete lsh;       
-        else if(strcmp(argv[0],"./cube") == 0)  delete cube;      
-        else if(strcmp(argv[0],"./cluster") == 0)   
-        {
-            if(strcmp(method.c_str(),"Classic") == 0)   delete Lloyd;
-            else if(strcmp(method.c_str(),"LSH") == 0)  delete RA_LSH;
-            else if(strcmp(method.c_str(),"Hypercube") == 0)    delete RA_HC;
-        }
     }
     return 0; 
 }

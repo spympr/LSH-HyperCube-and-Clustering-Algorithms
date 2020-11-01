@@ -206,7 +206,7 @@ void RA_LSH::Init_RA_LSH()
                 sum+=Hash_Tables[i][j]->images.size();
             }                
         }
-        cout << "HashTable " << i << ": " << counter << ", " << sum << endl;
+        // cout << "HashTable " << i << ": " << counter << ", " << sum << endl;
     }
 }
 
