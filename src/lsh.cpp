@@ -221,7 +221,7 @@ void LSH::InitLSH()
     Read_BF(&Images_Array,&Num_of_Images,&Columns,&Rows,input_file,1);
     
     //Read query binary file...
-    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,100);
+    Read_BF(&Queries_Array,&Num_of_Queries,&Columns,&Rows,query_file,1);
    
     file.open(output_file,ios::out);
 
