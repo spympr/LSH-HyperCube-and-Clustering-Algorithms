@@ -14,4 +14,6 @@
 
 > Output results will be displayed in output file.
 
-[a link](https://github.com/alexaapo)
+## Contributos
+[Alexandra Apostolopoulou](https://github.com/alexaapo)
+[Spyros Briakos](https://github.com/spympr)
