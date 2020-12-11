@@ -1,4 +1,4 @@
-# LSH-HyperCube-and-Clustering-Algorithms.
+## LSH-HyperCube-and-Clustering-Algorithms.
 
 > A very popular technique for finding near neighbors in the big data is to apply algorithms, which have probalistic behavior, such as Locality Sensitive Hashing and Random Projections to HyperCube. So the first part of this project is to compare the performance (time and accuracy) of LSH, HyperCube and BruteForce algorithms applied on nearest neighbor problem. We feed to those algoritmhs images from MNIST dataset (which has a lot of 28x28 vectors, that represents images) 
 
@@ -6,6 +6,6 @@
 
 ## Compilation & Execution
 > After a series of experiments, we tune hyperparameters for the best result so if you want to compile and run you can simply run one of the above commands from root directory:
-./scripts/lsh.sh
-./scripts/cube.sh
-./scripts/cluster.sh
+1. *./scripts/lsh.sh*
+2. *./scripts/cube.sh*
+3. *./scripts/cluster.sh*
