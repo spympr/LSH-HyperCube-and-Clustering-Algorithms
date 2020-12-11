@@ -14,6 +14,6 @@
 
 > Output results will be displayed in output file.
 
-## Contributos
+## Contributors
 1. [Alexandra Apostolopoulou](https://github.com/alexaapo)
 2. [Spyros Briakos](https://github.com/spympr)
