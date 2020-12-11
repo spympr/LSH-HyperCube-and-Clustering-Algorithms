@@ -15,18 +15,3 @@
 > Output results will be displayed in output file.
 
 ## Contributors
-
-
-@github
-
-
-
-@github/Spyros Briakos
-
-@Spyros Briakos
-
-
-@spympr
-
-
-@Alexandra Apostolopoulou
