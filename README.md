@@ -13,3 +13,5 @@
 > If you want to try different clustering approaches then you only have to change in scripts/cluster.sh parameter -m with 'Classic' or 'LSH' or 'Hypercube'.
 
 > Output results will be displayed in output file.
+
+[a link](https://github.com/alexaapo)
