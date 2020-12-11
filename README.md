@@ -15,5 +15,5 @@
 > Output results will be displayed in output file.
 
 ## Contributors
-@spympr
-@alexaapo
+@Spyros Briakos
+@Alexandra Apostolopoulou
