@@ -15,5 +15,5 @@
 > Output results will be displayed in output file.
 
 ## Contributors
-@https://github.com/spympr
-@https://github.com/alexaapo
+@spympr
+@alexaapo
